@@ -1,3 +1,4 @@
+
 -- Select all records from the Gas_Sensor table
 SELECT * FROM Gas_Sensor;
 
@@ -156,7 +157,6 @@ WHERE Employee_ID IN (
 );
 
 
--- Display the hierarchical structure of employees in the company
 WITH RECURSIVE Employee_Hierarchy AS (
     SELECT Employee_ID, Name, Position, 0 AS Level
     FROM Employee
@@ -164,10 +164,144 @@ WITH RECURSIVE Employee_Hierarchy AS (
     UNION ALL
     SELECT e.Employee_ID, e.Name, e.Position, eh.Level + 1
     FROM Employee e
-    JOIN Employee_Hierarchy eh ON e.Employee_ID = eh.Employee_ID
+    JOIN Employee_Hierarchy eh ON e.Manager_ID = eh.Employee_ID
 )
 SELECT Employee_ID, Name, Position, Level
 FROM Employee_Hierarchy;
 
 
 
+-- Retrieve employees who do not have access level 'Admin'
+SELECT * 
+FROM Employee_Management_System 
+WHERE User_Name NOT IN (SELECT User_Name FROM Employee_Management_System WHERE Access_Level = 'Admin');
+
+
+-- Find access levels with more than 3 employees assigned to them
+SELECT Access_Level, COUNT(*) AS Employee_Count
+FROM Employee_Management_System
+GROUP BY Access_Level
+HAVING COUNT(*) > 3;
+
+
+-- Find employees with similar usernames
+SELECT e1.User_Name, e2.User_Name AS Similar_User_Name
+FROM Employee_Management_System e1
+JOIN Employee_Management_System e2 ON e1.User_Name LIKE CONCAT('%', e2.User_Name, '%') AND e1.Management_ID <> e2.Management_ID;
+
+
+-- Calculate the percentage of employees with full access
+SELECT (COUNT(CASE WHEN Access_Level = 'Full access' THEN 1 END) / COUNT(*)) * 100 AS Percentage_Full_Access
+FROM Employee_Management_System;
+
+
+-- Find the latest joined employees
+SELECT User_Name, Access_Level, Control
+FROM Employee_Management_System
+ORDER BY Management_ID DESC
+LIMIT 5;
+
+
+-- Identify employees with the highest level of control
+SELECT User_Name, Access_Level, Control
+FROM Employee_Management_System
+WHERE Control = (SELECT MAX(Control) FROM Employee_Management_System);
+
+
+-- Find employees who have the same password
+SELECT Pass_Word, COUNT(*) AS Employees_Sharing_Password
+FROM Employee_Management_System
+GROUP BY Pass_Word
+HAVING COUNT(*) > 1;
+
+
+-- Calculate average password length by access level
+SELECT Access_Level, AVG(LENGTH(Pass_Word)) AS Avg_Password_Length
+FROM Employee_Management_System
+GROUP BY Access_Level;
+
+
+-- Find employees with expired passwords (for demonstration purpose, let's assume passwords are expired if they are shorter than 6 characters)
+SELECT User_Name, Pass_Word
+FROM Employee_Management_System
+WHERE LENGTH(Pass_Word) < 6;
+
+
+-- Identify employees with null passwords
+SELECT User_Name
+FROM Employee_Management_System
+WHERE Pass_Word IS NULL;
+
+
+-- Calculate the ratio of employees to control level
+SELECT Control, COUNT(*) AS Employee_Count,
+       COUNT(*) / (SELECT COUNT(*) FROM Employee_Management_System) AS Ratio
+FROM Employee_Management_System
+GROUP BY Control;
+
+
+-- Find employees who share the same access level and control
+SELECT Access_Level, Control, COUNT(*) AS Employee_Count
+FROM Employee_Management_System
+GROUP BY Access_Level, Control
+HAVING COUNT(*) > 1;
+
+
+-- Check if primary keys exist and are unique in Employee_Management_System table
+SELECT COUNT(Management_ID) AS Total_Records, COUNT(DISTINCT Management_ID) AS Unique_Records
+FROM Employee_Management_System;
+
+
+-- Check for employees with empty access levels
+SELECT *
+FROM Employee_Management_System
+WHERE Access_Level = '';
+
+
+-- Identify employees with weak passwords (less than 8 characters)
+SELECT User_Name, Pass_Word
+FROM Employee_Management_System
+WHERE LENGTH(Pass_Word) < 8;
+
+
+-- Identify employees with the same control and access level
+SELECT Access_Level, Control, COUNT(*) AS Employee_Count
+FROM Employee_Management_System
+GROUP BY Access_Level, Control
+HAVING COUNT(*) > 1;
+
+
+-- Identify employees with passwords containing special characters
+SELECT User_Name, Pass_Word
+FROM Employee_Management_System
+WHERE Pass_Word REGEXP '[^a-zA-Z0-9 ]';
+
+
+-- Find employees with the highest total salary
+SELECT e.User_Name, e.Access_Level, e.Control, SUM(sc.Total_Salary) AS Total_Salary
+FROM Employee_Management_System e
+JOIN Salary_Calculation sc ON e.Management_ID = sc.Employee_ID
+GROUP BY e.User_Name, e.Access_Level, e.Control
+ORDER BY Total_Salary DESC
+LIMIT 1;
+
+
+-- Calculate the percentage of employees with numeric passwords
+SELECT COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Employee_Management_System) AS Percentage_Numeric_Passwords
+FROM Employee_Management_System
+WHERE Pass_Word REGEXP '^[0-9]+$';
+
+
+-- Find employees with the longest access levels
+SELECT User_Name, Access_Level
+FROM Employee_Management_System
+ORDER BY LENGTH(Access_Level) DESC
+LIMIT 5;
+
+-- Identify employees with the highest total salary using aliases
+SELECT e.User_Name, e.Access_Level, e.Control, SUM(sc.Total_Salary) AS Total_Salary
+FROM Employee_Management_System e
+JOIN Salary_Calculation sc ON e.Management_ID = sc.Employee_ID
+GROUP BY e.User_Name, e.Access_Level, e.Control
+ORDER BY Total_Salary DESC
+LIMIT 1;

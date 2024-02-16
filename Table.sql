@@ -155,3 +155,5 @@ CREATE TABLE Salary_Calculation (
     Total_Salary DOUBLE,
     FOREIGN KEY (Employee_ID) REFERENCES Employee(Employee_ID)
 );
+
+
