@@ -19,7 +19,7 @@
 -- Table structure for table `communication_module`
 --
 
-DROP TABLE IF EXISTS `communication_module`;
+DROP TABLE IF  EXISTS `communication_module`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `communication_module` (
@@ -36,7 +36,7 @@ CREATE TABLE `communication_module` (
 
 LOCK TABLES `communication_module` WRITE;
 /*!40000 ALTER TABLE `communication_module` DISABLE KEYS */;
-INSERT INTO `communication_module` VALUES (1,'Wi-Fi','1234567890'),(2,'GSM','0987654321'),(3,'Bluetooth','1357902468');
+INSERT INTO `communication_module` VALUES (1,'Wi-Fi','1234567890'),(2,'GSM','0987654321'),;
 /*!40000 ALTER TABLE `communication_module` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
