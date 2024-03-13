@@ -1,0 +1,66 @@
+
+  
+/* Content Styles */
+body {
+  
+  background-image: url("../img/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0px;
+  padding: 0px;
+  
+}
+
+.box{
+  background-color: #cdf0ff;
+  border-radius: 20px;
+  border:none;
+  border-width: 0;
+
+}
+
+.materials{
+  background-color: #32478c;
+  border-radius: 20px;
+  border:none;
+  border-width: 0;
+}
+
+.alerts{
+  background-color: #32478c;
+  border-radius: 20px;
+  border:none;
+  border-width: 0;
+}
+
+.leave{
+  background-color: #32478c;
+  border-radius: 20px;
+  border:none;
+  border-width: 0;
+}
+.card {
+  border:none !important;
+  background-color: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .card {
+      border-radius: 10px;
+  }
+}
+
+h1{
+  font-family: "Caveat", cursive;
+  position:relative;
+  color: #ffffff;
+  padding: auto;
+  
+}
+
+button{
+  background-color: #111D46 !important;
+  border-radius: 25px !important;
+}
