@@ -6,7 +6,7 @@ body{
 /*..Hero section..*/
 
 #hero{
-  background: url(../img/login.jpg);
+  background-color: #fff;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -17,16 +17,16 @@ body{
   background-color: transparent;
   border-radius: 15px;
   padding: 5px;
-  border: 2px solid #90E0EF; 
+  border: 2px solid #c5c6c7; 
   backdrop-filter: blur(20px);
   box-shadow: 0;
 
 }
 
 .form-control {
-  border-radius: 10px;
+  border-radius: 20px !important;
   border: 2px ;
-  border-color: transparent !important;
+  border-color: #c5c6c7 !important;
   background-color: transparent !important;
   box-shadow: none !important; 
 }
@@ -64,7 +64,7 @@ h1{
 
 
 
-button {
+.btn {
   --button-background: oklch(20% 0.0666 var(--hue));
   --text-base: oklch(45% 0.175 var(--hue));
   --text-hover: oklch(95% 0.145 calc(var(--hue) + 30));
@@ -93,7 +93,7 @@ button {
   background-color: var(--button-background);
   background-clip: padding-box;
   border: 5px solid var(--text-base);
-  border-radius: 2em;
+  border-radius: 20px !important;
   cursor: pointer;
 
   /* Effects */
@@ -161,19 +161,13 @@ button {
   }
 }
 
-
-
-
-
-
 .footerBottom{
   text-align: center;
-  
   padding: 20px;
 }
 
 .footerBottom p{
-  color:bisque;
+  color: #616569;
   margin: 5px;
   
 }

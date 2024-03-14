@@ -26,6 +26,8 @@ body {
   border-radius: 20px;
   border:none;
   border-width: 0;
+  text-align: center;
+  align-items: center;
 }
 
 .alerts{
@@ -52,8 +54,8 @@ body {
   }
 }
 
-h1{
-  font-family: "Caveat", cursive;
+h6{
+  font-family: "Poppins", cursive;
   position:relative;
   color: #ffffff;
   padding: auto;
