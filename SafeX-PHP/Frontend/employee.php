@@ -5,9 +5,23 @@ require ("sidepanel.php");
 require("../Backend/Other-Script/employee-details.php");
 $user_role = $_SESSION["user_role"];
 $searchQuery = "";
+
+if(isset($_GET['id'])){
+    $employeeID = $_GET["id"];
+    $showEmployeeSQL = "SELECT * FROM employee WHERE Employee_ID = $employeeID";
+    $showEmployeeResult = $database_connection -> query($showEmployeeSQL);
+    if($showEmployeeResult && $showEmployeeResult->num_rows > 0) {
+        $employee = $showEmployeeResult->fetch_assoc(); 
+    } else {
+        echo "Employee not found!";
+    }
+} else {
+    echo "Employee ID not provided!";
+}
+
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
   <head>
@@ -79,7 +93,7 @@ $searchQuery = "";
                                 echo'</a>';   
                         }
                         ?>
-                        <a href="viewdefault.html">
+                        <a href="employee.php?id=<?php echo $employee['Employee_ID']; ?>">
                             <button class="btn btn-primary" type="button" value="View" id="viewbutton">View</button>
                         </a>     
                     </div>
@@ -136,6 +150,49 @@ $searchQuery = "";
     reader.readAsDataURL(file);
 });
 </script>
+<div class="selected-employee">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-5">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <!--employee image-->
+                            <img src="<?php echo '../Backend/'.$employee['Employee_Pic'];?>" alt="<?php echo $employee['Name'];?>" class="img-fluid rounded-start" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Employee Details</h5><br>
+                                <?php if(isset($employee)) ?>
+                                <p class="card-text">Employee Id:<?php echo $employee['Employee_ID']; ?> </p>
+                                <p class="card-text">Employee Name: <?php echo $employee['Name']; ?> </p>
+                                <p class="card-text">Helmet Id:<?php if($employee['Assigned'] ==1){
+                                    $employeeId = isset($_GET['id']);
+                                    $showHelmetSql = "SELECT Helmet_ID FROM helmet_assignment WHERE Employee_ID = $employeeID";
+                                    $result = mysqli_query($database_connection, $showHelmetSql);
+                                    $helmetId = '';
+                                    if ($result && mysqli_num_rows($result) > 0) {
+                                        $row = mysqli_fetch_assoc($result);
+                                        $helmetId = $row['Helmet_ID'];
+                                        echo $helmetId;
+                                    }else{
+                                        echo "N/A";
+                                    }
+                                }?> </p>
+                                <p class="card-text">Position:<?php echo $employee['Position']; ?> </p>
+                                <p class="card-text">Contact No:<?php echo $employee['Telephone_No']; ?> </p>
+                                <p class="card-text">Email:<?php echo $employee['Email_Address']; ?> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
 
 </body>
 </html>
