@@ -72,9 +72,13 @@ $searchQuery = "";
                     <img src="<?php echo '../Backend/'.$employee['Employee_Pic'];?>" alt="<?php echo $employee['Name'];?>" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"><!--employee image-->
                     <h5 class="mb-0"><?php echo $employee['Name'];?></h5>
                     <div class="defaultbutton">
-                        <a href="livedefault.html">
-                            <button class="btn btn-primary" type="button" value="Live" id="livebutton">Live</button>
-                        </a>
+                    <?php
+                        if(isset($user_role) && $user_role == 'employee'){
+                                echo' <a href="livedefault.html">';
+                                    echo '<button class="btn btn-primary" type="button" value="Live" id="livebutton">Live</button>';
+                                echo'</a>';   
+                        }
+                        ?>
                         <a href="viewdefault.html">
                             <button class="btn btn-primary" type="button" value="View" id="viewbutton">View</button>
                         </a>     
