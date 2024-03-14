@@ -69,7 +69,7 @@ $searchQuery = "";
            foreach($employees as $employee): ?>
             <div class="col-xl-3 col-sm-6 mb-5">
                 <div class="bg-white rounded shadow-sm py-5 px-4">
-                    <img src="<?php echo $employee['Employee_Pic'];?>" alt="<?php echo $employee['Name'];?>" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"><!--employee image-->
+                    <img src="<?php echo '../Backend/'.$employee['Employee_Pic'];?>" alt="<?php echo $employee['Name'];?>" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm"><!--employee image-->
                     <h5 class="mb-0"><?php echo $employee['Name'];?></h5>
                     <div class="defaultbutton">
                         <a href="livedefault.html">
@@ -88,9 +88,50 @@ $searchQuery = "";
     </div>
 
     <div class="add_new_employee">
-        
-    </div>
- 
+    <h2>Add Employee</h2>
+        <form id="employeeForm" action="../Backend/employee.php" method="post" enctype="multipart/form-data">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="position">Position:</label><br>
+            <select id="position" name="position" required>
+                <option value="">Select Position</option>
+                <option value="worker">Worker</option>
+                <option value="supervisor">Supervisor</option>
+                <option value="management">Management</option>
+            </select><br><br>
+            <label for="telephone">Telephone Number:</label><br>
+            <input type="text" id="telephone" name="telephone" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required><br><br>
+            <label for="email">Email Address:</label><br>
+            <input type="email" id="email" name="email"><br><br>
+            <label for="employeePic">Employee Picture:</label><br>
+            <input type="file" id="employeePic" name="employeePic" accept="image/*"><br>
+
+            <div id="preview"></div><br>
+
+            <input type="submit" value="Submit">
+        </form>
+</div>
+<script src="js/notification-panel.js"></script>
+    <script>
+        handleFormSubmit("employeeForm");
+    </script>
+<script>
+    document.getElementById('employeePic').addEventListener('change', function(event) {
+    var preview = document.getElementById('preview');
+    var file = event.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+        var img = new Image();
+        img.src = e.target.result;
+        img.style.maxWidth = '200px'; 
+        preview.innerHTML = ''; 
+        preview.appendChild(img);
+    };
+
+    reader.readAsDataURL(file);
+});
+</script>
 
 </body>
 </html>

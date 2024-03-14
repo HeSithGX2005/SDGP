@@ -1,5 +1,5 @@
 <?php include "css/css-links.php";
-    include "/xampp/htdocs/SX/Backend/login.php";
+    include ("../Backend/login.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <?php include "/xampp/htdocs/SX/Backend/Error-Handling/login-error.php"?>
+                <?php include "../Backend/Error-Handling/login-error.php"?>
 
                 <footer>
                     <div class="footerBottom mt-3">
