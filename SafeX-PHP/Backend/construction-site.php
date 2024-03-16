@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($database_connection->query($insert_site_sql) === TRUE) {
                 $status['status'] = 'success';
                 $status['message'] = "Site Is Added Succesfully";
+                $status['reload'] = true;
             } else {
                 $status['message'] = "Error inserting data: " . $database_connection->error;
             }
