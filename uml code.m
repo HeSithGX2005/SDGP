@@ -27,7 +27,7 @@ entity Employee {
     - Email : VARCHAR(255)
     - Telephone_No : VARCHAR(20)
     - Join_Date : DATETIME
-    - Photo : VARCHAR(255)
+    - Photo : TEXT
     - Helmet_ID : INT [FK]
     - Company_ID : INT [FK]
 }
