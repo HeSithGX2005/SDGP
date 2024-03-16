@@ -28,7 +28,7 @@ CREATE TABLE Employee (
     Email VARCHAR(255),
     Telephone_No VARCHAR(20),
     Join_Date DATETIME,
-    Photo VARCHAR(255),
+    Photo TEXT,
     Helmet_ID INT,
     Company_ID INT,
     FOREIGN KEY (Helmet_ID) REFERENCES Helmet(Helmet_ID),
