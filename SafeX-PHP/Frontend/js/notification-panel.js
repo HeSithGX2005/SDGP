@@ -20,7 +20,9 @@ function handleFormSubmit(formId) {
                     text: data.message,
                     icon: "success",
                 }).then(() => {
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
                 });
             } else {
                 swal({
