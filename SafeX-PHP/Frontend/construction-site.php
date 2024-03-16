@@ -65,7 +65,7 @@ $company_id = $_SESSION["Company_ID"]
                         <td>' . $assignedHelmets. '</td>
                         <td>
                             <a href="construction-site.php?delete=' . $row['site_id'] . '"class="btn btn-danger">Delete</a>
-                            <a href="construction-site.php?assign=' . $row['site_id'] . '"class="btn btn-primary">Assign</a>
+g                            <a href="construction-site.php?assign=' . $row['site_id'] . '"class="btn btn-primary">Assign</a>
                         </td>
                         </tr>';
                     $row_number++;

@@ -20,6 +20,10 @@ function handleFormSubmit(formId) {
                     text: data.message,
                     icon: "success",
                 });
+
+                if (data.reload) {
+                    window.location.reload();
+                }
             } else {
                 swal({
                     title: "Error",
