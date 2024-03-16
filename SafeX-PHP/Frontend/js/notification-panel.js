@@ -19,11 +19,9 @@ function handleFormSubmit(formId) {
                     title: "Success",
                     text: data.message,
                     icon: "success",
-                });
-
-                if (data.reload) {
+                }).then(() => {
                     window.location.reload();
-                }
+                });
             } else {
                 swal({
                     title: "Error",
