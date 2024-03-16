@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2024 at 05:17 PM
+-- Generation Time: Mar 16, 2024 at 07:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -68,16 +68,19 @@ INSERT INTO `company` (`Company_ID`, `Company_Name`, `Join_Date`, `No_of_Helmet`
 CREATE TABLE `construction_site` (
   `site_id` int(6) NOT NULL,
   `company_id` int(6) NOT NULL,
-  `Site_Name` varchar(100) NOT NULL
+  `Site_Name` varchar(100) NOT NULL,
+  `Number_of_workers` int(6) DEFAULT NULL,
+  `Assigned_Helmets` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `construction_site`
 --
 
-INSERT INTO `construction_site` (`site_id`, `company_id`, `Site_Name`) VALUES
-(1, 38, 'cc'),
-(2, 13, 'qq');
+INSERT INTO `construction_site` (`site_id`, `company_id`, `Site_Name`, `Number_of_workers`, `Assigned_Helmets`) VALUES
+(1, 38, 'cc', NULL, NULL),
+(2, 13, 'qq', NULL, NULL),
+(4, 47, 'ff', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -345,7 +348,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `construction_site`
 --
 ALTER TABLE `construction_site`
-  MODIFY `site_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `site_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `emergency alarm system`
@@ -411,3 +414,36 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TRIGGER `after_insert_helmet_assignment` AFTER INSERT ON `helmet_assignment`
+ FOR EACH ROW BEGIN
+    DECLARE company_id_var INT;
+    
+    -- Get the company ID associated with the new helmet assignment
+    SELECT Company_ID INTO company_id_var FROM helmet_assignment WHERE Helmet_AssigningID = NEW.Helmet_AssigningID;
+    
+    -- Update the number of helmets in the company table
+    UPDATE company SET No_of_Helmet = No_Of_Helmet + 1 WHERE Company_id = company_id_var;
+END
+
+CREATE TRIGGER `update_assigned_helmets` AFTER INSERT ON `site_assigend_wokers`
+ FOR EACH ROW BEGIN
+    UPDATE construction_site
+    SET assigned_helmets = (
+        SELECT COUNT(*)
+        FROM site_assigend_wokers
+        WHERE site_id = NEW.site_id
+    )
+    WHERE id = NEW.site_id;
+END
+
+CREATE TRIGGER `update_num_workers` AFTER INSERT ON `site_assigend_wokers`
+ FOR EACH ROW BEGIN
+    UPDATE construction_site
+    SET number_of_workers = (
+        SELECT COUNT(*)
+        FROM site_assigend_wokers
+        WHERE site_id = NEW.site_id
+    )
+    WHERE id = NEW.site_id;
+END
