@@ -56,11 +56,13 @@ $company_id = $_SESSION["Company_ID"]
 
             if ($construction_result->num_rows > 0) {
                 while ($row = $construction_result->fetch_assoc()) {
+                    $numWorkers = $row['Number_of_workers'] ?? 0;
+                    $assignedHelmets = $row['Assigned_Helmets'] ?? 0;
                     echo '<tr>
                         <td>' . $row_number . '</td>
                         <td>' . $row['Site_Name'] . '</td>
-                        <td>' . $row['Number_of_workers'] . '</td>
-                        <td>' . $row['Assigned_Helmets'] . '</td>
+                        <td>' .$numWorkers . '</td>
+                        <td>' . $assignedHelmets. '</td>
                         <td>
                             <a href="construction-site.php?delete=' . $row['site_id'] . '"class="btn btn-danger">Delete</a>
                         </td>
@@ -73,7 +75,7 @@ $company_id = $_SESSION["Company_ID"]
         </table>
     </div>
     <div class="add_new_site_form">
-        <form action="" method="post">
+        <form action="../Backend/construction-site.php" method="post" id="register_new_construction">
             <label for="sitename">Construction Site Name:</label><br>
             <input type="text" id="name" name="sitename" required><br><br>
 
@@ -82,7 +84,7 @@ $company_id = $_SESSION["Company_ID"]
     </div>
     <script src="js/notification-panel.js"></script>
     <script>
-        handleFormSubmit("register_new_company");
+        handleFormSubmit("register_new_construction");
     </script>
     <script src="js/table-resize-script.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
