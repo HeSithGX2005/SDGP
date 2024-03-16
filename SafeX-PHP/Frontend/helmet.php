@@ -1,7 +1,12 @@
 <?php include ("css/css-links.php");
 include("css/css-links.php");
 require ("sidepanel.php");
+require ("../Backend/database.php");
+require("../Backend/Other-Script/random-string-generating.php");
+require ("../Backend/Other-Script/phpqrcode/qrlib.php");
+require("../Backend/Other-Script/tcpdf/tcpdf.php");
 
+$user_role = $_SESSION["user_role"];
 ?>
 
 <!DOCTYPE html>
@@ -18,19 +23,25 @@ require ("sidepanel.php");
 </head>
 <body>
     <h2>Helmet Registration Form</h2>
-    <form action="" method="post"> <!-- Set action to an empty string or the same file name -->
-    <div>
-            <label for="num_helmets">Number of Helmets:</label>
-            <input type="number" id="num_helmets" name="num_helmets" min="1" required>
-            <button type="submit" name="generate_qr">Register Helmets</button>
+    <form action="" method="post"> 
+        <div>
+            <?php
+            if($user_role == "admin"){
+                echo'<label for="num_helmets">Number of Helmets:</label>';
+                echo'<input type="number" id="num_helmets" name="num_helmets" min="1" required>';
+                echo'<button type="submit" name="generate_qr">Register Helmets</button>';
+            }elseif($user_role == "company"){
+                echo'<label for="unique_code">Unique Code:</label>';
+                echo'<input type="text" name="unique_code" required placeholder="Helmet Unique Code">';
+                echo'<button type="submit" name="add_helmet">Register Helmets</button>';
+            }
+
+            ?>
         </div>
     </form>
     <?php
-      require ("../Backend/database.php");
-      require("../Backend/Other-Script/random-string-generating.php");
-      require ("../Backend/Other-Script/phpqrcode/qrlib.php");
-      require("../Backend/Other-Script/tcpdf/tcpdf.php");
-      if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generate_qr"])){
+
+      if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generate_qr"]) && $user_role == "admin"){
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         $pdf->SetCreator('SafeX');

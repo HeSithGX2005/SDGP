@@ -32,7 +32,7 @@ $user_role = isset($_SESSION['user_role']) ? $_SESSION ['user_role'] : "";
             case 'company':
                 $dynamicLinks = array(
                     array("url" => "employee.php", "icon" => "fa-person", "text" => "Employee"),
-                    array("url" => "add-new-helmet.php", "icon" => "fa-helmet-safety", "text" => "Helmet"),
+                    array("url" => "helmet.php", "icon" => "fa-helmet-safety", "text" => "Helmet"),
                     array("url" => "construction-site.php", "icon" => "fa-building", "text" => "Construction Site"),
                 );
                 break;
