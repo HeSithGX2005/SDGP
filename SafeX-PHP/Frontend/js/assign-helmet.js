@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
 
             var userId = this.getAttribute('data-userid');
-            window.location.href = 'assign.php?user_id=' + userId;
+            window.location.href = 'assign-helmet.php?user_id=' + userId;
         });
     });
 });
