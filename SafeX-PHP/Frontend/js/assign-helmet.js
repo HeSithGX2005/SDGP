@@ -21,18 +21,7 @@ function showFields() {
         dynamicForm.innerHTML += '<label for="NumofWorker">Number of Worker:</label>';
         dynamicForm.innerHTML += '<input type="number" id="input1" name="NumofWorker" required>';
         dynamicForm.innerHTML += '<label for="NumofSupervisior">Number of Supervisior:</label>';
-        dynamicForm.innerHTML += '<input type="number" id="input1" name="NumofSupervisior" required>';
-        dynamicForm.innerHTML += '<label for="SiteName">Site Name:</label>';
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                dynamicForm.innerHTML += xhr.responseText;
-            }
-        };
-        xhr.open("GET", "dropdown_ConstructionSite.php", true);
-        xhr.send();
-
-        
+        dynamicForm.innerHTML += '<input type="number" id="input1" name="NumofSupervisior" required>';    
         dynamicForm.innerHTML += '<input type="submit" value="Assign Worker">';
     } else if (selectedOption === "Manual") {
         var dropdownHTML = '<label for="position">Position: </label>';
