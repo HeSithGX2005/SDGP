@@ -19,11 +19,9 @@ function handleFormSubmit(formId) {
                     title: "Success",
                     text: data.message,
                     icon: "success",
-                }).then(() => {
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                });
+                }).then(function(result) { 
+                    location.replace(location.href);
+                  })
             } else {
                 swal({
                     title: "Error",
