@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showFields() {
-    var selectedOption = document.getElementById("operation").value;
+    var selectedOption = document.getElementById("dropdown").value;
     var dynamicForm = document.getElementById("dynamicForm");
     var dynamicContent = dynamicForm.querySelector(".dynamicform"); // Selecting the div with class "dynamicform"
 
@@ -20,12 +20,14 @@ function showFields() {
     dynamicContent.innerHTML = "";
 
     if (selectedOption === "Automatic") {
+        dynamicContent.innerHTML += '<input type="hidden" id="input1" name="operation" value ="Automatic">';
         dynamicContent.innerHTML += '<label for="NumofWorker">Number of Worker:</label>';
         dynamicContent.innerHTML += '<input type="number" id="input1" name="NumofWorker" required>';
         dynamicContent.innerHTML += '<label for="NumofSupervisor">Number of Supervisor:</label>';
         dynamicContent.innerHTML += '<input type="number" id="input2" name="NumofSupervisor" required>';    
         dynamicContent.innerHTML += '<input type="submit" value="Assign Worker">';
     } else if (selectedOption === "Manual") {
+        dynamicContent.innerHTML += '<input type="hidden" id="input1" name="operation" value ="Manual">';
         var dropdownHTML = '<label for="position">Position: </label>';
         dropdownHTML += '<select id="position" name="position" required>';
         dropdownHTML += '<option value="worker">Construction Worker</option>';
