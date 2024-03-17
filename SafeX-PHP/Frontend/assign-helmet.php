@@ -50,7 +50,7 @@ $siteId = $_GET['siteId'];
      
             $row;
             $row_number = 1;
-            $assigned_workers_query = "SELECT e.Name,e.Position,saw.site_id FROM  site_assigend_wokers  saw JOIN employee e ON saw.employee_id = e.Employee_Id WHERE saw.site_id = '$siteId'";
+            $assigned_workers_query = "SELECT e.Name,e.Position,saw.Site_ID,saw.Employee_ID FROM  site_assigend_wokers   saw JOIN employee e ON saw.Employee_ID = e.Employee_Id WHERE saw.Site_ID = '$siteId'";
             $assigned_workers_result = mysqli_query($database_connection, $assigned_workers_query);
 
             if ($assigned_workers_result->num_rows > 0) {
@@ -60,7 +60,7 @@ $siteId = $_GET['siteId'];
                         <td>' . $row['Name'] . '</td>
                         <td>' .$row['Position'] . '</td>
                         <td>
-                            <a href="assign-helmet.php?delete=' . $row['site_id'] . '"class="btn btn-danger">Delete</a>
+                            <a href="assign-helmet.php?site_ID='.$siteId.'delete=' . $row['Employee_ID'] . '"class="btn btn-danger">Delete</a>
                         </td>
                         </tr>';
                     $row_number++;
@@ -72,9 +72,9 @@ $siteId = $_GET['siteId'];
             </tbody>
         </table>
     </div>
- 
+    <script src="js/notification-panel.js"></script>
     <script>
-        //handleFormSubmit("dynamicForm");
+        handleFormSubmit("dynamicForm");
     </script>
     <script src="js/table-resize-script.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
