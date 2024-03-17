@@ -48,24 +48,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     $status['status'] = 'success';
                     $status['message'] = "Employee Registered Succefully";
                     echo json_encode($status);
+                    exit();
                     
                 } else{
                     $status['message'] = "Failed to insert new data: " . $database_connection->error;
                     echo json_encode($status);
+                    exit();
                 }
                 }else{
                     $status['message'] = "Sorry, there was an error uploading your file.";
                     echo json_encode($status);
+                    exit();
 
                 }
             } else{
                 $status['message'] = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.';
                 echo json_encode($status);
+                exit();
             }
         } else{
             $statusMsg = 'Please select an image file to upload.';
             $status['message'] = 'Please select an image file to upload.';
             echo json_encode($status);
+            exit();
 
         }
     }
