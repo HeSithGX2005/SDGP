@@ -12,16 +12,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $assignment_type = $_POST['operation'];
         if ($assignment_type =='Automatic') {
             automaticAssignment($companyID,$database_connection,$siteId);
-            /*$status['status'] = 'success';
-            $status['message'] = 'Auto Assignment Successful';
-            echo json_encode($status);*/
-            echo "Succesfully Added";
-            exit();
         } elseif ($assignment_type == 'Manual') {
             manualAssignment();
-            //$status['status'] = 'success';
-            //$status['message'] = 'Manual Assignment Successful';
-            //echo json_encode($status);
+            $status['status'] = 'success';
+            $status['message'] = 'Manual Assignment Successful';
+            echo json_encode($status);
             echo "Succesfully Adde42";
             exit();
         } else {
@@ -38,23 +33,57 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 // Function for automatic assignment
 function automaticAssignment($companyID,$database_connection,$siteId) {
-    if(isset($_POST['NumofWorker']) && isset($_POST['NumofSupervisior'])){
+    if (isset($_POST['NumofWorker']) && isset($_POST['NumofSupervisor'])) {
         $workers = $_POST['NumofWorker'];
-        $supervisors = $_POST['NumofSupervisior'];
-        $selectWorkersSql = "SELECT * FROM employee WHERE assinged = 0 AND position = 'worker' AND Company_ID = '$companyID' LIMIT '$workers'";
+        $supervisors = $_POST['NumofSupervisor'];
+        $selectWorkersSql = "SELECT * FROM employee WHERE Company_ID = '$companyID' AND Assigned = 0 AND Position = 'worker' LIMIT $workers";
         $resultWorkers = $database_connection->query($selectWorkersSql);
-        $selectSupervisiorSql = "SELECT * FROM employee WHERE assinged = 0 AND position = 'supervisior' AND Company_ID = '$companyID' LIMIT '$supervisors'";
+        if ($resultWorkers == false) {
+            $status['message'] = "Error executing query: " . $database_connection->error;;
+            echo json_encode($status);
+            exit();
+        }
+        $selectSupervisiorSql = "SELECT * FROM employee WHERE Company_ID = '$companyID' AND Assigned = 0 AND Position = 'supervisor' LIMIT $supervisors";
         $resultSupervisiors = $database_connection->query($selectSupervisiorSql);
-
+        if (!$database_connection->query($selectSupervisiorSql)) {
+            $supervisorSuccess = false;
+            $status['message'] = "Error adding worker:" . $database_connection->error ;
+            echo json_encode($status);
+            exit();
+            
+        }
+        $workerSuccess = true;
+        $supervisorSuccess = true;
+    
         while ($rowWorker = $resultWorkers->fetch_assoc()) {
             $workerId = $rowWorker['Employee_ID'];
-            $insertWorkerSql = "INSERT INTO  site_assigend_wokers (employee_id, company_id,site_id) VALUES ('$workerId', '$companyID','$siteId')";
-            $database_connection->query($insertWorkerSql);
+            $insertWorkerSql = "INSERT INTO site_assigend_wokers  (Company_ID, Employee_ID, Site_ID) VALUES ('$companyID', '$workerId', '$siteId')";
+            $resultInsertWorkers = $database_connection->query($insertWorkerSql);
+            if ($resultInsertWorkers == false) {
+                $status['message'] = "Error executing query: " . $database_connection->error;;
+                echo json_encode($status);
+                exit();
+            }
         }
+    
         while ($rowSupervisor = $resultSupervisiors->fetch_assoc()) {
             $supervisorId = $rowSupervisor['Employee_ID'];
-            $insertSupervisorSql = "INSERT INTO site_assigend_wokers (employee_id,company_id,site_id) VALUES ('$supervisorId', '$companyID','$siteId')";
-            $database_connection->query($insertSupervisorSql);
+            $insertSupervisorSql = "INSERT INTO site_assigend_wokers  (Company_ID, Employee_ID, Site_ID) VALUES ('$supervisorId', '$companyID','$siteId')";
+            if ($supervisors > 0 && !$database_connection->query($insertSupervisorSql)) {
+                $supervisorSuccess = false;
+                $status['message'] = "Error adding supervisor: " . $database_connection->error ;
+                echo json_encode($status);
+            }
+        }
+        if ($workerSuccess && $supervisorSuccess) {
+            $status['status'] = 'success';
+            $status['message'] = 'Auto Assignment Successful';
+            echo json_encode($status);
+            exit();
+        } else {
+            $status['message'] = 'Error Occured';
+            echo json_encode($status);
+            exit();
         }
     }
 }
