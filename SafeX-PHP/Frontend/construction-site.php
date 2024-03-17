@@ -65,7 +65,7 @@ $company_id = $_SESSION["Company_ID"]
                         <td>' . $assignedHelmets. '</td>
                         <td>
                             <a href="construction-site.php?delete=' . $row['site_id'] . '"class="btn btn-danger">Delete</a>
-                            <a href="#" data-userid="echo'.$row['site_id'].'" class="btn btn-primary assign-btn">Assign</a>
+                            <a href="#" data-userid="'.$row['site_id'].'" class="btn btn-primary assign-btn">Assign</a>
                         </td>
                         </tr>';
                     $row_number++;
@@ -89,6 +89,7 @@ $company_id = $_SESSION["Company_ID"]
     </script>
     <script src="js/table-resize-script.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/assign-helmet.js"></script>
     
 </body>
 </html>
