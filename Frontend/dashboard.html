@@ -1,0 +1,116 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Form</title>
+
+    <!--css links-->
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+    
+
+    <!--font links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        
+    <!--bootstrap css links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-5.0.2-dist/">
+    
+    <style>
+      .alert-card {
+  background-color: #f0f4f8; /* Adjust the color to match your design */
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-type {
+  font-weight: bold;
+}
+
+.alert-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alert-date,
+.alert-time {
+  font-size: 0.9em;
+}
+
+.alert-employee {
+  margin-top: 5px;
+  font-size: 0.8em;
+}
+
+    </style>
+  </head>
+
+  <body>
+
+  <!--main content-->
+  
+  <div class="content text-center mt-5">
+    <div class="container">
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <!--material content-->
+
+        <div class="col-4 mb-4  mt-5">
+          <div class="card">
+            <div class="card-body box">
+              <h5 class="card-title">Materials need to request</h5><br>
+              <div class="row materials-row">
+                <!-- Dynamic materials will be inserted here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!--alert content-->
+
+        <div class="col-4 mb-4  mt-5">
+          <div class="card">
+            <div class="card-body box">
+              <h5 class="card-title">Alert History</h5><br>
+              <div class="alerts">
+                <!-- Alert history will be inserted here by JavaScript -->
+              </div>
+              <a href="alert.html">
+                <button type="button" class="btn btn-primary">View All</button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!--leave content-->
+        <div class="card-body box">
+          <h5 class="card-title">Worker on Leave</h5><br>
+          <div class="card-body leave">
+            <!-- Workers on leave will be dynamically inserted here by JavaScript -->
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+
+  
+
+    <!--bootstrap javascript links-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="../Frontend/js/dashboard.js"></script>
+    <script src="alertChecker.js"></script>
+    <script src="config.js"></script>
+
+
+  </body>
+</html>

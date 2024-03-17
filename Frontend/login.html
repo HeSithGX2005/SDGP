@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html lang="en">
+    
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Form</title>
+
+    <!--css links-->
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    
+
+    <!--bootstrap css links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-5.0.2-dist/">
+
+    <!--font links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+    
+  </head>
+  
+  <body>
+    <div id="hero" class="col-12 min-vh-100 text-center align-items-center d-flex">
+        <div class="col-12">
+            <div class="container p-4">
+                <figure class="text-center mt-5 mb-2">
+                    <blockquote class="blockquote">
+                        <h1 class="herotext">Welcome to SafeX</h1>
+                    </blockquote>
+                    <figcaption class="blockquote mb-1">
+                        <p id="para" class="text-dark fs-6">Empower Safety, Enhance Connectivity, Elevate Lifestyle.</p>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div id="helmet" class="logoicon mb-4">
+                <img src="../Frontend/img/helmet.png" class="img-fluid rounded-4 mx-auto d-block" width="100px" height="100px">
+            </div>
+
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 col-md-6 col-sm-8 login-container">
+                        <form id="login-form" onsubmit="submitLoginForm()">
+                            <div class="input-box mt-4 mb-3">
+                                <input type="text" class="form-control" id="username" placeholder="Username" required>
+                            </div>
+                            <div class="input-box mb-3">
+                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary mb-3">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <div class="footerBottom mt-5">
+                    <p>&copy; All Rights Reserved </p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+        <!--bootstrap javascript links-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="../Frontend/js/login.js"></script>
+        <script src="config.js"></script>
+
+
+    </body>
+</html>

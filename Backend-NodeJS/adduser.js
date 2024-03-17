@@ -6,12 +6,12 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "safex"
+    database: "SafeX"
 });
 
 // New user details
-const email = 'dinalfernando43@gmail.com'; // Replace with the desired email
-const password = 'Dinalfernando2005'; // Replace with the desired password
+const email = 'sudeepaweerasena@gmail.com'; // Replace with the desired email
+const password = '2001'; // Replace with the desired password
 
 // Hash the password
 bcrypt.hash(password, 10, (err, hashedPassword) => {

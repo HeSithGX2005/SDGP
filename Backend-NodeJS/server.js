@@ -13,28 +13,28 @@ const fs = require('fs');
     
 app.use(cors());
 app.use(express.json());
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static('uploads'));
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
-    // Destination directory for uploaded files
-    destination: function (req, file, cb) {
-        const uploadsDir = path.join(__dirname, 'uploads');
-        cb(null, uploadsDir);
+    destination: function (req, file, callback) {
+        callback(null, 'uploads'); // The folder where the images will be saved; adjust if needed
     },
-    // Filename for uploaded files
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    filename: function (req, file, callback) {
+        // Create a unique filename for the image
+        callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
 
-// Initialize multer with the defined storage configuration, allowing only single file uploads with the field name 'image'
-const upload = multer({ storage: storage }).single('image');  
+
+const upload = multer({ storage: storage }).single('image');   
 // Create a MySQL database connection
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "safex"
+    database: "SafeX"
 })
 
 // Progression calculation
@@ -144,7 +144,7 @@ app.post('/reportIssue', (req, res) => {
 
     // Define the email options
     const mailOptions = {
-        from: 'sudeepaweerasena@gmail.com', // Replace with your email
+        from: 'sudeepaweerasena@gmail.com', 
         to: 'sudeepaweerasena@gmail.com',
         subject: 'New Issue Reported',
         text: `Name: ${name}\nEmail: ${email}\nIssue: ${issue}`
@@ -275,15 +275,15 @@ app.post('/employees', verifyToken, (req, res) => { // Get all employee details 
     });
 });
 
-
 // Get a specific employee's details
-app.post('/Employee/:Employee_ID', verifyToken, (req, res) => { // Endpoint to get a specific employee's details
-    const sql = "SELECT Employee_ID, Employee_Name, Position, Join_Date,  Telephone_No, Helmet_ID, Photo FROM Employee WHERE Employee_ID = ?";
-    db.query(sql, [req.params.Employee_ID], (err, result) => { // Query the database for the employee with the specified Employee_ID
-        if(err){
+app.post('/Employee', verifyToken, (req, res) => {
+    const employeeId = req.body.Employee_ID; // Get the Employee_ID from the request body
+    const sql = "SELECT Employee_ID, Employee_Name, Position, Join_Date, Telephone_No, Email, Helmet_ID, Photo FROM Employee WHERE Employee_ID = ?";
+    db.query(sql, [employeeId], (err, result) => { // Query the database for the employee with the specified Employee_ID
+        if(err) {
             return res.status(500).send({ error: "Error fetching employee details", details: err });
         }
-        if(result.length > 0){
+        if(result.length > 0) {
             res.json(result[0]);
         } else {
             res.status(404).send({ message: "Employee not found" });
@@ -748,9 +748,7 @@ app.post('/generate-report', verifyToken, verifySuperAdmin, (req, res) => { // E
             // Fetching material requests and adding them to the PDF
             const materialRequestQuery = `
             SELECT 
-                mr.Quantity_Requested, 
-                mr.Receiving_Date, 
-                m.Type
+                mr.Quantity_Requested, mr.Receiving_Date, m.Type
             FROM 
                 Material_Request mr
             JOIN 
