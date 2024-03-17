@@ -14,15 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
 function showFields() {
     var selectedOption = document.getElementById("dropdown").value;
     var dynamicForm = document.getElementById("dynamicForm");
-    
-    dynamicForm.innerHTML = "";
-    
+    var dynamicContent = dynamicForm.querySelector(".dynamicform"); // Selecting the div with class "dynamicform"
+
+    // Clear previous content inside dynamicContent
+    dynamicContent.innerHTML = "";
+
     if (selectedOption === "Automatic") {
-        dynamicForm.innerHTML += '<label for="NumofWorker">Number of Worker:</label>';
-        dynamicForm.innerHTML += '<input type="number" id="input1" name="NumofWorker" required>';
-        dynamicForm.innerHTML += '<label for="NumofSupervisior">Number of Supervisior:</label>';
-        dynamicForm.innerHTML += '<input type="number" id="input1" name="NumofSupervisior" required>';    
-        dynamicForm.innerHTML += '<input type="submit" value="Assign Worker">';
+        dynamicContent.innerHTML += '<label for="NumofWorker">Number of Worker:</label>';
+        dynamicContent.innerHTML += '<input type="number" id="input1" name="NumofWorker" required>';
+        dynamicContent.innerHTML += '<label for="NumofSupervisor">Number of Supervisor:</label>';
+        dynamicContent.innerHTML += '<input type="number" id="input2" name="NumofSupervisor" required>';    
+        dynamicContent.innerHTML += '<input type="submit" value="Assign Worker">';
     } else if (selectedOption === "Manual") {
         var dropdownHTML = '<label for="position">Position: </label>';
         dropdownHTML += '<select id="position" name="position" required>';
@@ -30,12 +32,10 @@ function showFields() {
         dropdownHTML += '<option value="supervisor">Supervisor</option>';
         dropdownHTML += '</select>';
         
-        // Append the dropdown menu HTML to dynamicForm
-        dynamicForm.innerHTML += dropdownHTML;;
-        dynamicForm.innerHTML += '<label for="employeeSearch">Search Employee:</label>';
-        dynamicForm.innerHTML += '<input type="text" id="employeeSearch" name="employeeSearch" placeholder="Search..." required>';
-        dynamicForm.innerHTML += '<button type="button" onclick="searchEmployee()">Search</button>';
-        
-    } 
-    
+        // Append the dropdown menu HTML to dynamicContent
+        dynamicContent.innerHTML += dropdownHTML;
+        dynamicContent.innerHTML += '<label for="employeeSearch">Search Employee:</label>';
+        dynamicContent.innerHTML += '<input type="text" id="employeeSearch" name="employeeSearch" placeholder="Search..." required>';
+        dynamicContent.innerHTML += '<button type="button" onclick="searchEmployee()">Search</button>';
+    }
 }
