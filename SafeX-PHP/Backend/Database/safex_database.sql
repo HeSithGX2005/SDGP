@@ -447,3 +447,17 @@ CREATE TRIGGER `update_num_workers` AFTER INSERT ON `site_assigend_wokers`
     )
     WHERE id = NEW.site_id;
 END
+
+CREATE TRIGGER `after_insert_employee` AFTER INSERT ON `site_assigend_wokers`
+ FOR EACH ROW BEGIN
+    UPDATE employee
+    SET assigned = 1
+    WHERE Employee_ID = NEW.employee_id;
+END
+
+CREATE TRIGGER `after_delete_employee` AFTER DELETE ON `site_assigend_wokers`
+ FOR EACH ROW BEGIN
+    UPDATE employee
+    SET assigned = 0
+    WHERE Employee_ID = OLD.employee_id;
+END
