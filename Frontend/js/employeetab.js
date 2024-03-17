@@ -39,13 +39,18 @@ function displayEmployees(employees) {
     const employeeContainer = document.getElementById('employeeContainer');
     employeeContainer.innerHTML = '';
 
+    // Default image path
+    const defaultImagePath = 'emp.jpg'; // Adjust this path if necessary
+
     employees.forEach(employee => {
-        const imagePath = employee.Photo ? `${API_URL}/uploads/${employee.Photo.split('\\').pop()}` : 'emp.jpg';
-        
+        // Normalize the path by replacing backslashes with forward slashes
+        const normalizedPath = employee.Photo ? employee.Photo.replace(/\\/g, '/') : defaultImagePath;
+        const imagePath = `${API_URL}/uploads/${normalizedPath.split('/').pop()}`;
+
         const employeeCard = `
             <div class="col-xl-3 col-sm-6 mb-5">
                 <div class="bg-white rounded shadow-sm py-5 px-4">
-                    <img src="${imagePath}" alt="${employee.Employee_Name}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded-circle mb-3">
+                    <img src="${imagePath}" alt="${employee.Employee_Name}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded-circle mb-3" onerror="this.onerror=null;this.src='${defaultImagePath}';">
                     <h5 class="mb-0">${employee.Employee_Name}</h5>
                     <div class="defaultbutton">
                         <a href="livedefault.html" class="btn btn-primary">Live</a>
@@ -68,6 +73,7 @@ function displayEmployees(employees) {
         });
     });
 }
+
 
 
 document.addEventListener('DOMContentLoaded', function() {

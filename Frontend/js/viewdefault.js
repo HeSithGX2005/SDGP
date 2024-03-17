@@ -9,10 +9,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function displayEmployeeDetails(employee) {
-    const imagePath = employee.Photo ? `${API_URL}/uploads/${employee.Photo.split('\\').pop()}` : 'emp.jpg';
+    const defaultImagePath = 'emp.jpg'; // Adjust this path
+
+    // Build the image path
+    const imagePath = employee.Photo ? `${API_URL}/uploads/${employee.Photo.replace(/\\/g, '/').split('/').pop()}` : defaultImagePath;
+
+    // Get the image element
+    const imageElement = document.getElementById('employeeImage');
 
     // Set the image source
-    document.getElementById('employeeImage').src = imagePath;
+    imageElement.src = imagePath;
+
+    // Error handling if the image fails to load
+    imageElement.onerror = function() {
+        imageElement.src = defaultImagePath;
+    };
     
     // Set the text content for each detail
     document.getElementById('employeeId').textContent = employee.Employee_ID;
@@ -23,3 +34,4 @@ function displayEmployeeDetails(employee) {
     document.getElementById('email').textContent = employee.Email;
     document.getElementById('joinDate').textContent = new Date(employee.Join_Date).toLocaleDateString();
 }
+
