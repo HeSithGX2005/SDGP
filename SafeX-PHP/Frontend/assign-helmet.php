@@ -6,7 +6,7 @@ require ("../Backend/database.php");
 $user_role = $_SESSION["user_role"];
 $company_id = $_SESSION["Company_ID"];
 
-
+$siteId = $_GET['siteId'];  
 ?>
 
 <!DOCTYPE html>
@@ -22,14 +22,16 @@ $company_id = $_SESSION["Company_ID"];
 <div class="main-container">
         <div class="upper-part col-md-6">
         <h1>Assigning Workers to Construction Site </h1>
-            <form id="dynamicForm" action="../Backend//assign-helmet.php" method="post" name="assignment_type">
+            <form id="dynamicForm" action="../Backend/assign-helmet.php" method="post" name="assignment_type">
+            <input type="hidden" name="siteId" value="<?php echo $siteId ?>">
+            <div class="dynamicform">
             <h2>Select an option:</h2>
             <select id="dropdown" onchange="showFields()">
                 <option value="">Select an option</option>
                 <option value="Automatic">Automatic Assigning</option>
                 <option value="Manual">Manual Assigning</option>
             </select>
-                <input type="submit" value="Assign Worker">
+            </div>
             </form>
         </div>
     </div>
@@ -45,7 +47,7 @@ $company_id = $_SESSION["Company_ID"];
             </thead>
             <tbody>
             <?php
-            $siteId = $_GET['siteId'];
+     
             $row;
             $row_number = 1;
             $assigned_workers_query = "SELECT e.Name,e.Position,saw.site_id FROM  site_assigend_wokers  saw JOIN employee e ON saw.employee_id = e.Employee_Id WHERE saw.site_id = '$siteId'";
@@ -70,9 +72,9 @@ $company_id = $_SESSION["Company_ID"];
             </tbody>
         </table>
     </div>
-    <script src="js/notification-panel.js"></script>
+ 
     <script>
-        handleFormSubmit("dynamicForm");
+        //handleFormSubmit("dynamicForm");
     </script>
     <script src="js/table-resize-script.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
