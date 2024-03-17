@@ -3,7 +3,7 @@ require("../Backend/database.php");
 include("css/css-links.php");
 require ("sidepanel.php");
 $user_role = $_SESSION["user_role"];
-$company_id = $_SESSION["Company_ID"]
+$company_id = $_SESSION["Company_ID"];
 
 ?>
 

@@ -22,7 +22,7 @@ $company_id = $_SESSION["Company_ID"];
 <div class="main-container">
         <div class="upper-part col-md-6">
         <h1>Assigning Workers to Construction Site </h1>
-            <form id="dynamicForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <form id="dynamicForm" action="" method="post">
             <h2>Select an option:</h2>
             <select id="dropdown" onchange="showFields()">
                 <option value="">Select an option</option>
