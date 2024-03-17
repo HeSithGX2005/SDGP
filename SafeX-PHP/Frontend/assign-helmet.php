@@ -22,11 +22,11 @@ $siteId = $_GET['siteId'];
 <div class="main-container">
         <div class="upper-part col-md-6">
         <h1>Assigning Workers to Construction Site </h1>
-            <form id="dynamicForm" action="../Backend/assign-helmet.php" method="post" name="assignment_type">
+            <form id="dynamicForm" action="../Backend/assign-helmet.php" method="post">
             <input type="hidden" name="siteId" value="<?php echo $siteId ?>">
             <div class="dynamicform">
             <h2>Select an option:</h2>
-            <select id="dropdown" onchange="showFields()">
+            <select id="dropdown" onchange="showFields()" name="assignment_type">
                 <option value="">Select an option</option>
                 <option value="Automatic">Automatic Assigning</option>
                 <option value="Manual">Manual Assigning</option>
