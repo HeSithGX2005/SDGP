@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
 
             var siteId = this.getAttribute('data-userid');
-            window.location.href = 'assign-helmet.php?site_id=' + siteId;
+            window.location.href = 'assign-helmet.php?siteId=' + siteId;
         });
     });
 });
