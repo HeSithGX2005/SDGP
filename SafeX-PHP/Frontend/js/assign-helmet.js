@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showFields() {
-    var selectedOption = document.getElementById("dropdown").value;
+    var selectedOption = document.getElementById("operation").value;
     var dynamicForm = document.getElementById("dynamicForm");
     var dynamicContent = dynamicForm.querySelector(".dynamicform"); // Selecting the div with class "dynamicform"
 
