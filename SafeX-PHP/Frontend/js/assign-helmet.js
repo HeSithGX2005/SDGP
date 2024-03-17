@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function(event) {
             event.preventDefault();
 
-            var userId = this.getAttribute('data-userid');
-            window.location.href = 'assign-helmet.php?user_id=' + userId;
+            var siteId = this.getAttribute('data-userid');
+            window.location.href = 'assign-helmet.php?site_id=' + siteId;
         });
     });
 });
