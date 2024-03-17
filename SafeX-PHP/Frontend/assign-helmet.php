@@ -5,7 +5,7 @@ require ("../Backend/database.php");
 
 $user_role = $_SESSION["user_role"];
 $company_id = $_SESSION["Company_ID"];
-$site_id = $_GET['siteID'];
+
 
 ?>
 
@@ -45,34 +45,26 @@ $site_id = $_GET['siteID'];
             </thead>
             <tbody>
             <?php
+            $siteId = $_GET['siteId'];
             $row;
             $row_number = 1;
-            $company_query = "SELECT * FROM company";
-            $construction_query = "SELECT * FROM construction_site WHERE company_id = '$company_id'";
+            $assigned_workers_query = "SELECT e.Name,e.Position,saw.site_id FROM  site_assigend_wokers  saw JOIN employee e ON saw.employee_id = e.Employee_Id WHERE saw.site_id = '$siteId'";
+            $assigned_workers_result = mysqli_query($database_connection, $assigned_workers_query);
 
-            if (isset($_POST['search_constructionsite_button']) && !empty($_POST['search_constructionsite'])) {
-                $search_constructionSite = $_POST['search_constructionsite'];
-                $construction_query = "SELECT * FROM construction_site WHERE Site_Name LIKE '%$search_constructionSite%' AND company_id = '$company_id'";
-            }
-
-            $construction_result = mysqli_query($database_connection, $construction_query);
-
-            if ($construction_result->num_rows > 0) {
-                while ($row = $construction_result->fetch_assoc()) {
-                    $numWorkers = $row['Number_of_workers'] ?? 0;
-                    $assignedHelmets = $row['Assigned_Helmets'] ?? 0;
+            if ($assigned_workers_result->num_rows > 0) {
+                while ($row = $assigned_workers_result->fetch_assoc()) {
                     echo '<tr>
                         <td>' . $row_number . '</td>
-                        <td>' . $row['Site_Name'] . '</td>
-                        <td>' .$numWorkers . '</td>
-                        <td>' . $assignedHelmets. '</td>
+                        <td>' . $row['Name'] . '</td>
+                        <td>' .$row['Position'] . '</td>
                         <td>
-                            <a href="construction-site.php?delete=' . $row['site_id'] . '"class="btn btn-danger">Delete</a>
-                            <a href="#" data-userid="'.$row['site_id'].'" class="btn btn-primary assign-btn">Assign</a>
+                            <a href="assign-helmet.php?delete=' . $row['site_id'] . '"class="btn btn-danger">Delete</a>
                         </td>
                         </tr>';
                     $row_number++;
                 }
+            }else{
+                echo '<tr><td colspan="4">No assigned workers found for this construction site.</td></tr>';
             }
             ?>
             </tbody>
