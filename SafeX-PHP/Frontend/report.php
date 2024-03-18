@@ -30,9 +30,9 @@ require ("sidepanel.php");
                         <h1 id="report">Report Isssue</h1>
                         <div class="card">
                             <div class="card-body">
-                                <form action="../Backend/report.php" method="post">
+                                <form action="../Backend/report.php" method="post" id="report-form">
                                     <div class="row">
-                                        <input type="hidden" class="form-control" placeholder="Name" name="name" value=<?php if(isset($_SESSION["Company_ID"])){
+                                        <input type="hidden" class="form-control" placeholder="Name" name="id" value=<?php if(isset($_SESSION["Company_ID"])){
                                             $companyID = $_SESSION["Company_ID"];echo $companyID;
                                         }elseif(isset( $_SESSION["Employee_ID"])){$employeeID = $_SESSION["Employee_ID"];echo $employeeID;}
                                         ?>>
@@ -40,13 +40,21 @@ require ("sidepanel.php");
                                     <div class="row">
                                         <textarea class="form-control" rows="5" id="message" placeholder="Issue" name="text"></textarea>
                                     </div>
+                                    <br>
+                                    <div class="row">
+                                        <input type="submit" value="Sent" class="btn btn-primary">
+                                    </div>
                                 </form><br>
                             </div>
                         </div><br>
-                        <button type="button" class="btn btn-primary">Sent</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script src="js/notification-panel.js"></script>
+        <script>
+        handleFormSubmit("report-form");
+    </script>
     </body>
 </html>
