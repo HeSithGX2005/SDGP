@@ -30,7 +30,7 @@ require ("sidepanel.php");
                         <h1 id="report">Report Isssue</h1>
                         <div class="card">
                             <div class="card-body">
-                                <form>
+                                <form action="../Backend/report.php" method="post">
                                     <div class="row">
                                         <input type="hidden" class="form-control" placeholder="Name" name="name" value=<?php if(isset($_SESSION["Company_ID"])){
                                             $companyID = $_SESSION["Company_ID"];echo $companyID;
