@@ -45,38 +45,17 @@ $siteId = $_GET['siteId'];
                     <th class="resizable">Action</th>
                 </tr>
             </thead>
-            <tbody>
-            <?php
-                $row;
-                $row_number = 1;
-                $assigned_workers_query = "SELECT e.Name,e.Position,saw.Site_ID,saw.Employee_ID FROM  site_assigend_wokers   saw JOIN employee e ON saw.Employee_ID = e.Employee_Id WHERE saw.Site_ID = '$siteId'";
-                $assigned_workers_result = mysqli_query($database_connection, $assigned_workers_query);
-                if ($assigned_workers_result->num_rows > 0) {
-                    while ($row = $assigned_workers_result->fetch_assoc()) {
-                        echo '<tr>
-                        <td>' . $row_number . '</td>
-                        <td>' . $row['Name'] . '</td>
-                        <td>' .$row['Position'] . '</td>
-                        <td>
-                            <a href="assign-helmet.php?site_ID='.$siteId.'delete=' . $row['Employee_ID'] . '"class="btn btn-danger">Delete</a>
-                        </td>
-                        </tr>';
-                        $row_number++;
-                        }
-                }else{
-                    echo '<tr><td colspan="4">No assigned workers found for this construction site.</td></tr>';
-                }
-            ?>
+            <tbody id="tableBody">
             </tbody>
         </table>
     </div>
     <script src="js/notification-panel.js"></script>
-    <script>
-        handleFormSubmit("dynamicForm");
-    </script>
     <script src="js/table-resize-script.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/assign-helmet.js"></script>
+    <script>
+        handleFormSubmit("dynamicForm");
+    </script>
     
 </body>
 </html>
