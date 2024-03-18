@@ -461,3 +461,23 @@ CREATE TRIGGER `after_delete_employee` AFTER DELETE ON `site_assigend_wokers`
     SET assigned = 0
     WHERE Employee_ID = OLD.employee_id;
 END
+
+CREATE TRIGGER clear_related_tables
+AFTER DELETE ON company
+FOR EACH ROW
+BEGIN
+    DELETE FROM employee WHERE Company_ID = OLD.Company_ID;
+    DELETE FROM construction_site WHERE company_id = OLD.Company_ID; 
+    DELETE FROM site_assigend_wokers WHERE Company_ID = OLD.Company_ID; 
+    DELETE FROM leave_reporting WHERE Company_ID = OLD.Company_ID;
+    DELETE FROM helmet_assignment WHERE Company_ID = OLD.Company_ID;
+END;
+
+CREATE TRIGGER `add_employee_to_user` AFTER INSERT ON `employee`
+ FOR EACH ROW BEGIN
+    DECLARE position_name VARCHAR(255);
+    SELECT Position INTO position_name FROM employee WHERE Employee_ID = NEW.Employee_ID;
+    IF position_name = 'management' OR position_name = 'supervisor' THEN
+        INSERT INTO users (User_Name) VALUES (NEW.Name);
+    END IF;
+END
