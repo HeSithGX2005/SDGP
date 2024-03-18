@@ -40,4 +40,21 @@ function showFields() {
         dynamicContent.innerHTML += '<input type="text" id="employeeSearch" name="employeeSearch" placeholder="Search..." required>';
         dynamicContent.innerHTML += '<button type="button" onclick="searchEmployee()">Search</button>';
     }
+
+    
+    function sendAjaxRequest(value) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                } else {
+                    console.error('Error:', xhr.statusText);
+                }
+            }
+        };
+        xhr.open('POST', 'update_table.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('selectedValue=' + encodeURIComponent(value));
+    }
 }
