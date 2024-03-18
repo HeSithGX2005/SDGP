@@ -11,6 +11,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function updateTableData(selectedOption) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_table.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Update the table with the response from the server
+            document.getElementById("tableBody").innerHTML = xhr.responseText;
+        }
+    };
+    var siteId = document.querySelector('input[name="siteId"]').value;
+    xhr.send("siteId=" + encodeURIComponent(siteId) + "&selectedOption=" + encodeURIComponent(selectedOption));
+}
+
 function showFields() {
     var selectedOption = document.getElementById("dropdown").value;
     var dynamicForm = document.getElementById("dynamicForm");
@@ -18,6 +32,7 @@ function showFields() {
 
     // Clear previous content inside dynamicContent
     dynamicContent.innerHTML = "";
+    updateTableData(selectedOption);
 
     if (selectedOption === "Automatic") {
         dynamicContent.innerHTML += '<input type="hidden" id="input1" name="operation" value ="Automatic">';
@@ -42,19 +57,5 @@ function showFields() {
     }
 
     
-    function sendAjaxRequest(value) {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                } else {
-                    console.error('Error:', xhr.statusText);
-                }
-            }
-        };
-        xhr.open('POST', 'update_table.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('selectedValue=' + encodeURIComponent(value));
-    }
+
 }
