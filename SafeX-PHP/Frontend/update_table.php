@@ -29,7 +29,7 @@ if ($assigned_workers_result->num_rows > 0) {
         if ($selectedOption === "Automatic") {
             $button='<a href="assign-helmet.php?site_ID='.$siteId.'delete=' . $row['Employee_ID'] . '" class="btn btn-danger">Delete</a>';
         } elseif($selectedOption === "Manual") {
-            $button='<a href="assign-helmet.php?site_ID='.$siteId.'update=' . $row['Employee_ID'] . '" class="btn btn-danger">Assigned Worker</a>';
+            $button = '<button class="btn btn-danger" onclick="manualAssignment('.$siteId.', '.$row['Employee_ID'].')">Assigned Worker</button>';
         }
         echo '<tr>
         <td>' . $row_number . '</td>
