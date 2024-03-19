@@ -1,13 +1,13 @@
 <?php
 require "database.php";
-//include "Cloud_Storage_Renew.php";
 
 $errors = array();
 session_start();
+
 // Login to the system
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['username']) && isset($_POST['password'])) {
-        $username = $_POST['username'];
+        $username = mysqli_real_escape_string($database_connection, $_POST['username']);
         $password = $_POST['password'];
 
         // Check if there is a username and password found on the company table
@@ -31,34 +31,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $user_id = $row['Company_ID'];
                 $_SESSION["Company_ID"] = $user_id;
                 $_SESSION['user_role'] = 'company';
-                header("Location:dashboard.php");
-                //exit(); // Exit after redirection
+                header("Location: dashboard.php");
+                exit(); // Exit after redirection
             } else {
                 array_push($errors, "Username or Password is Incorrect");
             }
         } elseif ($employeeResult->num_rows > 0) {
-            $row = $employeeResult->fetch_assoc(); // Changed from $companyResult to $employeeResult
-            $hashed_password1 = $row['Password_Hash'];
-            if (password_verify($password,$hashed_password1)) {
+            $row = $employeeResult->fetch_assoc();
+            $hashed_password = $row['Password_Hash'];
+            if (password_verify($password, $hashed_password)) {
                 $user_id = $row['Employee_ID'];
-                $_SESSION["Employee_ID"] = $user_id;
+                $_SESSION["Employee_ID"] = $user_id; // Set employee ID in session
                 $_SESSION['user_role'] = 'employee';
-                header("Location:dashboard.php");
-                exit();
+                header("Location: dashboard.php");
+                exit(); // Exit after redirection
             } else {
                 array_push($errors, "Username or Password is Incorrect");
-                header("Location: /login.php");
-                exit();
             }
         } elseif ($username == "admin" && $password == "admin123") {
-            $_SESSION['user_role'] = 'admin';
-            header("Location:dashboard.php");
-            exit();
+                $_SESSION['user_role'] = 'admin';
+                header("Location: dashboard.php");
+                exit();
         } else {
             array_push($errors, "Username does not exist");
         }
+    } else {
+        array_push($errors, "Username and Password are required");
     }
 }
-
 ?>
-
