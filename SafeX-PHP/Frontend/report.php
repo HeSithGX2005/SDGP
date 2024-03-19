@@ -29,7 +29,7 @@ require ("sidepanel.php");
                             <div class="card-body">
                                 <form action="../Backend/report.php" method="post" id="report-form">
                                     <div class="row">
-                                        <input type="text" class="form-control" placeholder="Name" name="id" value=<?php if(isset($_SESSION["Employee_ID"])){
+                                        <input type="hidden" class="form-control" placeholder="Name" name="id" value=<?php if(isset($_SESSION["Employee_ID"])){
                                             $employeeID = $_SESSION["Employee_ID"];echo $employeeID;
                                         }elseif(isset($_SESSION["Company_ID"])){$companyID = $_SESSION["Company_ID"];echo $companyID;}
                                         ?>>
