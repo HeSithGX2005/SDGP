@@ -6,9 +6,7 @@ if (!isset($_SESSION["Company_ID"])) {
     $_SESSION["Company_ID"] = 0;
 }
 
-if (!isset($_SESSION["Employee_ID"])) {
-    $_SESSION["Employee_ID"] = 0;
-}
+
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
