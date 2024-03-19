@@ -37,14 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 array_push($errors, "Username or Password is Incorrect");
             }
         } elseif ($employeeResult->num_rows > 0) {
-            $row1 = $employeeResult->fetch_assoc(); // Changed from $companyResult to $employeeResult
-            $hashed_password1 = $row1['Password_Hash'];
+            $row = $employeeResult->fetch_assoc(); // Changed from $companyResult to $employeeResult
+            $hashed_password1 = $row['Password_Hash'];
             if (password_verify($password,$hashed_password1)) {
-                $user_id = $row1['Employee_ID'];
+                $user_id = $row['Employee_ID'];
                 $_SESSION["Employee_ID"] = $user_id;
                 $_SESSION['user_role'] = 'employee';
                 header("Location:dashboard.php");
-                //exit();
+                exit();
             } else {
                 array_push($errors, "Username or Password is Incorrect");
                 header("Location: /login.php");
