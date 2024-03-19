@@ -29,7 +29,7 @@ require ("sidepanel.php");
                                     <div class="col">
                                         <input type="hidden" class="form-control"  name="from" value="<?php if(isset($_SESSION["Company_ID"])){
                                             $companyID = $_SESSION["Company_ID"];echo $companyID;
-                                        }elseif(isset( $_SESSION["Employee_ID"])){$employeeID = $_SESSION["Employee_ID"];echo $employeeID;}
+                                        }elseif(isset( $_SESSION["Employee_ID"] )){$employeeID = $_SESSION["Employee_ID"] ;echo $employeeID;}
                                         ?>">
                                     </div>
                                     </div><br>
@@ -46,7 +46,7 @@ require ("sidepanel.php");
                 </div>
             </div>
         </div>
-        <script src="js/notification-panel.js"></script>
+       <script src="js/notification-panel.js"></script>
     <script>
         handleFormSubmit("message-form");
     </script>
