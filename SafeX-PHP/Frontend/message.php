@@ -1,7 +1,7 @@
 <?php 
 require("../Backend/database.php");
 include("css/css-links.php");
-require ("sidepanel.php");
+require_once ("sidepanel.php");
 
 
 
@@ -27,10 +27,10 @@ require ("sidepanel.php");
                                         <input type="text" class="form-control" placeholder="To" name="receiver">
                                     </div>
                                     <div class="col">
-                                        <input type="hidden" class="form-control"  name="from" value="<?php if(isset($_SESSION["Company_ID"])){
-                                            $companyID = $_SESSION["Company_ID"];echo $companyID;
-                                        }elseif(isset( $_SESSION["Employee_ID"] )){$employeeID = $_SESSION["Employee_ID"] ;echo $employeeID;}
-                                        ?>">
+                                        <input type="text" class="form-control" placeholder="Name" name="id" value=<?php if(isset($_SESSION["Employee_ID"])){
+                                            $employeeID = $_SESSION["Employee_ID"];echo $employeeID;
+                                        }elseif(isset($_SESSION["Company_ID"])){$companyID = $_SESSION["Company_ID"];echo $companyID;}
+                                        ?>>
                                     </div>
                                     </div><br>
                                     <div class="row">
@@ -46,9 +46,6 @@ require ("sidepanel.php");
                 </div>
             </div>
         </div>
-       <script src="js/notification-panel.js"></script>
-    <script>
-        handleFormSubmit("message-form");
-    </script>
+
 </body>
 </html>
