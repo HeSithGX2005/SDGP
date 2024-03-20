@@ -43,8 +43,13 @@ body{
 }
 
 .btn{
-  background-color: #111D46 !important;
+  background-color: #000080 !important;
   color: #ffffff !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+.btn:hover{
+  background-color: #007fff !important;
 }
 .btn-rounded {
   border-radius: 20px !important;
