@@ -4,45 +4,99 @@ include("css/css-links.php");
 require ("sidepanel.php");
 $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : "" ;
 
-function showNewDataBox1($connection,$sqlQuery,$columnName,$redirectPage,$button){
+function showNewDataBox1($connection, $sqlQuery, $columnName, $redirectPage, $button,$columnName1) {
+  $sql = $sqlQuery;
+  $result = mysqli_query($connection, $sql);
+  $count = 0;
+  if ($result && mysqli_num_rows($result) > 0) {
+      echo '<div class="row">';
+      while ($row = mysqli_fetch_assoc($result)) {
+          if ($count % 2 == 0 && $count != 0) { 
+              echo '</div><br>'; 
+              echo '<div class="row">'; 
+          }
+          echo '<div class="col-sm-6 mb-3 mb-sm-0">';  
+          echo '<div class="card">';
+          echo '<div class="card-body materials">';
+          echo '<h6 class="card-title">'.$row[$columnName].'</h6>';
+          echo '<p class="small">'.$row[$columnName1].'</p>'; // Add small description
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+          $count++; 
+      }
+      echo '</div>';
+      echo '<br>'; 
+      echo '<div class="row justify-content-center">';
+      echo'<div class="col-sm-6 mb-3 mb-sm-0">';
+      echo '<a href="'.$redirectPage.'" class="btn btn-primary">'.$button.'</a>';
+      echo'</div>';
+      echo'</div>';
+  } else {
+      echo 'No Data Found';
+  }
+}
+function showNewDataBox2($connection,$sqlQuery,$columnName,$imagePath){
 $sql = $sqlQuery;
 $result = mysqli_query($connection, $sql);
-$count = 0;
-if ($result && mysqli_num_rows($result) > 0) {
-    echo '<div class="row">';
-    while ($row = mysqli_fetch_assoc($result)) {
-        if ($count % 2 == 0 && $count != 0) { 
-            echo '</div><br>'; 
-            echo '<div class="row">'; 
-        }
-        echo '<div class="col-sm-6 mb-3 mb-sm-0">';  
-        echo '<div class="card">';
-        echo '<div class="card-body materials">';
-        echo '<h6 class="card-title">'.$row[$columnName].'</h6>';
-        
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        $count++; 
+if($result && mysqli_num_rows($result)>0){
+  while ($row = mysqli_fetch_assoc($result)) {
+    if(isset($_SESSION['Company_ID'])){
+      $imgPath ='../Backend/'.$row[$imagePath];
     }
-    echo '</div>';
-    echo '<br>'; 
-    echo '<div class="row justify-content-center">';
-    echo'<div class="col-sm-6 mb-3 mb-sm-0">';
-    echo '<a href="'.$redirectPage.'" class="btn btn-primary">'.$button.'</a>';
-    echo'</div>';
-    echo'</div>';
-}else{
-    echo 'No Data Found';}
+    echo '<div class="row justify-content-center">
+    <div class="col-lg-10 mb-2 mb-lg-0">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="'.$imgPath.'" class="rounded-circle img-fluid" alt="'.$row[$columnName].'">
+                    </div>
+                    <div class="col-md-8 text-center text-md-start  mt-4 mt-md-0">
+                        <h5>'.$row[$columnName].'</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br>';
 }
+
+}else{
+  echo 'No Data Found';
+}
+}
+
+function showNewDataBox3($connection,$sqlQuery,$columnName,$columnName1){
+  $sql = $sqlQuery;
+  $result = mysqli_query($connection, $sql);
+  if($result && mysqli_num_rows($result)>0){
+    while ($row = mysqli_fetch_assoc($result)) {
+      echo '<div class="row justify-content-center">
+      <div class="col-lg-10 mb-2 mb-lg-0">
+          <div class="card">
+              <div class="card-body alerts">
+                  <h5 class="card-title">'.$row[$columnName].'</h5>
+                  <p class="card-text">'.$row[$columnName1].'</p>
+              </div>
+          </div>
+      </div>
+  </div><br>';
+  }
+  
+  }else{
+    echo 'No Data Found';
+  }
+  }
 
 $dashboard_content = "";
 switch ($user_role){
     case 'admin':
         $titletext = "Admin  Welcome To SafeX";
         $dashboard_content = "SafeX|Admin Dashboard"; 
-        $titlebox1 = "Newly Registered Companies"; 
-        $titlebox2 = "" ;   
+        $titlebox1 = ""; 
+        $titlebox2 = "NEW REGISTERED COMPANY";
+        $titlebox3 = "INQUIRIES" ;
         break;
     case 'company':
         $companyID = $_SESSION['Company_ID'];
@@ -60,7 +114,9 @@ switch ($user_role){
           $titletext ="Error fetching company information.";
         }
         $dashboard_content = "SafeX|Company Dashboard"; 
-        $titlebox1 = "Newly Registered Employees"; 
+        $titlebox1 = "REQUESTED ITEMS"; 
+        $titlebox2 = "NEWLY REGISTERED EMPLOYEES";
+        $titlebox3 = "NEW MESSAGES";
         break;
     case 'employee':
         $employeeID = $_SESSION['Employee_ID'];
@@ -77,11 +133,13 @@ switch ($user_role){
           } else {
             $titletext ="Error fetching company information.";
           }
-        $dashboard_content = "SafeX|Employee Dashboard"; break;
-        $titlebox1 = "Items To Request";  
+        $dashboard_content = "SafeX|Employee Dashboard";
+        $titlebox1 = "NEW MESSAGES"; 
+        $titlebox2 = "ALERT HISTORY";
+        $titlebox3 = "WORKERS ON LEAVE" ;
         break;
     default:
-        $dashboard_content = "SafeX|Dashboard"; break;
+        $dashboard_content = "SafeX|Dashboard"; 
 }
 
 ?>
@@ -109,7 +167,7 @@ switch ($user_role){
 
   <body>
 
-  <div class="title-text"><?php echo $titletext; ?></div>
+  <div class="title-text"><?php echo  $titletext; ?></div>
   
   <div class="content text-center mt-5">
     <div class="container">
@@ -125,13 +183,19 @@ switch ($user_role){
               <?php
                 switch($user_role){
                     case 'admin':
-                        echo $big = showNewDataBox1($database_connection,"SELECT * FROM company ORDER BY Join_Date DESC LIMIT 6",'Company_Name','Company.php',"View");
+                        //echo $big = showNewDataBox1($database_connection,"SELECT * FROM company ORDER BY Join_Date DESC LIMIT 6",'Company_Name','Company.php',"View");
                         break;
                     case 'company':
-                        echo $big = showNewDataBox1($database_connection,"SELECT * FROM employee ORDER BY Join_Date DESC LIMIT 6",'Name','Employee.php',"View");
+                        $companyID = $_SESSION['Company_ID'];
+                        echo $big =  showNewDataBox1($database_connection, "SELECT item_request.*, construction_site.Site_Name 
+                        FROM item_request 
+                        INNER JOIN construction_site ON item_request.Site_ID = construction_site.site_id 
+                        WHERE item_request.Company_ID = $companyID 
+                        ORDER BY item_request.Request_Date DESC 
+                        LIMIT 6", 'Request_Item_Name', 'Send_Item.php', "View",'Site_Name');
                         break;
                     case 'employee':
-                        echo $big = showNewDataBox1($database_connection,'company','Join_Date','Company_Name','Company.php',"View");
+                        //echo $big = showNewDataBox1($database_connection,'company','Join_Date','Company_Name','Company.php',"View");
                         break;
                 } 
               ?>
@@ -146,45 +210,22 @@ switch ($user_role){
         <div class="col-4 mb-4  mt-5">
           <div class="card">
             <div class="card-body box">
-              <h5 class="card-title">Alert History</h5><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
+              <h5 class="card-title"><?php echo $titlebox2;?></h5><br>
+                  <?php
+                                  switch($user_role){
+                                    case 'admin':
+                                        echo $big = showNewDataBox2($database_connection,"SELECT * FROM issue_reporting ORDER BY Report_Date DESC LIMIT 6",'Despription','inquire.php',"View");
+                                        break;
+                                    case 'company':
+                                        echo $big = showNewDataBox2($database_connection,"SELECT * FROM employee ORDER BY Join_Date DESC LIMIT 6","Name","Employee_Pic");
+                                        break;
+                                    case 'employee':
+                                        echo $big = showNewDataBox2($database_connection,'company','Join_Date','Company_Name','Company.php',"View");
+                                        break;
+                                } 
+                  ?>
 
-              <a href="alert.html">
+              <a href="employee.php">
                 <button type="button" class="btn btn-primary">View All</button>
               </a>
               
@@ -197,61 +238,24 @@ switch ($user_role){
         <div class="col-4 mb-4  mt-5">
           <div class="card">
             <div class="card-body box">
-              <h5 class="card-title">Worker on Leave</h5><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
+              <h5 class="card-title"><?php echo $titlebox3;?></h5><br>
+              <?php
+                                  switch($user_role){
+                                    case 'admin':
+                                        //echo $big = showNewDataBox2($database_connection,"SELECT * FROM issue_reporting ORDER BY Report_Date DESC LIMIT 6",'Despription','inquire.php',"View");
+                                        break;
+                                    case 'company':
+                                        $companyID = $_SESSION['Company_ID'];
+                                        echo $big = showNewDataBox3($database_connection,"SELECT messaging.*,employee.Name FROM messaging JOIN employee ON messaging.Sender_Employee_ID = employee.Employee_ID WHERE Receiver_Company_ID ='$companyID' ORDER BY messaging.Timestamp DESC LIMIT 6 ","Name","Message_Body");
+                                        break;
+                                    case 'employee':
+                                        //echo $big = showNewDataBox2($database_connection,'company','Join_Date','Company_Name','Company.php',"View");
+                                        break;
+                                } 
+                  ?>
+                                <a href="message.php">
+                <button type="button" class="btn btn-primary">View All</button>
+              </a>
             </div>
           </div>
         </div>
