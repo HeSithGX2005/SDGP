@@ -22,7 +22,7 @@ require_once("../Backend/database.php");
                     <div class="card-body">
                         <h5 class="card-title">Leave Form</h5><br>
 
-                        <form action="" method="POST" id="leave-form">
+                        <form action="../Backend/leave.php" method="POST" id="leave-form">
                             <div class="container mt-3">
                                 <div class="row justify-content-center">
                                     <div class="col-md-6">
@@ -39,7 +39,7 @@ require_once("../Backend/database.php");
                                         $row = $result->fetch_assoc();
                                         $siteID = $row['Site_ID'];
                                         $selectEmployeesSql = "SELECT Employee_ID, Name FROM employee WHERE Employee_ID IN 
-                                                                (SELECT Employee_ID FROM site_assigned_workers WHERE Site_ID = ?)";
+                                                                (SELECT Employee_ID FROM site_assigend_wokers WHERE Site_ID = ?)";
                                         $stmt = $database_connection->prepare($selectEmployeesSql);
                                         $stmt->bind_param("i", $siteID);
                                         $stmt->execute();
@@ -101,48 +101,3 @@ require_once("../Backend/database.php");
 </body>
 </html>
 
-<?php
-require_once("../Backend/database.php");
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $status = array();
-    $status['status'] = 'error';
-    $status['message'] = '';
-    if (isset($_POST['employeeName'])) {
-        $employeeID = $_POST['employeeName'];
-        $selectCompanyIDSql = "SELECT Company_ID FROM employee WHERE Employee_ID = ?";
-        $stmt = $database_connection->prepare($selectCompanyIDSql);
-        $stmt->bind_param("i", $employeeID);
-        if ($stmt->execute()) {
-            $result = $stmt->get_result();
-            if ($result->num_rows == 1) {
-                $row = $result->fetch_assoc();
-                $companyID = $row['Company_ID'];
-                $leaveStartDate = $_POST['leave_start_date'];
-                $leaveEndDate = $_POST['leave_end_date'];
-                $leaveDescription = $_POST['leave_description'];
-                if (!empty($leaveStartDate) && !empty($leaveEndDate) && !empty($leaveDescription)) {
-                    $insertLeaveReportSql = "INSERT INTO leave_reporting (Company_ID, Employee_ID, Leave_Start_Date, Leave_End_Date, Leave_Description) VALUES (?, ?, ?, ?, ?)";
-                    $stmt = $database_connection->prepare($insertLeaveReportSql);
-                    $stmt->bind_param("iisss", $companyID, $employeeID, $leaveStartDate, $leaveEndDate, $leaveDescription);
-                    if ($stmt->execute()) {
-                        $status['status'] = 'success';
-                        $status['message'] = 'Leave report submitted successfully.';
-                    } else {
-                        $status['message'] = "Error inserting leave report: " . $database_connection->error;
-                    }
-                } else {
-                    $status['message'] = "Leave start date, end date, and description are required.";
-                }
-            } else {
-                $status['message'] = "Company ID not found for the selected employee.";
-            }
-        } else {
-            $status['message'] = "Error executing query to retrieve company ID: " . $database_connection->error;
-        }
-    } else {
-        $status['message'] = "Employee ID not found in the form submission.";
-    }
-
-    echo json_encode($status);
-}
-?>
