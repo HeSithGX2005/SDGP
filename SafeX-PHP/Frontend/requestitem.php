@@ -25,9 +25,9 @@ require_once ("sidepanel.php");
                                 <div class="col-md-6">
                                     <select class="form-select form-control-lg" aria-label="Default select example" name="item">
                                         <option selected>Select Item</option>
-                                        <option value="1">Cement</option>
-                                        <option value="2">Bricks</option>
-                                        <option value="3">Sand</option>
+                                        <option value="Cement">Cement</option>
+                                        <option value="Bricks">Bricks</option>
+                                        <option value="Sand">Sand</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
