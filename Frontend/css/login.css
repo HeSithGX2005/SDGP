@@ -42,6 +42,10 @@ body{
   background-color: transparent !important;
 }
 
+.btn{
+  background-color: #111D46 !important;
+  color: #ffffff !important;
+}
 .btn-rounded {
   border-radius: 20px !important;
 }
