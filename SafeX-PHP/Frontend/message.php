@@ -18,7 +18,7 @@ require_once ("sidepanel.php");
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Inbox</a> <!-- Inbox heading -->
-            <button class="btn btn-primary ml-auto" onclick="">Write a Message</button> <!-- Write Message button -->
+            <button class="btn btn-primary ml-auto"  id="addbutton">Write a Message</button> <!-- Write Message button -->
         </div>
     </nav>
 
@@ -62,14 +62,14 @@ require_once ("sidepanel.php");
     </div>
 
     <!-- Message Form -->
-    <div class="content text-center mt-5">
+    <div class="content text-center mt-5" id="message-form-container" style="display: none;">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 mt-5">
                 
                 <div class="card">
-                    <div class="card-body" id="message-form-container">
-                        <form method="post" action="../Backend/message.php" id="message-form">
+                    <div class="card-body" >
+                        <form method="post" action="../Backend/message.php" id="message-form" >
                         <h4 class="text-center">Write a Message</h4> <!-- Centered heading -->
                         <br>
                             <div class="row">
@@ -102,18 +102,22 @@ require_once ("sidepanel.php");
         </div>
     </div>
 </div>
-<script src="js/message.js"></script> 
+
 
     <script src="js/notification-panel.js"></script>
     <script>
         handleFormSubmit("message-form");
+    </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    var addButton = document.getElementById("addbutton");
+    var addEmployeeDiv = document.getElementById("message-form-container");
 
-        document.addEventListener("DOMContentLoaded", function() {
-        var writeMessageButton = document.getElementById("write-message-button");
-        writeMessageButton.addEventListener("click", function() {
-            toggleMessageForm();
-        });
+    addButton.addEventListener("click", function() {
+        addEmployeeDiv.style.display = "block";
     });
+});
+</script>
     </script>
 </body>
 </html>
