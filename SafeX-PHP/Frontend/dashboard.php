@@ -39,15 +39,44 @@ if ($result && mysqli_num_rows($result) > 0) {
 $dashboard_content = "";
 switch ($user_role){
     case 'admin':
+        $titletext = "Admin  Welcome To SafeX";
         $dashboard_content = "SafeX|Admin Dashboard"; 
         $titlebox1 = "Newly Registered Companies"; 
         $titlebox2 = "" ;   
         break;
     case 'company':
+        $companyID = $_SESSION['Company_ID'];
+        $companyselectSql = "SELECT Company_Name FROM company WHERE Company_ID ='$companyID'";
+        $result = mysqli_query($database_connection, $companyselectSql);
+        if ($result) {
+          $row = mysqli_fetch_assoc($result);
+          if ($row) {
+              $companyName = $row['Company_Name'];
+              $titletext ="Welcome to Safex, $companyName!";
+          } else {
+              $titletext ="Welcome to Safex!";
+          }
+        } else {
+          $titletext ="Error fetching company information.";
+        }
         $dashboard_content = "SafeX|Company Dashboard"; 
         $titlebox1 = "Newly Registered Employees"; 
         break;
     case 'employee':
+        $employeeID = $_SESSION['Employee_ID'];
+        $employeeselectSql = "SELECT Name FROM employee WHERE Employee_ID ='$employeeID'";
+        $result = mysqli_query($database_connection, $employeeselectSql);
+        if ($result) {
+          $row = mysqli_fetch_assoc($result);
+          if ($row) {
+              $employeeName = $row['Name'];
+              $titletext ="Welcome to Safex, $employeeName!";
+          } else {
+              $titletext ="Welcome to Safex!";
+          }
+          } else {
+            $titletext ="Error fetching company information.";
+          }
         $dashboard_content = "SafeX|Employee Dashboard"; break;
         $titlebox1 = "Items To Request";  
         break;
@@ -70,12 +99,17 @@ switch ($user_role){
         body{
             margin-left: 200px;
         }
+        .title-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 24px;
+    }
     </style>
   </head>
 
   <body>
 
-  <!--main content-->
+  <div class="title-text"><?php echo $titletext; ?></div>
   
   <div class="content text-center mt-5">
     <div class="container">
