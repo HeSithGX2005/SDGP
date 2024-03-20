@@ -56,27 +56,27 @@ function reminderEmailSender($receiverAddress,$companyName){
     }
 }
 
-function employeeEmailSender($receiverAddress,$employeeName,$randomUsername,$randomPassword){
+function employeeEmailSender($receiverAddress, $employeeName, $randomUsername, $randomPassword){
     $mail = new PHPMailer(true);
-    $mail -> isSMTP();
-    $mail -> SMTPAuth = true;
-    $mail -> Host = 'smtp.gmail.com';
-    $mail -> Username = "johnsillva734@gmail.com";
-    $mail -> Password = "jvbbpmrngowbktgc ";
-    $mail -> SMTPSecure = 'ssl';
-    $mail -> Port = 465;
+    $mail->isSMTP();
+    $mail->SMTPAuth = true;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Username = "johnsillva734@gmail.com";
+    $mail->Password = "jvbbpmrngowbktgc ";
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
 
-    $mail -> setFrom('johnsillva734@gmail.com');
-    $mail -> addAddress($receiverAddress);
-    $mail -> isHTML(true);
-    $mail -> Subject = ("$employeeName, Welcome to SafeX");
-    $mail -> Body =("Dear $employeeName,\n\nYour temporary username:$randomUsername and password is: $randomPassword\n\nPlease login to your account and change your password immediately.\n\nRegards,\nSafeX Team");
-    $mail -> send();
+    $mail->setFrom('johnsillva734@gmail.com');
+    $mail->addAddress($receiverAddress);
+    $mail->isHTML(true);
+    $mail->Subject = "$employeeName, Welcome to SafeX";
+    $mail->Body = "Dear $employeeName,<br><br>Your temporary username: $randomUsername and password is: $randomPassword<br><br>Please login to your account and change your password immediately.<br><br>Regards,<br>SafeX Team";
+
     try {
         $mail->send();
-        echo "Email sent successfully";
+        return true; // Email sent successfully
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return false; // Email sending failed
     }
 }
 
