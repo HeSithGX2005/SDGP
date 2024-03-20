@@ -3,23 +3,24 @@ require("../Backend/database.php");
 include("css/css-links.php");
 require ("sidepanel.php");
 require("../Backend/Other-Script/employee-details.php");
+
 $user_role = $_SESSION["user_role"];
 $searchQuery = "";
 
-if(isset($_GET['id'])){
-    $employeeID = $_GET["id"];
-    $showEmployeeSQL = "SELECT * FROM employee WHERE Employee_ID = $employeeID";
-    $showEmployeeResult = $database_connection -> query($showEmployeeSQL);
-    if($showEmployeeResult && $showEmployeeResult->num_rows > 0) {
-        $employee = $showEmployeeResult->fetch_assoc(); 
-    } else {
-        echo "Employee not found!";
-    }
+// Check if session variable is set to company_id or employee_id
+if(isset($_SESSION['company_id']) && $user_role === 'company') {
+    $company_id = $_SESSION['company_id'];
+    $query = "SELECT * FROM employee WHERE Company_ID = $company_id";
+} elseif (isset($_SESSION['Employee_ID']) && $user_role === 'employee') {
+    $employeeID = $_SESSION["Employee_ID"];
+    $query = "SELECT * FROM employee WHERE Employee_ID IN (SELECT Employee_ID FROM site_assigend_wokers WHERE Site_ID = (SELECT Site_ID FROM site_assigend_wokers WHERE Employee_ID = $employeeID))";
 } else {
-    echo "Employee ID not provided!";
+    $query = "SELECT * FROM employee";
 }
+$employees = $database_connection->query($query);
 
 ?>
+
 
 <!DOCTYPE html>
 
@@ -56,21 +57,19 @@ if(isset($_GET['id'])){
                     }
 
                     if(empty($searchQuery)) {
-                        $employees = fetchAllEmployeeetails($database_connection);
+                        $employees = fetchAllEmployeeDetails($database_connection);
                     } else {
                         $employees = fetchSearchEmployeeDetails($searchQuery,$database_connection);
                     }
                 ?>
                 </div>
-                        <?php
-                        if(isset($user_role) && $user_role == 'company'){
-                            echo'<div class="col-md-6  mt-5">';
-                                echo'<a href="addemployee.html">';
-                                    echo '<button class="btn btn-primary" type="button" id="addbutton">Add Employee</button>';
-                                echo'</a>';   
-                            echo'</div>';
-                        }
-                        ?>
+                <?php
+                if(isset($user_role) && $user_role == 'company'){
+                    echo '<div class="col-md-6 mt-5">';
+                    echo '<button class="btn btn-primary" type="button" id="addbutton">Add Employee</button>';
+                    echo '</div>';
+                }
+                ?>
 
                      
             </div>
@@ -105,7 +104,7 @@ if(isset($_GET['id'])){
     </div>
     </div>
 
-    <div class="add_new_employee">
+    <div class="add_new_employee" style="display: none;">
     <h2>Add Employee</h2>
         <form id="employeeForm" action="../Backend/employee.php" method="post" enctype="multipart/form-data">
             <label for="name">Name:</label><br>
@@ -129,6 +128,16 @@ if(isset($_GET['id'])){
             <input type="submit" value="Submit">
         </form>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var addButton = document.getElementById("addbutton");
+    var addEmployeeDiv = document.querySelector(".add_new_employee");
+
+    addButton.addEventListener("click", function() {
+        addEmployeeDiv.style.display = "block";
+    });
+});
+</script>
 <script src="js/notification-panel.js"></script>
     <script>
         handleFormSubmit("employeeForm");
@@ -150,6 +159,21 @@ if(isset($_GET['id'])){
     reader.readAsDataURL(file);
 });
 </script>
+<?php
+// Retrieve the Employee_ID from the URL parameter
+if(isset($_GET['id'])) {
+    $employeeID = $_GET['id'];
+    
+    // Fetch the details of the selected employee based on the Employee_ID
+    $selectEmployeeSQL = "SELECT * FROM employee WHERE Employee_ID = $employeeID";
+    $result = $database_connection->query($selectEmployeeSQL);
+    
+    // Check if employee details are found
+    if ($result && $result->num_rows > 0) {
+        $employee = $result->fetch_assoc();
+?>
+
+<!-- Display the employee details -->
 <div class="selected-employee">
     <div class="container">
         <div class="row justify-content-center">
@@ -157,31 +181,18 @@ if(isset($_GET['id'])){
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <!--employee image-->
+                            <!-- Employee image -->
                             <img src="<?php echo '../Backend/'.$employee['Employee_Pic'];?>" alt="<?php echo $employee['Name'];?>" class="img-fluid rounded-start" alt="">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Employee Details</h5><br>
-                                <?php if(isset($employee)) ?>
-                                <p class="card-text">Employee Id:<?php echo $employee['Employee_ID']; ?> </p>
+                                <p class="card-text">Employee Id: <?php echo $employee['Employee_ID']; ?> </p>
                                 <p class="card-text">Employee Name: <?php echo $employee['Name']; ?> </p>
-                                <p class="card-text">Helmet Id:<?php if($employee['Assigned'] ==1){
-                                    $employeeId = isset($_GET['id']);
-                                    $showHelmetSql = "SELECT Helmet_ID FROM helmet_assignment WHERE Employee_ID = $employeeID";
-                                    $result = mysqli_query($database_connection, $showHelmetSql);
-                                    $helmetId = '';
-                                    if ($result && mysqli_num_rows($result) > 0) {
-                                        $row = mysqli_fetch_assoc($result);
-                                        $helmetId = $row['Helmet_ID'];
-                                        echo $helmetId;
-                                    }else{
-                                        echo "N/A";
-                                    }
-                                }?> </p>
-                                <p class="card-text">Position:<?php echo $employee['Position']; ?> </p>
-                                <p class="card-text">Contact No:<?php echo $employee['Telephone_No']; ?> </p>
-                                <p class="card-text">Email:<?php echo $employee['Email_Address']; ?> </p>
+                                <p class="card-text">Helmet Id: <?php echo ($employee['Assigned'] == 1) ? $helmetId : "N/A"; ?> </p>
+                                <p class="card-text">Position: <?php echo $employee['Position']; ?> </p>
+                                <p class="card-text">Contact No: <?php echo $employee['Telephone_No']; ?> </p>
+                                <p class="card-text">Email: <?php echo $employee['Email_Address']; ?> </p>
                             </div>
                         </div>
                     </div>
@@ -191,7 +202,13 @@ if(isset($_GET['id'])){
     </div>
 </div>
 
-</div>
+<?php
+    } else {
+        echo "Employee details not found!";
+    }
+}
+?>
+
 
 
 </body>
