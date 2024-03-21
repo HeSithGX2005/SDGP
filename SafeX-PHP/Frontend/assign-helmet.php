@@ -32,6 +32,7 @@ $siteId = $_GET['siteId'];
                 <option value="Manual">Manual Assigning</option>
             </select>
             </div>
+            
             </form>
         </div>
     </div>

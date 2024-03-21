@@ -2,10 +2,6 @@
 session_start();
 require "database.php";
 
-if (!isset($_SESSION["Company_ID"])) {
-    $_SESSION["Company_ID"] = 0;
-}
-
 
 
 

@@ -68,7 +68,7 @@ function automaticAssignment($companyID,$database_connection,$siteId) {
     
         while ($rowSupervisor = $resultSupervisiors->fetch_assoc()) {
             $supervisorId = $rowSupervisor['Employee_ID'];
-            $insertSupervisorSql = "INSERT INTO site_assigend_wokers  (Company_ID, Employee_ID, Site_ID) VALUES ('$supervisorId', '$companyID','$siteId')";
+            $insertSupervisorSql = "INSERT INTO site_assigend_wokers  (Company_ID, Employee_ID, Site_ID) VALUES ('$companyID', '$supervisorId','$siteId')";
             if ($supervisors > 0 && !$database_connection->query($insertSupervisorSql)) {
                 $supervisorSuccess = false;
                 $status['message'] = "Error adding supervisor: " . $database_connection->error ;
@@ -90,7 +90,6 @@ function automaticAssignment($companyID,$database_connection,$siteId) {
 
 // Function for manual assignment
 function manualAssignment() {
-    // Implement your manual assignment algorithm here
-    echo "Manual assignment algorithm is executed";
+
 }
 ?>
