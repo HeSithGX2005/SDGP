@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $user_id = $row['Company_ID'];
                 $_SESSION["Company_ID"] = $user_id;
                 $_SESSION['user_role'] = 'company';
-                header("Location: dashboard.php");
+                header("Location:dashboard.php");
                 exit(); // Exit after redirection
             } else {
                 array_push($errors, "Username or Password is Incorrect");
