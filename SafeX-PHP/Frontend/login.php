@@ -8,69 +8,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SafeX|Login</title>
-    <style>
-        body{
-  margin: 0px;
-  padding: 0px;
-}
-
-/*..Hero section..*/
-
-#hero{
-  background-color: #ffffff;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 100vh;
-}
-
-.login-container{
-  background-color: #888484;
-  border-radius: 25px !important;
-  padding: 5px;
-  border: 2px; 
-}
-
-.login-container:hover{
-    box-shadow: rgb(170,170,170) 0px 5px 15px !important;
-}
-
-.logo{
-  max-width: 100%;
-  height: auto;
-}
-  
-.form-control {
-  border-radius: 20px !important;
-  border: 2px ;
-  border-color: #c5c6c7 !important;
-  background-color: #ffffff !important;
-  box-shadow: none !important;
-  color: #000000;
-}
-
-.form-control:hover{
-  background-color: transparent !important;
-}
-
-.btn{
-  background-color: #000080 !important;
-  color: #ffffff !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-}
-.btn:hover{
-  background-color: #007fff !important;
-}
-.btn-rounded {
-  border-radius: 20px !important;
-}
-
-p,a{
-  color:#000000 !important;
-}
-    </style>
     <!--css links-->
+    <link rel="stylesheet" href="css/login1.css">
     <link rel="icon" href="img/helmet.png" type="image/x-icon">
     
     
