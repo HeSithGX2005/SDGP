@@ -1,6 +1,8 @@
 body {
-    
-    background-image: url("../img/background.jpg");
-    background-size: cover;
-    background-position: center;
+  background-color: #FFEEDA !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
   }
+  
