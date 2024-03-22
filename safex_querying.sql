@@ -203,10 +203,7 @@ JOIN `Leave` l1 ON e.Employee_ID = l1.Employee_ID
 JOIN `Leave` l2 ON e.Employee_ID = l2.Employee_ID
 WHERE DATEDIFF(l2.Start_Date, l1.End_Date) = 1;
 
-SELECT e.Employee_Name, l.Reason, l.Start_Date, l.End_Date
-FROM Employee e
-JOIN `Leave` l ON e.Employee_ID = l.Employee_ID
-WHERE l.Reason LIKE '%family%';
+
 
 SELECT e.Employee_Name, l.Reason, l.Start_Date, l.End_Date
 FROM Employee e
