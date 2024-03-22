@@ -222,10 +222,7 @@ JOIN `Leave` l ON e.Employee_ID = l.Employee_ID
 WHERE DAYOFWEEK(l.Start_Date) BETWEEN 2 AND 6 OR DAYOFWEEK(l.End_Date) BETWEEN 2 AND 6;
 
 
-SELECT e.Employee_Name, l.Reason, l.Start_Date, l.End_Date
-FROM Employee e
-JOIN `Leave` l ON e.Employee_ID = l.Employee_ID
-WHERE l.Reason = 'Personal Leave' AND DATEDIFF(l.End_Date, l.Start_Date) <= 3;
+
 
 
 SELECT fde.Location, COUNT(*) AS Total_Fall_Events
@@ -327,10 +324,7 @@ FROM Employee e
 LEFT JOIN Emergency_Alarm_System eas ON e.Employee_ID = eas.Employee_ID
 GROUP BY e.Employee_ID, e.Employee_Name;
 
-SELECT e.Employee_ID, e.Employee_Name, SUM(TIMESTAMPDIFF(HOUR, h.Start_Time, h.End_Time)) AS Total_Hours_Worked
-FROM Employee e
-JOIN Helmet h ON e.Helmet_ID = h.Helmet_ID
-GROUP BY e.Employee_ID, e.Employee_Name;
+
 
 SELECT e.*
 FROM Employee e
