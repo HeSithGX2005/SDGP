@@ -7,6 +7,10 @@ function Hero(props) {
         <div className="hero-images">
           <img alt="HerpImg" src={props.heroImg} />
           <img className="helmet" alt="" src={props.helmetimg} />
+          <img className="web" alt="" src={props.webimg} />
+          <img className="gas" alt="" src={props.gasimg} />
+          <img className="money" alt="" src={props.moneyimg} />
+          <img className="time" alt="" src={props.timeimg} />
         </div>
 
         <div className="hero-text">
