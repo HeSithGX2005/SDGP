@@ -11,6 +11,29 @@ require_once ("sidepanel.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SafeX|Message</title>
     <link rel="stylesheet" href="css/company.css">
+    <style>
+        #message-form-container{
+            border-radius: 1px solid gray;
+            padding: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 1000;
+            width: 100%;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+            z-index: 999; /* make sure the overlay appears on top */
+            display: none; /* initially hidden */
+}
+    </style>
 </head>
 <body>
 
@@ -62,21 +85,21 @@ require_once ("sidepanel.php");
     </div>
 
     <!-- Message Form -->
-    <div class="content text-center mt-5" id="message-form-container" style="display: none;">
+    <div class="overlay" id="overlay"></div>
+<div class="content text-center mt-5" id="message-form-container">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 mt-5">
-                
                 <div class="card">
-                    <div class="card-body" >
-                        <form method="post" action="../Backend/message.php" id="message-form" >
-                        <h4 class="text-center">Write a Message</h4> <!-- Centered heading -->
-                        <br>
-                            <div class="row">
-                                <div class="col">
+                    <div class="card-body">
+                        <form method="post" action="../Backend/message.php" id="message-form">
+                            <h4 class="text-center">Write a Message</h4>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control" placeholder="To" name="receiver">
+                                    <br>
                                 </div>
-                                <div class="col">
+                                <div class="col-sm-6">
                                     <input type="hidden" class="form-control" placeholder="From" name="from" value="<?php
                                         if (isset($_SESSION["Employee_ID"])) {
                                             $employeeID = $_SESSION["Employee_ID"];
@@ -86,18 +109,23 @@ require_once ("sidepanel.php");
                                             echo $companyID;
                                         }
                                     ?>">
+                                    <br>
                                 </div>
-                            </div><br>
-                            <div class="row">
-                                <textarea class="form-control" rows="5" id="message" placeholder="Message" name="message-body" required></textarea>
                             </div>
-                            <br>
-                            <div class="row">
-                                <input type="submit" class="btn btn-primary" value="Send">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" rows="5" id="message" placeholder="Message" name="message-body" style="resize: none;" required></textarea>
+                                </div>
                             </div>
-                        </form><br>
+                            <div class="form-group row justify-content-center">
+                                <div class="col-sm-6">
+                                    <br>
+                                    <input type="submit" class="btn btn-primary btn-block" value="Send">
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div><br>
+                </div>
             </div>
         </div>
     </div>
@@ -109,14 +137,37 @@ require_once ("sidepanel.php");
         handleFormSubmit("message-form");
     </script>
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var addButton = document.getElementById("addbutton");
-    var addEmployeeDiv = document.getElementById("message-form-container");
 
-    addButton.addEventListener("click", function() {
-        addEmployeeDiv.style.display = "block";
+            const btn = document.getElementById("addbutton");
+            const form = document.getElementById("message-form-container");
+            const overlay = document.getElementById("overlay");
+            const containers = document.querySelectorAll(".main-container, .table-container,.navbar navbar-expand-lg navbar-light bg-light");
+
+            btn.addEventListener('click', () => {
+                if (form.style.display === "none") {
+                    form.style.display = "block";
+                    containers.forEach(function(container) {
+                        container.classList.add("blur");
+                    });
+                } else {
+                    form.style.display = "none";
+                    containers.forEach(function(container) {
+                container.classList.remove("blur");
+            });
+                }
+            });
+
+        overlay.addEventListener("click", function(event) {
+        if (event.target === this) {
+            form.style.display = "none";
+            displaydetails.style.display = "none";
+            overlay.style.display = "none";
+            containers.forEach(function(container) {
+                container.classList.remove("blur");
+            });
+        }
     });
-});
+ 
 </script>
     </script>
 </body>

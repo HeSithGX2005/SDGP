@@ -12,6 +12,35 @@ require ("sidepanel.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/company.css">
     <title>SafeX|Add New Company</title>
+    <style>
+.add_new_company_form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid gray; 
+    border-radius: 10px;
+    padding: 20px; 
+    z-index: 1000; /* make sure the form appears on top of the overlay */
+    background-color: #fff; /* white background */
+    display: none; /* initially hidden */
+    max-width: 80%; /* optional: set max width for the form */ 
+}
+.blur {
+    filter: blur(5px); /* Apply a blur effect */
+    pointer-events: none; /* Prevent interactions with blurred elements */
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+    z-index: 999; /* make sure the overlay appears on top */
+    display: none; /* initially hidden */
+}
+    </style>
 </head>
 <body>
     <div class="main-container">
@@ -20,9 +49,11 @@ require ("sidepanel.php");
                 <div class="input-container">
                     <input type="text" name="search_company" id="input-box" placeholder="Company Name">
                     <button type="submit" name="search_company_button" id="search">Search</button>
-                    <button name="add_new_company">Add New</button>
+
+
                 </div>
             </form>
+            <button name="add_new_company" id="showFormBtn">Add New</button>
         </div>
     </div>
     <div class="table-container table-responsive">
@@ -56,7 +87,7 @@ require ("sidepanel.php");
                         <td>' . $row['Cloud_Storage_Renew_Date'] . '</td>
                         <td>' . $row['Join_Date'] . '</td>
                         <td>
-                            <a href="ViewAllCompanies.php?delete=' . $row['Company_ID'] . '"class="btn btn-danger">Delete</a>
+                            <a href="company.php?delete=' . $row['Company_ID'] . '"class="btn btn-danger">Delete</a>
                         </td>
                         </tr>';
                         $row_number++;
@@ -66,32 +97,66 @@ require ("sidepanel.php");
             </tbody>
         </table>
     </div>
-
-    <div class="add_new_company_form">
-    <h2>Register New Company</h2>
-    <form action="../Backend/add-new-company.php" method="post" id="register_new_company">
-        <label for="company_name">Company Name:</label><br>
-        <input type="text" id="company_name" name="company_name"><br>
-        
-        <label for="no_of_helmet">Number of Helmets:</label><br>
-        <input type="number" id="no_of_helmet" name="no_of_helmet"><br>
-        
-        <label for="cloud_storage_renew_date">Cloud Storage Renew Date:</label><br>
-        <input type="date" id="cloud_storage_renew_date" name="cloud_storage_renew_date"><br>
-        
-        <label for="email_address">Email Address:</label><br>
-        <input type="email" id="email_address" name="email_address"><br>
-                
-        <input type="submit" value="Register">
+    <div class="overlay" id="overlay"></div>      
+    <div class="add_new_company_form" id="add_new_company_form">
+    <h2 class="text-center">Register New Company</h2>
+    <form action="../Backend/add-new-company.php" method="post" id="register_new_company" class="row">
+        <div class="col-md-6">
+            <label for="company_name">Company Name:</label><br>
+            <input type="text" id="company_name" name="company_name" class="form-control"><br>
+        </div>
+        <div class="col-md-6">
+            <label for="no_of_helmet">Number of Helmets:</label><br>
+            <input type="number" id="no_of_helmet" name="no_of_helmet" class="form-control"><br>
+        </div>
+        <div class="col-md-6">
+            <label for="cloud_storage_renew_date">Cloud Storage Renew Date:</label><br>
+            <input type="date" id="cloud_storage_renew_date" name="cloud_storage_renew_date" class="form-control"><br>
+        </div>
+        <div class="col-md-6">
+            <label for="email_address">Email Address:</label><br>
+            <input type="email" id="email_address" name="email_address" class="form-control"><br>
+        </div>
+        <div class="col-12 text-center"> <!-- Center the button -->
+            <input type="submit" value="Register" class="btn btn-primary">
+        </div>
     </form>
-    </div>
+</div>
+ <script>
 
+</script>
     <script src="js/notification-panel.js"></script>
     <script>
         handleFormSubmit("register_new_company");
     </script>
     <script src="js/table-resize-script.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+            const btn = document.getElementById("showFormBtn");
+            const form = document.getElementById("add_new_company_form");
+            const overlay = document.getElementById("overlay");
+            const containers = document.querySelectorAll(".main-container, .table-container");
+
+            btn.addEventListener('click', () => {
+                if (form.style.display === "none") {
+                    form.style.display = "block";
+                    containers.forEach(function(container) {
+                        container.classList.add("blur");
+                    });
+                } else {
+                    form.style.display = "none";
+                }
+            });
+
+            overlay.addEventListener("click", function(event) {
+                if (event.target === this) {
+                    form.style.display = "none";
+                    containers.forEach(function(container) {
+                        container.classList.remove("blur");
+                    });
+                }
+            });
+    </script>
 </body>
 </html>
 

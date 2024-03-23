@@ -1,5 +1,4 @@
 body{         
-    background-image: url("../SafeX/img/background.jpg");
     background-size: cover;
     background-position: center;
 
@@ -22,6 +21,9 @@ body{
     background-color: #111D46;
     padding-top: 20px;
     padding-left: 20px;
+    border-top-right-radius: 20px; /* Add top-right rounded corner */
+    border-bottom-right-radius: 20px; /* Add bottom-right rounded corner */
+    display: none;
 }
 
 .logo {
@@ -41,16 +43,13 @@ body{
     margin-right: 10px;
 }
 
-.sidebar-footer{
-    position: fixed;
-    margin-top: 300px;
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
     left: 0;
-    width: 200px;
-    height: 100%;
-    background-color: #111D46;
-    padding-top: 20px;
-    padding-left: 20px;
-
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 h1{
@@ -58,4 +57,25 @@ h1{
     font-family: 'Caveat', cursive;
     font-size: 50px;
     padding-left: 0% !important;
+}
+
+/* Toggle button styles */
+.toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+/* Adjust sidebar styles for mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        overflow-x: hidden;
+        transition: width 0.3s ease; /* Add a smooth transition effect */
+    }
+
+    .sidebar.show {
+        width: 200px; /* Adjust width as needed */
+    }
 }

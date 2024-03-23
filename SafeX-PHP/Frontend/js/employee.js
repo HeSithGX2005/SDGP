@@ -4,4 +4,7 @@ document.getElementById('searchButton').addEventListener('click', function() {
     // Perform search action or other functionality with the searchTerm
     console.log('Search Term:', searchTerm);
   });
+
+
+
   

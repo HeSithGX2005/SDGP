@@ -11,6 +11,7 @@
     <!--css links-->
     <link rel="stylesheet" href="css/login1.css">
     <link rel="icon" href="img/helmet.png" type="image/x-icon">
+
     
     
   </head>
@@ -27,7 +28,7 @@
                         <img src="../Frontend/img/logo2.PNG" class="img-fluid" alt="Logo">
                     </figure>  
                 </div>
-
+                <?php include_once "../Backend/Error-Handling/login-error.php"?>
                 <!--login form-->
                 <div class="container-fluid">
                     <div class="row justify-content-center">
@@ -51,7 +52,7 @@
                 </div>
             </div>   
         </div>
-                <?php include "../Backend/Error-Handling/login-error.php"?>
+                
 
                 <footer>
                     <div class="footerBottom mt-3">
@@ -64,6 +65,5 @@
 
         <!--bootstrap javascript links-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
     </body>
 </html>

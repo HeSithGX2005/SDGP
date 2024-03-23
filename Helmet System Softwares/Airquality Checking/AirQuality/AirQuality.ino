@@ -1,6 +1,7 @@
+
 int buz = 10;            // Buzzer connected to pin 10
 const int aqsensor = A0;  // Output of MQ135 connected to A0 pin of Arduino
-int threshold = 400;    // Threshold level for Air Quality
+int threshold = 180;    // Threshold level for Air Quality
 
 void setup() {
   pinMode(buz, OUTPUT);     // Buzzer is connected as Output from Arduino
@@ -15,7 +16,7 @@ void loop() {
   Serial.print("Air Quality: ");  // Print message in serial monitor
   Serial.println(ppm);            // Print value of ppm in serial monitor
 
-  if (ppm > threshold) {          // Check if ppm is greater than threshold or not
+  if (ppm < threshold) {          // Check if ppm is greater than threshold or not
     Serial.println("AQ Level HIGH");
     tone(buz, 1000, 200);         // Sound the buzzer
   } else {

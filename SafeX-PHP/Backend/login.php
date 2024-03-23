@@ -4,6 +4,7 @@ require "database.php";
 $errors = array();
 session_start();
 
+
 // Login to the system
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['username']) && isset($_POST['password'])) {

@@ -1,7 +1,6 @@
 <?php include ("css/css-links.php");
-include("css/css-links.php");
-require ("sidepanel.php");
-require ("../Backend/database.php");
+require_once ("sidepanel.php");
+require_once ("../Backend/database.php");
 require("../Backend/Other-Script/random-string-generating.php");
 require ("../Backend/Other-Script/phpqrcode/qrlib.php");
 require("../Backend/Other-Script/tcpdf/tcpdf.php");
@@ -22,23 +21,24 @@ $user_role = $_SESSION["user_role"];
     </style>
 </head>
 <body>
-    <h2>Helmet Registration Form</h2>
-    <form action="" method="post"> 
-        <div>
-            <?php
-            if($user_role == "admin"){
-                echo'<label for="num_helmets">Number of Helmets:</label>';
-                echo'<input type="number" id="num_helmets" name="num_helmets" min="1" required>';
-                echo'<button type="submit" name="generate_qr">Register Helmets</button>';
-            }elseif($user_role == "company"){
-                echo'<label for="unique_code">Unique Code:</label>';
-                echo'<input type="text" name="unique_code" required placeholder="Helmet Unique Code">';
-                echo'<button type="submit" name="add_helmet">Register Helmets</button>';
-            }
+<div class="helmet-container">
+<form action="" method="post" class="helmet"> <!-- Add 'text-center' class to center the form -->
+    <div class="form-group">
+        <?php
+        if($user_role == "admin"){
+            echo '<label for="num_helmets">Number of Helmets:</label>';
+            echo '<input type="value" id="num_helmets" name="num_helmets" min="1" required class="form-control">';
+            echo '<button type="submit" name="generate_qr" class="btn btn-primary text-center" >Register Helmets</button>';
+        } elseif($user_role == "company"){
+            echo '<label for="unique_code">Unique Code:</label>';
+            echo '<input type="text" name="unique_code" required placeholder="Helmet Unique Code" class="form-control">';
+            echo '<button type="submit" name="add_helmet" class="btn btn-primary">Register Helmets</button>';
 
-            ?>
-        </div>
-    </form>
+            
+        }
+        ?>
+    </div>
+</form>
     <?php
 
       if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generate_qr"]) && $user_role == "admin"){
@@ -75,5 +75,7 @@ $user_role = $_SESSION["user_role"];
 }
 
     ?>
+</div>
+
 </body>
 </html>

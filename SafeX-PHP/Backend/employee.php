@@ -60,17 +60,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $status['message'] = "Failed to insert new data: " . $database_connection->error;
                 }            
             }elseif($position == 'worker' ){
-                $insertQuery = "INSERT INTO employee (Name, Position, Telephone_No, Company_ID, Employee_Pic, Username, Password_Hash, Email_Address)
-                            VALUES ('$employeeName', '$position', '$telephone', '$companyID', '$targetFilePath', '$username', '$passwordHash', '$email')";
-                if ($database_connection->query($insertQuery)) {
-                    $status['status'] = 'success';
-                    $status['message'] = "Employee Registered Successfully";
-                } else {
-                    $status['message'] = "Failed to insert new data: " . $database_connection->error;
-                }
-            }else {
-                $status['message'] = "Failed to insert new data: " . $database_connection->error;
-            }
+                $selectHelmet = "SELECT * FROM helmet WHERE Company_ID = '$companyID";
+                $result = mysqli_query($database_connection, $selectHelmet);
+                if(mysqli_num_rows($result)>0){
+                    $insertQuery = "INSERT INTO employee (Name, Position, Telephone_No, Company_ID, Employee_Pic, Username, Password_Hash, Email_Address)
+                    VALUES ('$employeeName', '$position', '$telephone', '$companyID', '$targetFilePath', '$username', '$passwordHash', '$email')";
+                     if ($database_connection->query($insertQuery)) {
+
+                        $status['status'] = 'success';
+                        $status['message'] = "Employee Registered Successfully";
+                    } else {
+                        $status['message'] = "Failed to insert new data: " . $database_connection->error;
+                    }
+            }else{
+                $status['message'] = "Not Enough Helmets";
+            }}
+        else {
+             $status['message'] = "Failed to insert new data: " . $database_connection->error;
+        }
+                
+
         } else {
             $status['message'] = "Sorry, there was an error uploading your file.";
         }

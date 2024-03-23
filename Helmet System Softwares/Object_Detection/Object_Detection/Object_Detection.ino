@@ -1,6 +1,6 @@
-#define trigPin4 12          // Trig Pin Of HC-SR04 - Upwards
-#define echoPin4 13          // Echo Pin Of HC-SR04 - Upwards
-#define buzzerPin 10         // Buzzer Pin
+#define trigPin4 12         // Trig Pin Of HC-SR04 - Upwards
+#define echoPin4 13         // Echo Pin Of HC-SR04 - Upwards
+#define buzzerPin 8         // Buzzer Pin
 
 long duration4, distance4;
 
@@ -15,19 +15,19 @@ void loop() {
   // Upwards sensor
   digitalWrite(trigPin4, LOW);
   delayMicroseconds(2);
-  digitalWrite(trigPin4, HIGH);  // Transmit Waves For 10us
+  digitalWrite(trigPin4, HIGH);
   delayMicroseconds(10);
-  duration4 = pulseIn(echoPin4, HIGH);  // Receive Reflected Waves
-  distance4 = duration4 * 0.034 / 2;    // Convert duration to distance
+  duration4 = pulseIn(echoPin4, HIGH);
+  distance4 = duration4 * 0.034 / 2;
 
   // Print distance for debug purposes
   Serial.print("Upwards: ");
   Serial.println(distance4);
 
   // If the upward sensor detects an object at least 2 meters away, activate the buzzer
-  if (distance4 >= 200) {
+  if (distance4 <= 200) {
     digitalWrite(buzzerPin, HIGH); // Turn on the buzzer
-    delay(1000);                   // Wait for a second
-    digitalWrite(buzzerPin, LOW);  // Turn off the buzzer
+  } else {
+    digitalWrite(buzzerPin, LOW); // Turn off the buzzer
   }
 }

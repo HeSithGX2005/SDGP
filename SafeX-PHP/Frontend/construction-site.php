@@ -14,6 +14,35 @@ $company_id = $_SESSION["Company_ID"];
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Add New Construction Site</title>
     <link rel="stylesheet" href="css/company.css">
+    <style>
+.add_new_site_form{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid gray; 
+    border-radius: 10px;
+    padding: 20px; 
+    z-index: 1000; /* make sure the form appears on top of the overlay */
+    background-color: #fff; /* white background */
+    display: none; /* initially hidden */
+    max-width: 80%; /* optional: set max width for the form */ 
+}
+.blur {
+    filter: blur(5px); /* Apply a blur effect */
+    pointer-events: none; /* Prevent interactions with blurred elements */
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+    z-index: 999; /* make sure the overlay appears on top */
+    display: none; /* initially hidden */
+}
+    </style>
 </head>
 <body>
 <div class="main-container">
@@ -22,9 +51,9 @@ $company_id = $_SESSION["Company_ID"];
                 <div class="input-container">
                     <input type="text" name="search_constructionsite" id="input-box" placeholder="Constructionsite Name">
                     <button type="submit" name="search_constructionsite_button" id="search">Search</button>
-                    <button name="add_new_constructionsite">Add New</button>
                 </div>
             </form>
+            <button name="add_new_constructionsite" id="showFormBtn">Add New</button>
         </div>
     </div>
     <div class="table-container table-responsive">
@@ -75,12 +104,17 @@ $company_id = $_SESSION["Company_ID"];
             </tbody>
         </table>
     </div>
-    <div class="add_new_site_form">
+    <div class="overlay" id="overlay"></div> 
+    <div class="add_new_site_form" id="add_new_site_form">
+    <h2 class="text-center">Register New Construction Site</h2>
         <form action="../Backend/construction-site.php" method="post" id="register_new_construction">
+            <div class="col-md-12">
             <label for="sitename">Construction Site Name:</label><br>
             <input type="text" id="name" name="sitename" required><br><br>
-
-            <input type="submit" value="Add Construction Site" name="add_site">
+            </div>
+            <div class="col-12 text-center">
+            <input type="submit" value="Add Construction Site" name="add_site" class="btn btn-primary">
+            </div>
         </form>
     </div>
     <script src="js/notification-panel.js"></script>
@@ -90,6 +124,31 @@ $company_id = $_SESSION["Company_ID"];
     <script src="js/table-resize-script.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/assign-helmet.js"></script>
-    
+    <script>
+            const btn = document.getElementById("showFormBtn");
+            const form = document.getElementById("add_new_site_form");
+            const overlay = document.getElementById("overlay");
+            const containers = document.querySelectorAll(".main-container, .table-container");
+
+            btn.addEventListener('click', () => {
+                if (form.style.display === "none") {
+                    form.style.display = "block";
+                    containers.forEach(function(container) {
+                        container.classList.add("blur");
+                    });
+                } else {
+                    form.style.display = "none";
+                }
+            });
+
+            overlay.addEventListener("click", function(event) {
+                if (event.target === this) {
+                    form.style.display = "none";
+                    containers.forEach(function(container) {
+                        container.classList.remove("blur");
+                    });
+                }
+            });
+    </script>
 </body>
 </html>

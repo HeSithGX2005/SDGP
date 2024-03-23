@@ -1,6 +1,5 @@
 body {
   margin-left: 250px;
-  background-image: url("../img/background.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -23,7 +22,6 @@ body {
   }
 
 .content{
-    background: url(/img/background.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

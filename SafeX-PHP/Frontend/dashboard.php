@@ -92,7 +92,7 @@ function showNewDataBox3($connection,$sqlQuery,$columnName,$columnName1){
 $dashboard_content = "";
 switch ($user_role){
     case 'admin':
-        $titletext = "Admin  Welcome To SafeX";
+        $titletext = " Welcome To SafeX";
         $dashboard_content = "SafeX|Admin Dashboard"; 
         $titlebox1 = ""; 
         $titlebox2 = "NEW REGISTERED COMPANY";
@@ -106,7 +106,7 @@ switch ($user_role){
           $row = mysqli_fetch_assoc($result);
           if ($row) {
               $companyName = $row['Company_Name'];
-              $titletext ="Welcome to Safex, $companyName!";
+              $titletext ="Welcome to Safex <br> $companyName!";
           } else {
               $titletext ="Welcome to Safex!";
           }
@@ -126,7 +126,7 @@ switch ($user_role){
           $row = mysqli_fetch_assoc($result);
           if ($row) {
               $employeeName = $row['Name'];
-              $titletext ="Welcome to Safex, $employeeName!";
+              $titletext ="Welcome to Safex<br> $employeeName!";
           } else {
               $titletext ="Welcome to Safex!";
           }
@@ -152,16 +152,68 @@ switch ($user_role){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $dashboard_content; ?></title>
     <link rel="icon" href="img/helmet.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
     <style>
-        body{
-            margin-left: 200px;
-        }
         .title-text {
       text-align: center;
       margin-top: 20px;
       font-size: 24px;
     }
+    
+  
+  /* Content Styles */
+  body {
+    margin-left: 200px;
+background-size: cover;
+background-position: center;
+  }
+  @media (max-width: 768px) {
+  body {
+    margin-left: 0;
+  }
+  .title-text{
+    font-size: 20px;
+  }
+}
+
+
+
+.materials{
+background-color: #32478c
+
+}
+
+.box{
+background-color: #ffffff;
+
+}
+
+h6{
+color: #ffffff;
+}
+
+.card-title{
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 18px;
+}
+
+h1{
+font-family: "Caveat", cursive;
+position:relative;
+color: #ffffff;
+padding: auto;
+
+}
+.title-text{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 40px;
+  font-family: "Delius", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
     </style>
   </head>
 
@@ -172,11 +224,11 @@ switch ($user_role){
   <div class="content text-center mt-5">
     <div class="container">
       
-      <div class="row row-cols-1 row-cols-md-3">
+      <div class="row">
 
         <!--material content-->
 
-        <div class="col-4 mb-4  mt-5">
+        <div class="col-12 col-md-4 mb-4 mt-5">
           <div class="card">
             <div class="card-body box">
               <h5 class="card-title"><?php echo $titlebox1;?></h5><br>
@@ -207,7 +259,7 @@ switch ($user_role){
       
         <!--alert content-->
 
-        <div class="col-4 mb-4  mt-5">
+        <div class="col-4 mb-4  mt-5col-12 col-md-4 mb-4 mt-5">
           <div class="card">
             <div class="card-body box">
               <h5 class="card-title"><?php echo $titlebox2;?></h5><br>
@@ -235,7 +287,7 @@ switch ($user_role){
         </div>
 
         <!--leave content-->
-        <div class="col-4 mb-4  mt-5">
+        <div class="col-12 col-md-4 mb-4 mt-5">
           <div class="card">
             <div class="card-body box">
               <h5 class="card-title"><?php echo $titlebox3;?></h5><br>
