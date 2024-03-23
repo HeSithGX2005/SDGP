@@ -20,14 +20,26 @@ body {
 
 .card:hover{
   transform: scale(101%);
-  box-shadow: rgba(148, 57, 4, 0.35) 0px 5px 15px ;
   background: #ffffff;
+  box-shadow: rgba(8, 161, 164, 0.35) 0px 5px 15px !important;
 }
 
 #comment{
   border-radius: 20px;
 }
 
+#submit{
+  background-color: #000080 !important;
+  color: #ffffff !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  border-radius: 10px !important;
+}
+#submit:hover{
+  background-color: #5783db  !important;
+  color: #000 !important;
+  box-shadow: 0px 5px 15px rgba(128, 102, 157, 0.5) !important;
+}
 
 
 

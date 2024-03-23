@@ -33,14 +33,15 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-8 col-sm-10 mt-5">
+                    <h5 class="card-title mb-5">Leave Form</h5>
                     <div class="card">
                         <div class="card-body">
-                        <h5 class="card-title">Leave Form</h5><br>
+                        
                         
                         <div class="container mt-3">
                             <div class="row justify-content-center">
-                              <div class="col-md-6">
-                                <div class="input-group mb-3">
+                              <div class="col-md-7 col-lg-8 col-sm-8">
+                                <div class="input-group mb-4">
                                   <input type="text" class="form-control" placeholder="Search Employee Name" id="searchInput">
                                   <button class="btn btn-primary" type="button" id="searchButton">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -50,63 +51,42 @@
                                 </div>
                               </div>
                             </div>
-                        </div>
-                          <br>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="container">
-                                    <form class="row">
-                                        <label for="dateFrom" class="col-1 col-md-2 col-form-label"></label>
-                                        <div class="col-5 col-md-10">
-                                            <div class="input-group date" id="fromDatePicker">
-                                                <input type="text" class="form-control" id="dateFrom" placeholder="From">
-                                                <span class="input-group-append">
-                                                    <span class="input-group-text bg-light d-block">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
-                                                            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
-                                                            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-                                                        </svg>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="container">
-                                    <form class="row">
-                                        <label for="dateTo" class="col-1 col-md-2 col-form-label"></label>
-                                        <div class="col-5 col-md-10">
-                                            <div class="input-group date" id="toDatePicker">
-                                                <input type="text" class="form-control" id="dateTo" placeholder="To">
-                                                <span class="input-group-append">
-                                                    <span class="input-group-text bg-light d-block">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
-                                                            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
-                                                            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-                                                        </svg>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--reason content-->
-                        <label for="comment"></label>
-                        <textarea class="form-control" rows="4" id="comment" name="text" placeholder="Reason"></textarea>
                         
-                      </div>
+
+                            <div class="row justify-content-center">
+                                <form class="col-md-auto">
+                                  <div class="input-group mb-3">
+                                    <span class="input-group-text">From</span>
+                                    <input type="date" id="datemin" name="datemin" class="form-control">
+                                  </div>
+                                </form>
+                                <form class="col-md-auto">
+                                  <div class="input-group mb-3">
+                                    <span class="input-group-text">To</span>
+                                    <input type="date" id="datemax" name="datemax" class="form-control">
+                                  </div>
+                                </form>
+                              </div>
+
+
+                            <!--reason content-->
+                        
+
+                            <div class="row">
+                                <div class="col">
+                                    <label for="comment" class="form-label">Reason</label>
+                                    <textarea class="form-control" style="max-height: 100px;" rows="3" id="comment" name="text" placeholder="Reason"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary mt-3" id="submit">Submit</button>
+                        
+                        </div>
                     </div>
                   </div>
                 </div>
                 
             </div><br>
-            <button type="button" class="btn btn-primary" data-mdb-ripple-init>Submit</button>
+            
         </div>
     </div>
 
