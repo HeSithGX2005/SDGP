@@ -1,9 +1,14 @@
 import React from "react";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer"; // Import the Footer component
+import Footer from "../components/Footer";
 import ProductImg from "../Assets/photo1.png";
 import HelmetImg from "../Assets/helmet.png";
+import WebImg from "../Assets/web.png";
+import GasImg from "../Assets/fire.png";
+import MoneyImg from "../Assets/money.png";
+import TimeImg from "../Assets/time.png"
+
 
 function Product (){
     return(
@@ -13,6 +18,10 @@ function Product (){
         cName="hero-mid"
         heroImg={ProductImg}
         helmetimg={HelmetImg}
+        webimg={WebImg}
+        gasimg={GasImg}
+        moneyimg={MoneyImg}
+        timeimg={TimeImg}
         title2="Our Product"
         title3="SAFEx ensures a new era for the construction field."
         title4="Web Camera"
