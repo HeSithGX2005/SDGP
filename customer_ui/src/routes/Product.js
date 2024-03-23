@@ -1,5 +1,7 @@
+import React from "react";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer"; // Import the Footer component
 import ProductImg from "../Assets/photo1.png";
 import HelmetImg from "../Assets/helmet.png";
 
@@ -25,6 +27,7 @@ function Product (){
         showP3={true}
         showP4={true}
         />
+        <Footer /> {/* Add the Footer component */}
         </>
     )
 }

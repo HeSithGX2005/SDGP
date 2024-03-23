@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer"; // Import the Footer component
 import ConImg from "../Assets/photo2.png";
 
 function Contact() {
@@ -78,6 +79,7 @@ function Contact() {
           </button>
         </form>
       </div>
+      <Footer /> {/* Add the Footer component */}
     </>
   );
 }
