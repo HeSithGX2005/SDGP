@@ -78,7 +78,7 @@ img {
 
 .hero-mid h4{
     position: absolute;
-    top: 85%;
+    top: 120%;
     left: -70%;
     font-family: "Sulphur Point", sans-serif;
     font-weight: 600;
@@ -89,7 +89,7 @@ img {
 
 .hero-mid h5{
     position: absolute;
-    top: 85%;
+    top: 120%;
     left: 34.3%;
     font-family: "Sulphur Point", sans-serif;
     font-weight: 600;
@@ -100,7 +100,7 @@ img {
 
 .hero-mid h6{
     position: absolute;
-    top: 85%;
+    top: 120%;
     right: -70%;
     font-family: "Sulphur Point", sans-serif;
     font-weight: 600;
@@ -113,7 +113,7 @@ img {
     position: absolute;
     text-align: center;
     justify-content: center;
-    top: 105%;
+    top: 140%;
     left: -82%;
     width: 200px;
     animation: slideIn 1.5s forwards, fadeIn 1s forwards;
@@ -121,7 +121,7 @@ img {
 
 .p-class-2 {
     position: absolute;
-    top: 105%;
+    top: 140%;
     left: 27.5%;
     width: 200px;
     animation: slideIn 1.5s forwards, fadeIn 1s forwards;
@@ -130,7 +130,7 @@ img {
 
 .p-class-3 {
     position: absolute;
-    top: 105%;
+    top: 140%;
     left: 128%;
     width: 200px;
     animation: slideIn 1.5s forwards, fadeIn 1s forwards;
