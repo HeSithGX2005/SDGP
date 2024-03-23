@@ -798,7 +798,7 @@ function sendReportAsEmail(companyID, reportPath, res) {
             return res.status(404).send('No email address found for the given company ID');
         }
         const mailOptions = {
-            from: 'dinalfernando43@gamil.com',
+            from: 'sudeepaweerasena@gamil.com',
             to: userEmail,
             subject: 'Your Report',
             text: `Date: ${new Date().toLocaleDateString()}\nYour Report is successfully generated and has been attached to this email.`,

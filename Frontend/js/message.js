@@ -1,7 +1,6 @@
-document.getElementById('messageForm').addEventListener('submit', function(event) {
+document.getElementById('submitButton').addEventListener('click', function(event) {
     event.preventDefault();
 
-    const form = this;
     const to = document.getElementById('to').value;
     const from = document.getElementById('from').value;
     const message = document.getElementById('message').value;
@@ -21,7 +20,7 @@ document.getElementById('messageForm').addEventListener('submit', function(event
     })
     .then(data => {
         alert('Message sent successfully');
-        form.reset(); // Reset the form after successful submission
+        document.getElementById('messageForm').reset(); // Reset the form after successful submission
     })
     .catch(error => {
         console.error('Error:', error);

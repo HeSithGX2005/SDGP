@@ -1,4 +1,4 @@
-document.getElementById('issueForm').addEventListener('submit', function(event) {
+document.querySelector('button.btn-primary').addEventListener('click', function(event) {
     event.preventDefault();
 
     const name = document.getElementById('name').value;
@@ -19,7 +19,7 @@ document.getElementById('issueForm').addEventListener('submit', function(event) 
         return response.text();
     })
     .then(data => {
-        // Alert removed for streamlined UX
+        alert('Issue reported successfully');
         window.location.href = 'dashboard.html'; // Redirect to dashboard.html
     })
     .catch(error => {
