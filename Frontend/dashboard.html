@@ -31,120 +31,107 @@
 
   <!--main content-->
   
-  <div class="content text-center mt-5">
+  <div class="content text-center mt-5 min-vh-100">
     <div class="container">
       <h1>Welcome</h1>
-      <h2>Liam Johnson</h2>
+      <h2>Liam Johnson</h2><!--display user name-->
       
-      <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-2"> 
 
-        <!--material content-->
+        <!--message inbox-->
 
-        <div class="col-4 mb-4  mt-5">
+        <div class="col-4 mt-4">
           <div class="card">
             <div class="card-body box">
-              <h5 class="card-title">Materials Need To Request</h5><br>
-              <div class="row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Cement</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div><br>
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Sand</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                
-              </div><br>
-              <div class="row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Bricks</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Stone</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div> 
-              </div><br>
+              <h5 class="card-title">Inbox</h5>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-10 mb-2 mt-2">
                   <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Iron</h6>
-                      </a>
+                    <div class="card-body inbox">
+                      <!--get from database-->
+                      <h6 class="mb-1">sender name</h6><!--sender name-->
+                      <p class="mt-0 mb-0">message</p><!--message-->
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-10 mb-2">
+                  <div class="card">
+                    <div class="card-body alerts">
+                      <!--get from database--> 
+                      <h6 class="mb-1">sender name</h6>
+                      <p class="mt-0 mb-0">message</p> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-10 mb-2">
+                  <div class="card">
+                    <div class="card-body alerts">
+                      <!--get from database-->
+                      <h6 class="mb-1">sender name</h6>
+                      <p class="mt-0 mb-0">message</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-10 mb-2">
+                  <div class="card">
+                    <div class="card-body alerts">
+                      <!--get from database-->
+                      <h6 class="mb-1">sender name</h6>
+                      <p class="mt-0 mb-0">message</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+              <a href="message.html">
+                <button type="button" class="btn btn-primary mt-2">View All</button>
+              </a>
             </div>
           </div>
         </div>
       
         <!--alert content-->
 
-        <div class="col-4 mb-4  mt-5">
+        <div class="col-4 mt-4">
           <div class="card">
             <div class="card-body box">
-              <h5 class="card-title">Alert History</h5><br>
+              <h5 class="card-title">Alert History</h5>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-4 mt-2">
                   <div class="card">
                     <div class="card-body alerts">
                       <!--get from database-->
+                      <h6 class="mb-3 mt-2" id="alertname">Alert name !</h6>
+                      <p class="mt-1 mb-0" id="alertdetails">Alert date</p><!--Alert date-->
+                      <p class="mt-0 mb-2" id="alertdetails">Alert time</p><!--Alert time-->
+                      <p class="mt-0 mb-0" id="alertdetails">Alert employee name</p><!--alert employee name-->
                     </div>
                   </div>
                 </div>
-              </div><br>
+              </div>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-2">
                   <div class="card">
                     <div class="card-body alerts">
+                      <h6 class="mb-3 mt-2" id="alertname">Alert name !</h6>
+                      <p class="mt-1 mb-0" id="alertdetails">Alert date</p><!--Alert date-->
+                      <p class="mt-0 mb-2" id="alertdetails">Alert time</p><!--Alert time-->
+                      <p class="mt-0 mb-0" id="alertdetails">Alert employee name</p><!--alert employee name-->
                       <!--get from database-->  
                     </div>
                   </div>
                 </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
+              </div>
 
               <a href="alert.html">
-                <button type="button" class="btn btn-primary">View All</button>
+                <button type="button" class="btn btn-primary mt-3">View All</button>
               </a>
               
 
@@ -153,64 +140,64 @@
         </div>
 
         <!--leave content-->
-        <div class="col-4 mb-4  mt-5">
+        <div class="col-4 mt-4">
           <div class="card">
             <div class="card-body box">
               <h5 class="card-title">Worker on Leave</h5><br>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-2 mt-2">
                   <div class="card">
                     <div class="card-body leave">
                       <!--get from database-->
                     </div>
                   </div>
                 </div>
-              </div><br>
+              </div>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-2">
                   <div class="card">
                     <div class="card-body leave">
                       <!--get from database-->  
                     </div>
                   </div>
                 </div>
-              </div><br>
+              </div>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-2">
                   <div class="card">
                     <div class="card-body leave">
                       <!--get from database-->
                     </div>
                   </div>
                 </div>
-              </div><br>
+              </div>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-2">
                   <div class="card">
                     <div class="card-body leave">
                       <!--get from database-->  
                     </div>
                   </div>
                 </div>
-              </div><br>
+              </div>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-2">
                   <div class="card">
                     <div class="card-body leave">
                       <!--get from database-->
                     </div>
                   </div>
                 </div>
-              </div><br>
+              </div>
               <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-sm-8 mb-2">
                   <div class="card">
                     <div class="card-body leave">
                       <!--get from database-->  
                     </div>
                   </div>
                 </div>
-              </div><br>
+              </div>
             </div>
           </div>
         </div>

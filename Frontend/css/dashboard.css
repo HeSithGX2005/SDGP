@@ -1,6 +1,4 @@
-
-  
-/* Content Styles */
+  /* Content Styles */
 body {
   background-color: #ffffff !important;
   background-position: center;
@@ -29,11 +27,11 @@ h1,h2{
 
 .box:hover{
   transform: scale(101%);
-  box-shadow: rgba(148, 57, 4, 0.35) 0px 5px 15px ;
+  box-shadow: rgba(8, 161, 164, 0.35) 0px 5px 15px !important;
   background: #ffffff;
 }
 
-.materials, .alerts, .leave{
+.inbox, .alerts, .leave{
   background-color: #fff;
   box-shadow: #808080 0 0 10px;
   border-radius: 20px;
@@ -47,6 +45,7 @@ h1,h2{
 .card {
   border:none !important;
   background-color: transparent !important;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -66,4 +65,17 @@ h6{
 button{
   background-color: #111D46 !important;
   border-radius: 25px !important;
+}
+
+h6, p{
+  text-align: justify;
+}
+
+#alertname{
+  color: #ff0f0f ;
+  text-align: center;
+}
+
+#alertdetails{
+  text-align: center;
 }

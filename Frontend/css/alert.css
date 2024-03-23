@@ -4,4 +4,14 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
-  }
+}
+
+table, tr, td {
+  border: 1px solid black !important;
+  border-collapse: collapse;
+}
+
+#alertname {
+  color:#ff0f0f;
+}
+

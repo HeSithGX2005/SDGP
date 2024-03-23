@@ -30,6 +30,7 @@ body {
 .input-group {
     max-width: 500px; /* Adjust as needed */
     margin: 0 auto; /* Center the search bar */
+    border-radius: 15px !important;
   }
   
   /* Additional styling for the search button */
