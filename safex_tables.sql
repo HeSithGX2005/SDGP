@@ -120,7 +120,7 @@ CREATE TABLE Bank_Account (
 
 CREATE TABLE Login (
     Login_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Access_Level INT,
+    Access_Level TEXT,
     Username VARCHAR(255),
     Password VARCHAR(255),
     Company_ID INT,
