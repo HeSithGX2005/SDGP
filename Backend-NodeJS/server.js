@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
@@ -11,6 +12,7 @@ const cron = require('node-cron');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
     
+
 app.use(cors());
 app.use(express.json());
 // Serve static files from the 'uploads' directory
@@ -28,14 +30,15 @@ const storage = multer.diskStorage({
 });
 
 
-const upload = multer({ storage: storage }).single('image');   
+const upload = multer({ storage: storage }).single('image');  
+
 // Create a MySQL database connection
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "SafeX"
-})
+    database: "safex"
+});
 
 // Progression calculation
 function calculateProgress(startDate, estimatedDurationDays) {
@@ -88,16 +91,18 @@ app.post('/changePassword', verifyToken, (req, res) => {
     if (!oldPassword || !newPassword) {
         return res.status(400).send("Old and new passwords are required.");
     }
+
     // Verify the JWT token
     jwt.verify(req.token, 'secretkey', (err, decoded) => {
         if (err) {
             return res.status(401).send("Invalid token.");
         }
         // Extract the username from the decoded token
-        const Username = decoded.data[0].Username;
+        const username = decoded.username;
+
         // SQL query to check if the user exists
         const checkUserSql = "SELECT * FROM Login WHERE Username = ?";
-        db.query(checkUserSql, [Username], (err, result) => {
+        db.query(checkUserSql, [username], (err, result) => {
             if (err) {
                 return res.status(500).send("Error checking user.");
             }
@@ -108,11 +113,13 @@ app.post('/changePassword', verifyToken, (req, res) => {
                     if (err) {
                         return res.status(500).send("Error checking password.");
                     }
-                    // If old password matches, hash the new password and update the database
                     if (isMatch) {
+                        // If old password matches, hash the new password and update the database
                         const hashedNewPassword = bcrypt.hashSync(newPassword, 10);
+
+                        // SQL query to update the user's password
                         const updatePasswordSql = "UPDATE Login SET Password = ? WHERE Username = ?";
-                        db.query(updatePasswordSql, [hashedNewPassword, Username], (updateErr) => {
+                        db.query(updatePasswordSql, [hashedNewPassword, username], (updateErr) => {
                             if (updateErr) {
                                 return res.status(500).send("Error updating password.");
                             }
@@ -129,6 +136,7 @@ app.post('/changePassword', verifyToken, (req, res) => {
     });
 });
 
+
 // Setup the nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail', 
@@ -144,7 +152,7 @@ app.post('/reportIssue', (req, res) => {
 
     // Define the email options
     const mailOptions = {
-        from: 'sudeepaweerasena@gmail.com', 
+        from: 'sudeepaweerasena@gmail.com',
         to: 'sudeepaweerasena@gmail.com',
         subject: 'New Issue Reported',
         text: `Name: ${name}\nEmail: ${email}\nIssue: ${issue}`
@@ -166,7 +174,7 @@ app.post('/sendMessage', (req, res) => {
     // Define the email options
     const mailOptions = {
         from: 'sudeepaweerasena@gmail.com', 
-        to: to, // The recipient's email address, set based on form input
+        to: to, // The recipient's email address, dynamically set based on form input
         subject: 'New Message',
         text: `From: ${from}\nMessage: ${message}`
     };
@@ -177,14 +185,14 @@ app.post('/sendMessage', (req, res) => {
             console.error('Error sending email:', err);
             return res.status(500).send("Error sending email.");
         }
-        console.log('Email sent:', info.response); // Log the response when the email is sent successfully
+        console.log('Email sent:', info.response);
         res.send("Message sent successfully.");
     });
 });
 
 // Leave
-app.post('/submitLeave', verifyToken, (req, res) => {    // Leave request submission endpoint        
-    const { Employee_ID, Start_Date, End_Date, Reason } = req.body;  // Extract leave request details from request body
+app.post('/submitLeave', verifyToken, (req, res) => { // Leave request submission endpoint        
+    const { Employee_ID, Start_Date, End_Date, Reason } = req.body; // Extract leave request details from request body
 
     // SQL query to insert the leave request into the database
     const insertLeaveSql = `
@@ -237,11 +245,11 @@ app.post('/submitLeave', verifyToken, (req, res) => {    // Leave request submis
 });
 
 //Material
-app.post('/materials', verifyToken, (req, res) => {
+app.post('/material_req', verifyToken, (req, res) => {
     const { Quantity_Requested, Receiving_Date, Supervisor_Name, Material_ID } = req.body;
     const Company_ID = req.user.companyID;
 
-    // SQL query to insert the material request into the database
+    // Insert the material request into the database
     const insertRequestSql = `
         INSERT INTO Material_Request (Quantity_Requested, Receiving_Date, Supervisor_Name, Material_ID, Company_ID) 
         VALUES (?, ?, ?, ?, ?)
@@ -259,7 +267,6 @@ app.post('/materials', verifyToken, (req, res) => {
 
 //Get all emplayee details 
 app.post('/employees', verifyToken, (req, res) => { // Get all employee details endpoint
-    // Verify the JWT token
     jwt.verify(req.token, 'secretkey', (err, decoded) => {
         if (err) return res.status(401).send("Invalid token.");
         const companyID = decoded.companyID; // Extract the company ID from the decoded token
@@ -275,6 +282,7 @@ app.post('/employees', verifyToken, (req, res) => { // Get all employee details 
     });
 });
 
+
 // Get a specific employee's details
 app.post('/Employee', verifyToken, (req, res) => {
     const employeeId = req.body.Employee_ID; // Get the Employee_ID from the request body
@@ -285,25 +293,6 @@ app.post('/Employee', verifyToken, (req, res) => {
         }
         if(result.length > 0) {
             res.json(result[0]);
-        } else {
-            res.status(404).send({ message: "Employee not found" });
-        }
-    });
-});
-
-//Live stream and location
-app.post('/Employee/live/:Employee_ID', (req, res) => {
-    const sql = "SELECT Employee_ID, Live_Video_Feed_URL, Location_Coordinates FROM Employee WHERE Employee_ID = ?";
-    db.query(sql, [req.params.Employee_ID], (err, result) => {
-        if(err){
-            return res.status(500).send({ error: "Error fetching live feed details", details: err });
-        }
-        if(result.length > 0){
-            const Employee = result[0];
-            res.json({
-                liveVideoFeedURL: Employee.Live_Video_Feed_URL,
-                googleMapsLink: `https://www.google.com/maps/search/?api=1&query=${Employee.Location_Coordinates}`
-            });
         } else {
             res.status(404).send({ message: "Employee not found" });
         }
@@ -339,7 +328,6 @@ app.post('/alert-history', verifyToken, (req, res) => { // Endpoint to display a
         });
     });
 });
-
 //Display workers on leave
 app.post('/workers-on-leave', verifyToken, (req, res) => { // Endpoint to display workers on leave
     jwt.verify(req.token, 'secretkey', (err, decoded) => { // Verify the JWT token
@@ -348,16 +336,18 @@ app.post('/workers-on-leave', verifyToken, (req, res) => { // Endpoint to displa
         const today = new Date().toISOString().slice(0, 10); // Get the current date
 
         const sql = `
-            SELECT l.Leaving_ID, l.Reason, l.Start_Date, l.End_Date, l.Employee_ID
-            FROM \`Leave\` l
-            JOIN Employee e ON l.Employee_ID = e.Employee_ID
-            WHERE e.Company_ID = ? AND l.Start_Date <= ? AND l.End_Date >= ?`;
+        SELECT l.Leaving_ID, l.Reason, l.Start_Date, l.End_Date, e.Employee_Name, e.Photo
+        FROM \`Leave\` l
+        JOIN Employee e ON l.Employee_ID = e.Employee_ID
+        JOIN Employee emp ON l.Employee_ID = emp.Employee_ID
+        WHERE e.Company_ID = ? AND l.Start_Date <= ? AND l.End_Date >= ?`;
         db.query(sql, [companyID, today, today], (err, leaveRecords) => { // Query the database for leave records
-            if (err) return res.status(500).send("Error fetching leave records.");
-            res.json(leaveRecords); // Return the list of leave records as JSON
+            if (err) return res.status(500).send("Error fetching leave records."); // Return the list of leave records as JSON
+            res.json(leaveRecords);
         });
     });
 });
+
 
 
 //Display project progress
@@ -401,7 +391,7 @@ function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
     if (typeof bearerHeader !== 'undefined') {
         const bearerToken = bearerHeader.split(' ')[1];
-        req.token = bearerToken;
+        req.token = bearerToken; 
 
         // Verify and decode the token
         jwt.verify(bearerToken, 'secretkey', (err, decoded) => {
@@ -419,7 +409,9 @@ function verifyToken(req, res, next) {
     }
 }
 
-// Protected route that requires JWT authentication
+
+
+// Protected route using JWT token
 app.post('/protected-route', verifyToken, (req, res) => {
     // Verify the JWT token
     jwt.verify(req.token, 'secretkey', (err, authData) => {
@@ -433,43 +425,43 @@ app.post('/protected-route', verifyToken, (req, res) => {
     });
 });
 
-// Add Employee image upload
-app.post('/addEmployee', verifyToken, verifySuperAdmin, (req, res) => { // Add Employee endpoint with image upload
+// Add Employee endpoint with image upload
+app.post('/addEmployee', verifyToken, verifySuperAdmin, (req, res) => {
     // Use multer to handle file upload
-    upload(req, res, (err) => {
-        if (err) {
-            return res.status(500).json({ message: "File upload failed", error: err }); // File uploading failure
+    upload(req, res, function(err) {
+        if (err instanceof multer.MulterError) {
+            // A Multer error occurred when uploading.
+            return res.status(500).json({ message: "Multer upload error", error: err.toString() });
+        } else if (err) {
+            // An unknown error occurred when uploading.
+            return res.status(500).json({ message: "Unknown upload error", error: err.toString() });
         }
 
-        jwt.verify(req.token, 'secretkey', (jwtErr, decoded) => { // Verify the JWT token
-            if (jwtErr) {
-                return res.status(401).send("Invalid token."); // Token is invalid
-            }
+        // Save everything to the database.
+        const { name, email, position, telephoneNumber, hourlyRate, joinDate, helmetID } = req.body;
+        let imagePath = req.file ? req.file.path : 'path/to/default/image.png'; // Set a default image path if no file was uploaded
 
-            // Extract companyID from JWT token
-            const companyID = decoded.companyID;
-            // Extract employee details from the request body
-            const { name, email, position, telephoneNumber, hourlyRate, joinDate, helmetID } = req.body;
-            // Get the file path of the uploaded image
-            const imagePath = req.file ? req.file.path : null;
-
-            const insertEmployeeSql = `
+        // Insert into database
+        const insertEmployeeSql = `
             INSERT INTO Employee (Employee_Name, Email, Position, Telephone_No, Hourly_Rate, Join_Date, Photo, Helmet_ID, Company_ID) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            `;
+        `;
 
-            // Use the extracted companyID in your SQL query
-            db.query(insertEmployeeSql, [name, email, position, telephoneNumber, hourlyRate, joinDate, imagePath, helmetID, companyID], (dbErr, result) => {
-                if (dbErr) {
-                    return res.status(500).json({ message: "Database operation failed", error: dbErr }); // Database operation failures
-                }
-                res.status(200).json({ message: "Employee added successfully", data: result });
-            });
+        // Get the company ID from the decoded token
+        const companyID = req.user.companyID; 
+
+        db.query(insertEmployeeSql, [name, email, position, telephoneNumber, hourlyRate, joinDate, imagePath, helmetID, companyID], (dbErr, dbRes) => {
+            if (dbErr) {
+                // Handle your database error
+                return res.status(500).json({ message: "Database operation failed", error: dbErr.toString() });
+            }
+            res.status(200).json({ message: "Employee added successfully", data: dbRes });
         });
     });
 });
 
 
+ 
 
 // Endpoint to calculate salary and send email with personalized content
 app.post('/calculateSalary', verifyToken, verifySuperAdmin, (req, res) => {
@@ -523,7 +515,7 @@ app.post('/calculateSalary', verifyToken, verifySuperAdmin, (req, res) => {
 
                         // Define the email options
                         const mailOptions = {
-                            from: 'sudeepaweerasena@gmail.com', // Replace with your email
+                            from: 'sudeepaweerasena@gmail.com',
                             to: Email,
                             subject: 'Salary Payment Summary',
                             text: `Dear ${Employee_Name},
@@ -581,7 +573,7 @@ function calculateAndSendSalaryForEmployee(employeeID) {
 
             // Define the email options
             const mailOptions = {
-                from: 'sudeepaweerasena@gmail.com', // Replace with your email
+                from: 'sudeepaweerasena@gmail.com',
                 to: Email,
                 subject: 'Salary Payment Summary',
                 text: `Dear ${Employee_Name},
@@ -643,7 +635,7 @@ function calculateAndSendSalaries() {
 // Schedule the job for the 28th of every month at 11:40 AM
 cron.schedule('50 22 28 * *', calculateAndSendSalaries, {
     scheduled: true,
-    timezone: "Asia/Colombo" 
+    timezone: "Asia/Colombo"
 });    
 
 function verifyAdmin(req, res, next) {
@@ -665,17 +657,21 @@ function verifySuperAdmin(req, res, next) {
 // Helper function to format dates in DD/MM/YYYY
 function formatDate(date) {
     const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
 }
 
 // Generate report and send as email
-app.post('/generate-report', verifyToken, verifySuperAdmin, (req, res) => { // Endpoint to generate report and send as email
+app.post('/generate-report', verifyToken, verifySuperAdmin, (req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if (err) {
             console.error('JWT Verification Error:', err);
             return res.sendStatus(403);
+        }
+        const userRole = req.user.role; // Extract user role from JWT payload
+        if(userRole !== 'Super_Admin') {
+            return res.status(403).send('You are not authorized for this task.');
         }
 
         const companyID = authData.companyID;
@@ -695,7 +691,7 @@ app.post('/generate-report', verifyToken, verifySuperAdmin, (req, res) => { // E
         GROUP BY 
             c.Company_ID, p.Project_ID`;
 
-            // Query the database to fetch company and project details
+        // Query the database to fetch company and project details
         db.query(companyQuery, [companyID], (dbErr, companyResults) => {
             if (dbErr) {
                 console.error('Database Error:', dbErr);
@@ -704,6 +700,7 @@ app.post('/generate-report', verifyToken, verifySuperAdmin, (req, res) => { // E
             if (companyResults.length === 0) {
                 return res.status(404).send('No data found for the provided company ID');
             }
+
             // Extracting data for the report
             const data = companyResults[0];
             const startDate = new Date(data.Start_Date);
@@ -748,7 +745,9 @@ app.post('/generate-report', verifyToken, verifySuperAdmin, (req, res) => { // E
             // Fetching material requests and adding them to the PDF
             const materialRequestQuery = `
             SELECT 
-                mr.Quantity_Requested, mr.Receiving_Date, m.Type
+                mr.Quantity_Requested, 
+                mr.Receiving_Date, 
+                m.Type
             FROM 
                 Material_Request mr
             JOIN 
@@ -781,7 +780,6 @@ app.post('/generate-report', verifyToken, verifySuperAdmin, (req, res) => { // E
     });
 });
 
-
 // Function to send the generated report as an email
 function sendReportAsEmail(companyID, reportPath, res) {
     const emailQuery = 'SELECT Username FROM Login WHERE Company_ID = ?';
@@ -800,7 +798,7 @@ function sendReportAsEmail(companyID, reportPath, res) {
             return res.status(404).send('No email address found for the given company ID');
         }
         const mailOptions = {
-            from: 'sudeepaweerasena@gamil.com',
+            from: 'dinalfernando43@gamil.com',
             to: userEmail,
             subject: 'Your Report',
             text: `Date: ${new Date().toLocaleDateString()}\nYour Report is successfully generated and has been attached to this email.`,
@@ -825,5 +823,5 @@ function sendReportAsEmail(companyID, reportPath, res) {
 
 // Starting the server
 app.listen(8081, ()=> {
-    console.log("Backend Server is running on the 8081 Port");
-})
+    console.log(`Backend Server is running on ${process.env.SERVER_URL}`);
+});
