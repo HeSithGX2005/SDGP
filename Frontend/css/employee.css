@@ -45,29 +45,33 @@ body {
 }
 
 #livebutton {
-  background-color: #5783db !important;
-  border-radius: 10px !important;
+  background-color: #000080 !important;
+  color: #ffffff !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
   margin-left: 10px;
+  border-radius: 10px !important;
 }
 
 #livebutton:hover {
-  background-color: #55c2da !important;
-  border-radius: 10px !important;
-  margin-left: 10px;
+  background-color: #5783db  !important;
+  color: #000 !important;
   box-shadow: 0px 5px 15px rgba(128, 102, 157, 0.5) !important;
 }
 
 
 #viewbutton {
-  background-color: #5783db !important;
-  border-radius: 10px !important;
+  background-color: #000080 !important;
+  color: #ffffff !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
   margin-left: 10px;
+  border-radius: 10px !important;
 }
 
 #viewbutton:hover{
-  background-color: #55c2da !important;
-  border-radius: 10px !important;
-  margin-left: 10px;
+  background-color: #5783db  !important;
+  color: #000 !important;
   box-shadow: 0px 5px 15px rgba(128, 102, 157, 0.5) !important;
 }
 
