@@ -54,3 +54,7 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-03-15 20:53:57
+
+-- Altering table to change data type of Access_Level column to text
+ALTER TABLE `login`
+MODIFY COLUMN `Access_Level` TEXT;
