@@ -182,9 +182,9 @@ img {
     top: 190%;
     left: 27.5%;
     width: 200px;
-    animation: slideIn 1.5s forwards, fadeIn 1s forwards;
     font-size: 20px;
     font-weight: 600;
+    animation: slideIn 1.5s forwards, fadeIn 1s forwards;
   }
   
 
