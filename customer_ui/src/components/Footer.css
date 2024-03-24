@@ -9,7 +9,12 @@
     max-width: 1200px;
     margin: 0 auto;
   }
-  
+
+  .footer-text{
+    position: absolute;
+    top: 107.5%;
+  }
+
   .safex-text {
     font-family: "Caveat", cursive;
     font-optical-sizing: auto;
@@ -18,9 +23,4 @@
     font-size: 30px;
     font-weight: 500;
     padding-bottom: 20px;
-  }
-
-  .footer-text{
-    position: absolute;
-    top: 107.5%;
   }
