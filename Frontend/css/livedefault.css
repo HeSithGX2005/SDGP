@@ -23,3 +23,9 @@ body {
   box-shadow: rgba(8, 161, 164, 0.35) 0px 5px 15px !important;
   background: #ffffff;
 }
+
+h5{
+  font-family: "Philosopher", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

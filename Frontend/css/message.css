@@ -6,13 +6,9 @@ body {
   min-height: 100vh;
   }
 
-.card{
-  border-radius: 20px !important;
-}
-
 .form-control{
   border-radius: 20px !important;
-
+  box-shadow: #808080 0 0 10px;
 }
 
 #submit{
@@ -31,7 +27,7 @@ body {
 .card{
   background-color: #ffffff;
   border-width: 0;
-  border-radius: 30px;
+  border-radius: 20px !important;
   padding: 25px;
   align-items:center;
   margin: 10px;
@@ -44,4 +40,10 @@ body {
   transform: scale(101%);
   box-shadow: rgba(8, 161, 164, 0.35) 0px 5px 15px !important;
   background: #ffffff;
+}
+
+h5{
+  font-family: "Philosopher", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
