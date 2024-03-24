@@ -51,21 +51,29 @@
         h2 {
             text-align: center;
         }
+        .main-content {
+        margin-left: 200px; 
+        }
     </style>
 </head>
 <body>
-
-    <form id="addEmployeeForm" enctype="multipart/form-data">
-        <input type="text" id="name" placeholder="Name" required><br>
-        <input type="email" id="email" placeholder="Email" required><br>
-        <input type="text" id="position" placeholder="Position" required><br>
-        <input type="text" id="telephoneNumber" placeholder="Telephone Number" required><br>
-        <input type="number" id="hourlyRate" placeholder="Hourly Rate" required><br>
-        <input type="date" id="joinDate" required><br>
-        <input type="text" id="helmetID" placeholder="Helmet ID"><br>
-        <input type="file" id="image" accept="image/*"><br>
-        <button type="submit">Add Employee</button>
-    </form>
+    <div class="sidebar" id="sidebar-placeholder">
+        <!-- Sidebar content will be loaded here -->
+    </div>
+    <div class="main-content">
+        <h2>Add Employee</h2>
+        <form id="addEmployeeForm" enctype="multipart/form-data">
+            <input type="text" id="name" placeholder="Name" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="text" id="position" placeholder="Position" required><br>
+            <input type="text" id="telephoneNumber" placeholder="Telephone Number" required><br>
+            <input type="number" id="hourlyRate" placeholder="Hourly Rate" required><br>
+            <input type="date" id="joinDate" required><br>
+            <input type="text" id="helmetID" placeholder="Helmet ID"><br>
+            <input type="file" id="image" accept="image/*"><br>
+            <button type="submit">Add Employee</button>
+        </form>
+    </div>
 
     <script src="js/addemployee.js"></script>
     <script src="alertChecker.js"></script>

@@ -4,12 +4,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
+    <title>Login Form</title>
 
     <!--css links-->
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
     
-
+    
     <!--font links-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,198 +22,91 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-5.0.2-dist/">
     
-  
+    <style>
+      .alert-card {
+  background-color: #f0f4f8; /* Adjust the color to match your design */
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-type {
+  font-weight: bold;
+}
+
+.alert-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alert-date,
+.alert-time {
+  font-size: 0.9em;
+}
+
+.alert-employee {
+  margin-top: 5px;
+  font-size: 0.8em;
+}
+
+    </style>
+    <style>
+      .main-content {
+          margin-left: 200px; 
+      }
+  </style>
   </head>
 
   <body>
+    <div class="sidebar" id="sidebar-placeholder">
+      <!-- Sidebar content will be loaded here -->
+  </div>
 
   <!--main content-->
-  
-  <div class="content text-center mt-5">
-    <div class="container">
+  <div class="main-content">
+    <div class="container content text-center mt-5 min-vh-100">
       <h1>Welcome</h1>
-      <h2>Liam Johnson</h2>
-      
+      <h2 id="username">Loading...</h2> <!-- Place where username will be displayed -->
       <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
-
-        <!--material content-->
-
-        <div class="col-4 mb-4  mt-5">
+        <!-- Material Request Section -->
+        <div class="col-4 mt-4">
           <div class="card">
             <div class="card-body box">
-              <h5 class="card-title">Materials Need To Request</h5><br>
-              <div class="row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Cement</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div><br>
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Sand</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                
-              </div><br>
-              <div class="row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Bricks</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Stone</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div> 
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body materials">
-                      <a href="requestitem.html" class="btn">
-                        <h6 class="card-title">Iron</h6>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              <h5 class="card-title">Materials need to request</h5>
+              <div class="row materials-row">
+                <!-- Dynamic materials will be inserted here -->
               </div>
             </div>
           </div>
         </div>
-      
-        <!--alert content-->
-
-        <div class="col-4 mb-4  mt-5">
+  
+        <!-- Alert History Section -->
+        <div class="col-4 mt-4">
           <div class="card">
             <div class="card-body box">
-              <h5 class="card-title">Alert History</h5><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body alerts">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-
+              <h5 class="card-title">Alert History</h5>
+              <div class="alerts">
+                <!-- Alert history will be inserted here by JavaScript -->
+              </div>
               <a href="alert.html">
-                <button type="button" class="btn btn-primary">View All</button>
+                <button type="button" class="btn btn-primary mt-3">View All</button>
               </a>
-              
-
             </div>
           </div>
         </div>
-
-        <!--leave content-->
-        <div class="col-4 mb-4  mt-5">
+  
+        <!-- Worker on Leave Section -->
+        <div class="col-4 mt-4">
           <div class="card">
             <div class="card-body box">
-              <h5 class="card-title">Worker on Leave</h5><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body leave">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body leave">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body leave">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body leave">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body leave">
-                      <!--get from database-->
-                    </div>
-                  </div>
-                </div>
-              </div><br>
-              <div class="row justify-content-center">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                  <div class="card">
-                    <div class="card-body leave">
-                      <!--get from database-->  
-                    </div>
-                  </div>
-                </div>
-              </div><br>
+              <h5 class="card-title">Worker on Leave</h5>
+              <div class="leave">
+                <!-- Workers on leave will be dynamically inserted here by JavaScript -->
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 

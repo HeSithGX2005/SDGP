@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 });
 
 // New user details
-const email = 'sudeepaweerasena@gmail.com'; // Replace with the desired email
+const email = 'shisha@gmail.com'; // Replace with the desired email
 const password = '2001'; // Replace with the desired password
 
 // Hash the password

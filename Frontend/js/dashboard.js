@@ -1,9 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
+    displayUsername();
     fetchMaterials();
     fetchAlertHistory();
-    fetchWorkersOnLeave(); // Add this line to fetch workers on leave
-  });
-  
+    fetchWorkersOnLeave();
+});
+
+function displayUsername() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.log('No token found');
+        return;
+    }
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const username = payload.username; // Adjust depending on your token structure
+
+    document.getElementById('username').textContent = username || 'Unknown';
+}
+
 function fetchMaterials() {
   const apiEndpoint = `${API_URL}/materials`; // Adjust this if your endpoint is different
 
@@ -109,7 +123,7 @@ function fetchWorkersOnLeave() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}` 
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })
     .then(response => {
@@ -124,26 +138,29 @@ function fetchWorkersOnLeave() {
     .catch(error => {
         console.error('Error fetching workers on leave:', error);
     });
-  }
-  
-  function displayWorkersOnLeave(leaveRecords) {
-    const leaveContainer = document.querySelector('.card-body.leave');
+}
+
+function normalizeImagePath(path, defaultImagePath) {
+    if (!path) return defaultImagePath;
+    return `${API_URL}/uploads/${path.replace(/\\/g, '/').split('/').pop()}`;
+}
+
+function displayWorkersOnLeave(leaveRecords) {
+    const leaveContainer = document.querySelector('.leave'); // Update the selector as per your HTML
     leaveContainer.innerHTML = '';
-  
+
     leaveRecords.forEach(record => {
-      console.log('Individual Record:', record); // Log each individual record to inspect the structure
-      const imagePath = record.Photo ? `${API_URL}/uploads/${record.Photo.split('\\').pop()}` : 'emp.jpg'; // Use a default image if no photo is available
-  
-      const leaveCard = `
-        <div class="worker-leave-card">
-          <img src="${imagePath}" alt="${record.Employee_Name}" class="img-fluid rounded-circle mb-3">
-          <div class="worker-leave-info">
-            <div class="worker-name">${record.Employee_Name}</div> <!-- Make sure this matches the JSON property -->
-            <!-- Add additional details here as needed -->
-          </div>
-        </div>
-      `;
-      leaveContainer.insertAdjacentHTML('beforeend', leaveCard);
+        const imagePath = normalizeImagePath(record.Photo, 'emp.jpg'); // 'emp.jpg' is a fallback image
+
+        const leaveCard = `
+            <div class="worker-leave-card">
+                <img src="${imagePath}" alt="${record.Employee_Name}" class="img-fluid rounded-circle mb-3">
+                <div class="worker-leave-info">
+                    <div class="worker-name">${record.Employee_Name}</div>
+                    <!-- Add additional details here as needed -->
+                </div>
+            </div>
+        `;
+        leaveContainer.insertAdjacentHTML('beforeend', leaveCard);
     });
-  }
-  
+}
