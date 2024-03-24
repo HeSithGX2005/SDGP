@@ -1,7 +1,7 @@
 
 int buz = 10;            // Buzzer connected to pin 10
 const int aqsensor = A0;  // Output of MQ135 connected to A0 pin of Arduino
-int threshold = 180;    // Threshold level for Air Quality
+int threshold = 500;    // Threshold level for Air Quality
 
 void setup() {
   pinMode(buz, OUTPUT);     // Buzzer is connected as Output from Arduino
