@@ -52,3 +52,6 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-03-15 20:53:56
+ALTER TABLE salary_calculation
+ADD COLUMN Helmet_ID INT,
+ADD FOREIGN KEY (Helmet_ID) REFERENCES Helmet(Helmet_ID);

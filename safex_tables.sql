@@ -161,3 +161,8 @@ CREATE TABLE Projects (
     Company_ID INT,
     FOREIGN KEY (Company_ID) REFERENCES Company(Company_ID)
 );
+
+
+ALTER TABLE Salary_Calculation
+ADD COLUMN Helmet_ID INT,
+ADD FOREIGN KEY (Helmet_ID) REFERENCES Helmet(Helmet_ID);
