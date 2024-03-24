@@ -271,30 +271,27 @@ describe('POST /calculateSalary', () => {
   }, 70000);
 });
 
+//Update Password Test
+describe('POST /changePassword', () => {
+  let token;
 
-
-
-// Update Password Test
-// describe('POST /changePassword', () => {
-//   let token;
-
-//   // Login before running the tests
-//   beforeAll(async () => {
-//     const loginResponse = await request(backendURL)
-//       .post('/login')
-//       .send({ Username: 'sudeepaweerasena@gmail.com', Password: '2002' });
+  // Login before running the tests
+  beforeAll(async () => {
+    const loginResponse = await request(backendURL)
+      .post('/login')
+      .send({ Username: 'sudeepaweerasena@gmail.com', Password: '2002' });
     
-//     token = loginResponse.body.token; // Store the token for later use
-//   }, 70000);
+    token = loginResponse.body.token; // Store the token for later use
+  }, 70000);
 
-//   // Test for password update
-//   it('should update password for authenticated user', async () => {
-//     const res = await request(backendURL)
-//       .post('/changePassword')
-//       .set('Authorization', `Bearer ${token}`) // Set the authorization header with the token
-//       .send({ oldPassword: '2002', newPassword: '2003' });
+  // Test for password update
+  it('should update password for authenticated user', async () => {
+    const res = await request(backendURL)
+      .post('/changePassword')
+      .set('Authorization', `Bearer ${token}`) // Set the authorization header with the token
+      .send({ oldPassword: '2002', newPassword: '2003' });
 
-//     expect(res.statusCode).toEqual(200); // Assuming 200 is success status
-//     // Further assertions based on your API response
-//   }, 70000);
-// });
+    expect(res.statusCode).toEqual(200); // Assuming 200 is success status
+    // Further assertions based on your API response
+  }, 70000);
+});
