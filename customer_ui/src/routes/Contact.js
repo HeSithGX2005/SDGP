@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
+import emailjs from 'emailjs-com';
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer"; // Import the Footer component
+import Footer from "../components/Footer";
 import ConImg from "../Assets/photo2.png";
 
 function Contact() {
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,7 +26,15 @@ function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    emailjs.sendForm('service_dhr12ms', 'template_9h58k29', e.target, 'QqdMiJvptHw_3fA0K')
+      .then((result) => {
+        console.log(result.text);
+        alert("Message sent successfully!");
+        navigate('/'); // Use navigate function to navigate
+      }, (error) => {
+        console.log(error.text);
+        alert("An error occurred, please try again later.");
+      });
 
     setFormData({ name: "", email: "", message: "" });
   };
@@ -79,7 +91,7 @@ function Contact() {
           </button>
         </form>
       </div>
-      <Footer /> {/* Add the Footer component */}
+      <Footer />
     </>
   );
 }

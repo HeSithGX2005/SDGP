@@ -19,4 +19,8 @@
     font-weight: 500;
     padding-bottom: 20px;
   }
-  
+
+  .footer-text{
+    position: absolute;
+    top: 107.5%;
+  }
