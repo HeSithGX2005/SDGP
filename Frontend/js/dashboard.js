@@ -147,14 +147,18 @@ function normalizeImagePath(path, defaultImagePath) {
 
 function displayWorkersOnLeave(leaveRecords) {
     const leaveContainer = document.querySelector('.leave'); // Update the selector as per your HTML
-    leaveContainer.innerHTML = '';
+    leaveContainer.innerHTML = ''; // Clear the container
 
     leaveRecords.forEach(record => {
-        const imagePath = normalizeImagePath(record.Photo, 'emp.jpg'); // 'emp.jpg' is a fallback image
+        // Adjust defaultImagePath if necessary
+        const defaultImagePath = 'emp.jpg'; // 'emp.jpg' is a fallback image
+        
+        // Construct the image path
+        const imagePath = record.Photo ? `${API_URL}/uploads/${record.Photo.replace(/\\/g, '/').split('/').pop()}` : defaultImagePath;
 
         const leaveCard = `
             <div class="worker-leave-card">
-                <img src="${imagePath}" alt="${record.Employee_Name}" class="img-fluid rounded-circle mb-3">
+                <img src="${imagePath}" alt="${record.Employee_Name}" class="img-fluid rounded-circle mb-3" onerror="this.onerror=null;this.src='${defaultImagePath}';">
                 <div class="worker-leave-info">
                     <div class="worker-name">${record.Employee_Name}</div>
                     <!-- Add additional details here as needed -->
@@ -164,3 +168,4 @@ function displayWorkersOnLeave(leaveRecords) {
         leaveContainer.insertAdjacentHTML('beforeend', leaveCard);
     });
 }
+
