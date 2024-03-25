@@ -31,7 +31,7 @@ $user_role = $_SESSION["user_role"];
 <div class="container">
     <div class="row helmet-container">
         <div class="col-md-6"> <!-- Adjust the column size as per your preference -->
-            <form action="" method="post" class="helmet border p-4"> <!-- Add 'text-center' class to center the form -->
+            <form action="" method="post" class="helmet border p-4" id="add-helmet"> <!-- Add 'text-center' class to center the form -->
                 <div class="form-group">
                     <?php
                     if($user_role == "admin"){
@@ -50,6 +50,7 @@ $user_role = $_SESSION["user_role"];
     </div>
 </div>
 <?php
+
       if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generate_qr"]) && $user_role == "admin"){
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -83,7 +84,31 @@ $user_role = $_SESSION["user_role"];
         echo '<a href="' . $pdf_file . '" download>Download PDF</a>';
 }
 
+if(isset($_POST['add_helmet'])) {
+    $status = array();
+    $status['status'] = 'error';
+    $status['message'] = '';
+    $entered_code = $_POST['unique_code'];
+    $is_assigned = false; 
+
+    if(!$is_assigned) {
+        $_SESSION['company_id'] = 1;
+        $status['status'] = 'success';
+        $status['message'] = 'Helmet Assigned Succefuly';
+        echo json_encode($status);
+    } else {
+        $status['message'] = 'Helmet Assigned Succefuly';
+        echo json_encode($status);
+    }
+}
+
     ?>
+
+
+<script src="js/notification-panel.js"></script>
+    <script>
+       // handleFormSubmit("add-helmet");
+    </script>
 
 </body>
 </html>

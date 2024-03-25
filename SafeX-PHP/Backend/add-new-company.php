@@ -30,34 +30,35 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             die("Error: " . $newCompanySql . "<br>" . $database_connection->error);
         }
         $stmt->bind_param("sisss", $companyName,  $noOfHelmet, $cloudStorageRenewDate, $companyEmail, $hashedPassword);
-        if ($stmt->execute()) {
-            $companyID = $database_connection->insert_id;
-            $unAssignHelmetQuery = "SELECT * FROM helmet WHERE Assigned = 0 LIMIT $noOfHelmet";
-            $result = $database_connection->query($unAssignHelmetQuery);
-            if ($result->num_rows < $noOfHelmet) {
-                $status['message'] = "Not Enough Helmet to Assign";
+ if ($stmt->execute()) {
+    $companyID = $database_connection->insert_id;
+    $unAssignHelmetQuery = "SELECT * FROM helmet WHERE Assigned = 0 LIMIT $noOfHelmet";
+    $result = $database_connection->query($unAssignHelmetQuery);
+    if ($result->num_rows < $noOfHelmet) {
+        $status['message'] = "Not Enough Helmet to Assign";
+    } else {
+        while ($row = $result->fetch_assoc()) {
+            $helmetID = $row["Helmet_ID"];
+            $assignHelmetQuery = "UPDATE helmet SET Assigned = 1 WHERE Helmet_ID = $helmetID";
+            $updateResult = $database_connection->query($assignHelmetQuery);
+            if ($updateResult) {
+                // Update was successful
+                $status['status'] = 'success';
+                $status['message'] = "Company Registered Successfully";
             } else {
-                while ($row = $result->fetch_assoc()) {
-                    $helmetID = $row["Helmet_ID"];
-                    $assignHelmetQuery = "UPDATE helmet SET Assigned = 1 WHERE Helmet_ID = $helmetID";
-                    $updateResult = $database_connection->query($assignHelmetQuery);
-                    if ($updateResult) {
-                        $addingHelmetSql = "INSERT INTO helmet_assignment(Company_ID, Helmet_ID) VALUES (?, ?)";
-                        $addingStmt = $database_connection->prepare($addingHelmetSql);
-                        $addingStmt->bind_param("ii", $companyID, $helmetID);
-                        if ($addingStmt->execute()) {
-                            $status['status'] = 'success';
-                            $status['message'] = "Company Registered Successfully";
-                        } else {
-                            $status['message'] = "Error Occurred While Registering";
-                        }
-                    }
-                }
+                // Update failed
+                $status['message'] = "Error Occurred While Registering";
             }
         }
     }
+}
+
+
+    }
     echo json_encode($status);
 }
+ 
+
 
 
 ?>

@@ -13,8 +13,34 @@ require ("sidepanel.php");
     <link rel="stylesheet" href="css/company.css">
     <title>SafeX|Add New Company</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
+         .add_new_company_form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid gray;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 1000;
+            background-color: #fff;
+            display: none;
+            max-width: 80%;
+        }
+        .blur {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
 .add_new_company_form {
     position: fixed;
     top: 50%;
@@ -55,7 +81,7 @@ require ("sidepanel.php");
 
                 </div>
             </form>
-            <button name="add_new_company" id="showFormBtn">Add New</button>
+            <button class="btn btn-primary" id="showFormBtn">Add New</button>
         </div>
     </div>
     <div class="table-container table-responsive">
@@ -67,9 +93,7 @@ require ("sidepanel.php");
                     <th class="resizable">No Of Helmet</th>
                     <th class="resizable">Cloud Renwal Date</th>
                     <th class="resizable">Register Date</th>
-                    <th class="resizable">Action</th>
                 </tr>
-                <script src="js/api.js"></script>
             </thead>
             <tbody>
                 <?php
@@ -89,59 +113,12 @@ require ("sidepanel.php");
                         <td>' . $row['No_of_Helmet'] . '</td>
                         <td>' . $row['Cloud_Storage_Renew_Date'] . '</td>
                         <td>' . $row['Join_Date'] . '</td>
-                        <td>
-                        <a href="#" data-company-id="' . $row['Company_ID'] . '" class="deleteBtn">
-                        <button class="btn btn-danger " type="button">Delete</button>
-                        </a>
-                        </td>
                         </tr>';
                         $row_number++;
                     }
                 }
                 ?>
-               <script>
-$(document).ready(function() {
-    $('.deleteBtn').click(function() {
-        var companyID = $(this).data('company-id');
-        
-        // Display SweetAlert confirmation dialog
-        Swal.fire({
-            title: 'Delete Company',
-            text: 'Are you sure you want to delete this company?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '../Backend/delete-employee.php', // Update the URL to your backend script
-                    method: 'POST',
-                    data: { Company_ID: companyID }, // Make sure the field name matches what your backend expects
-                    success: function(response) {
-                        response = response.trim(); // Trim leading and trailing whitespace
-                        var data = JSON.parse(response);
-                        if (data.status === 'success') {
-                            // Optionally, you can reload the page or update the UI
-                            location.reload(); // Reload the page
-                        } else {
-                            // Handle error
-                            Swal.fire('Error!', data.message, 'error');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                        // Handle error
-                        Swal.fire('Error!', 'An error occurred while deleting the company.', 'error');
-                    }
-                });
-            }
-        });
-    });
-});
-</script>
-
+             
             </tbody>
         </table>
     </div>

@@ -97,7 +97,6 @@ if(isset($_GET['id'])) {
                         <p class="card-text text-start">Position: <?php echo $employee['Position'];?></p>
                         <p class="card-text text-start">Contact No: <?php echo $employee['Telephone_No'];?></p>
                         <p class="card-text text-start">Email: <?php echo $employee['Email_Address'];?></p>
-                        <p class="card-text text-start">Health Status: <?php echo $employee['Name'];?></p>
                     </div>
                 </div>
             </div>
