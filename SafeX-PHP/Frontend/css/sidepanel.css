@@ -1,0 +1,81 @@
+body{         
+    background-size: cover;
+    background-position: center;
+
+}
+.nav-link1 {
+    text-decoration: none;
+    color: inherit; 
+}
+.nav-link1:hover {
+    text-decoration: none;
+    color: inherit; 
+}
+        /* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #111D46;
+    padding-top: 20px;
+    padding-left: 20px;
+    border-top-right-radius: 20px; /* Add top-right rounded corner */
+    border-bottom-right-radius: 20px; /* Add bottom-right rounded corner */
+    display: none;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.logo img {
+    width: 80px;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link i {
+    margin-right: 10px;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1{
+    color: #ffffff;
+    font-family: 'Caveat', cursive;
+    font-size: 50px;
+    padding-left: 0% !important;
+}
+
+/* Toggle button styles */
+.toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+/* Adjust sidebar styles for mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        overflow-x: hidden;
+        transition: width 0.3s ease; /* Add a smooth transition effect */
+    }
+
+    .sidebar.show {
+        width: 200px; /* Adjust width as needed */
+    }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="path/to/bootstrap.php"
+    colors="true"
+    stopOnFailure="false"
+    stopOnError="false"
+    stopOnIncomplete="false"
+    stopOnSkipped="false">
+    <testsuites>
+        <testsuite name="ProjectTestSuite">
+            <directory>path/to/tests/directory</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

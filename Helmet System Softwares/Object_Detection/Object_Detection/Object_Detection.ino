@@ -18,14 +18,14 @@ void loop() {
   digitalWrite(trigPin4, HIGH);  // Transmit Waves For 10us
   delayMicroseconds(10);
   duration4 = pulseIn(echoPin4, HIGH);  // Receive Reflected Waves
-  distance4 = duration4 * 0.034 / 2;    // Convert duration to distance
+  distance4 = duration4 * 0.0343 / 2;    // Convert duration to distance
 
   // Print distance for debug purposes
   Serial.print("Upwards: ");
   Serial.println(distance4);
 
   // If the upward sensor detects an object at least 2 meters away, activate the buzzer
-  if (distance4 >= 200) {
+  if (distance4 <= 200) {
     digitalWrite(buzzerPin, HIGH); // Turn on the buzzer
     delay(1000);                   // Wait for a second
     digitalWrite(buzzerPin, LOW);  // Turn off the buzzer
