@@ -1,0 +1,11 @@
+body {
+  background-color: #ffffff !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  }
+
+.card{
+  border-radius: 20px !important;
+}

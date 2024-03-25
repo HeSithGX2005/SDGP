@@ -1,0 +1,147 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Form</title>
+
+    <!--css links-->
+    <link rel="stylesheet" type="text/css" href="css/leaveform.css">
+
+    <!--font links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        
+    <!--bootstrap css links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-5.0.2-dist/">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <style>
+        .main-content {
+            margin-left: 200px; 
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar" id="sidebar-placeholder">
+        <!-- Sidebar content will be loaded here -->
+    </div>
+    <!--main content-->
+    <div class="main-content">
+        <div class="content text-center mt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Leave Form</h5><br>
+    
+                                <!-- Begin single form encompassing all inputs -->
+                                <form id="leaveForm" class="container">
+    
+                                    <!-- Employee ID Select -->
+                                    <div class="row justify-content-center mb-3">
+                                        <div class="col-md-6">
+                                            <select class="form-select" id="employeeIdSelect">
+                                                <option selected>Select Employee ID</option>
+                                                <!-- Options will be dynamically loaded here -->
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <!-- Date From Picker -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="input-group date" id="fromDatePicker">
+                                                <input type="text" class="form-control" id="dateFrom" placeholder="From">
+                                                <span class="input-group-append">
+                                                    <span class="input-group-text bg-light d-block">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+                                                            <path
+                                                                d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+    
+                                        <!-- Date To Picker -->
+                                        <div class="col-md-6">
+                                            <div class="input-group date" id="toDatePicker">
+                                                <input type="text" class="form-control" id="dateTo" placeholder="To">
+                                                <span class="input-group-append">
+                                                    <span class="input-group-text bg-light d-block">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+                                                            <path
+                                                                d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <!-- Reason Textarea -->
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="5" id="comment" name="text"
+                                            placeholder="Reason"></textarea>
+                                    </div>
+    
+                                    <!-- Submit Button -->
+                                    <button type="submit" class="btn btn-primary" data-mdb-ripple-init>Submit</button>
+    
+                                </form>
+                                <!-- End of single form -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--bootstrap 5 javascript links-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="../Frontend/js/leaveform.js"></script>
+<script src="alertChecker.js"></script>
+<script src="config.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

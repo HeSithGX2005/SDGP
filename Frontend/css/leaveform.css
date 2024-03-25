@@ -1,0 +1,32 @@
+body {
+  background-color: #ffffff !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  }
+
+.card{
+  background-color: #ffffff;
+  border-width: 0;
+  border-radius: 30px !important;
+  padding: 25px;
+  align-items:center;
+  margin: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 18px 36px -18px ;
+  transition:all 0.5s ease;
+  border: 1px solid #ebecf0;
+}
+
+.card:hover{
+  transform: scale(101%);
+  box-shadow: rgba(148, 57, 4, 0.35) 0px 5px 15px ;
+  background: #ffffff;
+}
+
+#comment{
+  border-radius: 20px;
+}
+
+
+
