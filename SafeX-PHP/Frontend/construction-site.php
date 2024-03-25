@@ -53,7 +53,7 @@ $company_id = $_SESSION["Company_ID"];
                     <button type="submit" name="search_constructionsite_button" id="search">Search</button>
                 </div>
             </form>
-            <button name="add_new_constructionsite" id="showFormBtn">Add New</button>
+            <button name="add_new_constructionsite" id="showFormBtn" class="btn-primary assign-btn">Add New</button>
         </div>
     </div>
     <div class="table-container table-responsive">
@@ -93,7 +93,6 @@ $company_id = $_SESSION["Company_ID"];
                         <td>' .$numWorkers . '</td>
                         <td>' . $assignedHelmets. '</td>
                         <td>
-                            <a href="construction-site.php?delete=' . $row['site_id'] . '"class="btn btn-danger">Delete</a>
                             <a href="#" data-userid="'.$row['site_id'].'" class="btn btn-primary assign-btn">Assign</a>
                         </td>
                         </tr>';

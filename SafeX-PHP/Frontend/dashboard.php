@@ -94,8 +94,8 @@ switch ($user_role){
     case 'admin':
         $titletext = " Welcome To SafeX";
         $dashboard_content = "SafeX|Admin Dashboard"; 
-        $titlebox1 = ""; 
-        $titlebox2 = "NEW REGISTERED COMPANY";
+        $titlebox1 = "NEW REGISTERED COMPANY"; 
+        $titlebox2 = "";
         $titlebox3 = "INQUIRIES" ;
         break;
     case 'company':
@@ -135,8 +135,8 @@ switch ($user_role){
           }
         $dashboard_content = "SafeX|Employee Dashboard";
         $titlebox1 = "NEW MESSAGES"; 
-        $titlebox2 = "ALERT HISTORY";
-        $titlebox3 = "WORKERS ON LEAVE" ;
+        $titlebox2 = "WORKERS ON LEAVE";
+        $titlebox3 = "ALERT HISTORY" ;
         break;
     default:
         $dashboard_content = "SafeX|Dashboard"; 
@@ -178,12 +178,18 @@ background-position: center;
 
 
 .materials{
-background-color: #32478c
+background-color:white; 
+border-radius: 10px;
+transition: all 0.3s ease-in-out;
 
+}
+.materials:hover{
+  color: #17a2b8;
 }
 
 .box{
 background-color: #ffffff;
+
 
 }
 
@@ -197,7 +203,10 @@ color: #ffffff;
   font-weight: 300;
   font-style: normal;
   font-size: 18px;
+  color: black;
+
 }
+
 
 h1{
 font-family: "Caveat", cursive;
@@ -226,7 +235,6 @@ padding: auto;
       
       <div class="row">
 
-        <!--material content-->
 
         <div class="col-12 col-md-4 mb-4 mt-5">
           <div class="card">
@@ -235,7 +243,7 @@ padding: auto;
               <?php
                 switch($user_role){
                     case 'admin':
-                        //echo $big = showNewDataBox1($database_connection,"SELECT * FROM company ORDER BY Join_Date DESC LIMIT 6",'Company_Name','Company.php',"View");
+                        echo $big =  showNewDataBox1($database_connection,"SELECT * FROM company ORDER BY Join_Date DESC LIMIT 6", 'Company_Name','Company.php',"View" ,'Join_Date');
                         break;
                     case 'company':
                         $companyID = $_SESSION['Company_ID'];
@@ -247,7 +255,11 @@ padding: auto;
                         LIMIT 6", 'Request_Item_Name', 'Send_Item.php', "View",'Site_Name');
                         break;
                     case 'employee':
-                        //echo $big = showNewDataBox1($database_connection,'company','Join_Date','Company_Name','Company.php',"View");
+                      $sql = "SELECT m.Sender_Company_ID, c.Company_Name, m.Message_Body
+                                      FROM messaging m
+                                      JOIN company c ON m.Sender_Company_ID = c.Company_ID
+                                      LIMIT 6";
+                        echo $big = showNewDataBox1($database_connection,$sql,'Company_Name','Message_Body','message.php',"View");
                         break;
                 } 
               ?>
@@ -266,20 +278,20 @@ padding: auto;
                   <?php
                                   switch($user_role){
                                     case 'admin':
-                                        echo $big = showNewDataBox2($database_connection,"SELECT * FROM issue_reporting ORDER BY Report_Date DESC LIMIT 6",'Despription','inquire.php',"View");
+                                        
                                         break;
                                     case 'company':
                                         echo $big = showNewDataBox2($database_connection,"SELECT * FROM employee ORDER BY Join_Date DESC LIMIT 6","Name","Employee_Pic");
                                         break;
                                     case 'employee':
-                                        echo $big = showNewDataBox2($database_connection,'company','Join_Date','Company_Name','Company.php',"View");
+                                        $sql = "SELECT lr.Employee_ID, e.Name, e.Employee_Pic
+                                        FROM leave_reporting lr
+                                        JOIN employee e ON lr.Employee_ID = e.Employee_ID ORDER BY Leave_Start_Date DESC LIMIT 6";
+                                        echo $big = showNewDataBox2($database_connection,$sql,'Name','Employee_Pic','leave.php',"View");
                                         break;
                                 } 
                   ?>
 
-              <a href="employee.php">
-                <button type="button" class="btn btn-primary">View All</button>
-              </a>
               
 
             </div>
@@ -294,14 +306,16 @@ padding: auto;
               <?php
                                   switch($user_role){
                                     case 'admin':
-                                        //echo $big = showNewDataBox2($database_connection,"SELECT * FROM issue_reporting ORDER BY Report_Date DESC LIMIT 6",'Despription','inquire.php',"View");
+                                        echo $big = showNewDataBox3($database_connection,"SELECT * FROM issue_reporting ORDER BY Report_Date DESC LIMIT 4",'Report_Date','Description');
                                         break;
                                     case 'company':
                                         $companyID = $_SESSION['Company_ID'];
-                                        echo $big = showNewDataBox3($database_connection,"SELECT messaging.*,employee.Name FROM messaging JOIN employee ON messaging.Sender_Employee_ID = employee.Employee_ID WHERE Receiver_Company_ID ='$companyID' ORDER BY messaging.Timestamp DESC LIMIT 6 ","Name","Message_Body");
+                                        echo $big = showNewDataBox3($database_connection,"SELECT messaging.*,employee.Name FROM messaging JOIN employee ON messaging.Sender_Employee_ID = employee.Employee_ID WHERE Receiver_Company_ID ='$companyID' ORDER BY messaging.Timestamp DESC LIMIT 4 ","Name","Message_Body");
                                         break;
                                     case 'employee':
-                                        //echo $big = showNewDataBox2($database_connection,'company','Join_Date','Company_Name','Company.php',"View");
+                                      
+                                      $sql = "SELECT * FROM falldetection_event ORDER BY time_stamp LIMIT 4";
+                                      echo $big = showNewDataBox3($database_connection, $sql,"Fall_Detected","time_stamp");
                                         break;
                                 } 
                   ?>

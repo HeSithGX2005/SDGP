@@ -18,29 +18,38 @@ $user_role = $_SESSION["user_role"];
         body{
             margin-left: 220px;
         }
+        
+        .helmet-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
     </style>
 </head>
 <body>
-<div class="helmet-container">
-<form action="" method="post" class="helmet"> <!-- Add 'text-center' class to center the form -->
-    <div class="form-group">
-        <?php
-        if($user_role == "admin"){
-            echo '<label for="num_helmets">Number of Helmets:</label>';
-            echo '<input type="value" id="num_helmets" name="num_helmets" min="1" required class="form-control">';
-            echo '<button type="submit" name="generate_qr" class="btn btn-primary text-center" >Register Helmets</button>';
-        } elseif($user_role == "company"){
-            echo '<label for="unique_code">Unique Code:</label>';
-            echo '<input type="text" name="unique_code" required placeholder="Helmet Unique Code" class="form-control">';
-            echo '<button type="submit" name="add_helmet" class="btn btn-primary">Register Helmets</button>';
-
-            
-        }
-        ?>
+<div class="container">
+    <div class="row helmet-container">
+        <div class="col-md-6"> <!-- Adjust the column size as per your preference -->
+            <form action="" method="post" class="helmet border p-4"> <!-- Add 'text-center' class to center the form -->
+                <div class="form-group">
+                    <?php
+                    if($user_role == "admin"){
+                        echo '<label for="num_helmets">Number of Helmets:</label>';
+                        echo '<input type="value" id="num_helmets" name="num_helmets" min="1" required class="form-control">';
+                        echo '<button type="submit" name="generate_qr" class="btn btn-primary mt-3 btn-block justify-content-center" >Register Helmets</button>';
+                    } elseif($user_role == "company"){
+                        echo '<label for="unique_code">Unique Code:</label>';
+                        echo '<input type="text" name="unique_code" required placeholder="Helmet Unique Code" class="form-control">';
+                        echo '<button type="submit" name="add_helmet" class="btn btn-primary mt-3 btn-block justify-content-center">Register Helmets</button>';
+                    }
+                    ?>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
-    <?php
-
+</div>
+<?php
       if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["generate_qr"]) && $user_role == "admin"){
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -75,7 +84,6 @@ $user_role = $_SESSION["user_role"];
 }
 
     ?>
-</div>
 
 </body>
 </html>

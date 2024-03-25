@@ -18,10 +18,9 @@ if(isset($_SESSION['company_id']) && $user_role === 'company') {
     $query = "SELECT * FROM employee";
 }
 $employees = $database_connection->query($query);
+$employeeID = isset($_GET['id']) ? $_GET['id'] : 0;
 
 ?>
-
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -30,6 +29,7 @@ $employees = $database_connection->query($query);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Employee|SafeX</title>
     <style>
+
 
         body {
             margin-left: 250px;
@@ -101,6 +101,19 @@ $employees = $database_connection->query($query);
 .blur {
     filter: blur(5px); /* Adjust the blur radius as needed */
 }
+.selected-employee {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    background-color: #fff;
+    display: none;
+    max-width: 80%;
+}
     </style>
   </head>
 
@@ -132,6 +145,7 @@ $employees = $database_connection->query($query);
 </div>
 
     <?php
+
                     if(isset($_POST['search'])) {
                         $searchQuery = $_POST['search']; // Retrieve search query from form submission
                     }
@@ -154,17 +168,13 @@ $employees = $database_connection->query($query);
                     <h5 class="mb-0"><?php echo $employee['Name'];?></h5><br>
                     <div class="defaultbutton">
                     <?php
+                    
                         if(isset($user_role) && $user_role == 'employee'){
-                                echo' <a href="live-default.php">';
+                                echo' <a href="#">';
                                     echo '<button class="btn btn-primary" type="button" value="Live" id="livebutton">Live</button>';
                                 echo'</a>';   
-                        }if(isset($user_role) && $user_role == 'company'){
-                            echo '<a href="#" data-employee-id="' . $employee['Employee_ID'] . '" class="deleteBtn">';
-                            echo '<button class="btn btn-danger " type="button">Delete</button>';
-                            echo '</a>';
                         }
                         ?>
-                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                         <script>
                         $(document).ready(function() {
                             $('.deleteBtn').click(function() {
@@ -198,9 +208,9 @@ $employees = $database_connection->query($query);
                             });
                         });
                         </script>
-                        <a href="employee.php?id=<?php echo $employee['Employee_ID']; ?>">
-                            <button class="btn btn-primary" type="button" value="View" id="viewbutton">View</button>
-                        </a>     
+                      <a href="view-employee.php?id=<?php echo $employee['Employee_ID']; ?>">
+                                <button class="btn btn-primary" type="button" value="View">View</button>
+                            </a>
                     </div>
                     
                 </div>
@@ -255,8 +265,6 @@ $employees = $database_connection->query($query);
 <script src="js/notification-panel.js"></script>
     <script>
         handleFormSubmit("employeeForm");
-        var data = { employeeID: employeeID };
-        handleButtonClicked('../Backend/delete_employee.php', 'POST', data);
     </script>
 <script>
     document.getElementById('employeePic').addEventListener('change', function(event) {
@@ -275,33 +283,7 @@ $employees = $database_connection->query($query);
     reader.readAsDataURL(file);
 });
 </script>
-<?php
-// Retrieve the Employee_ID from the URL parameter
-if(isset($_GET['id'])) {
-    $employeeID = $_GET['id'];
-    
-    // Fetch the details of the selected employee based on the Employee_ID
-    $selectEmployeeSQL = "SELECT * FROM employee WHERE Employee_ID = $employeeID";
-    $result = $database_connection->query($selectEmployeeSQL);
-    
-    // Check if employee details are found
-    if ($result && $result->num_rows > 0) {
-        $employee = $result->fetch_assoc();
-?>
-<script>
-    // Preload employee details into a JavaScript variable
-    const employeeDetails = <?php echo json_encode($employee); ?>;
-</script>
 
-<!-- Display the employee details -->
-<div class="selected-employee" id="selected-employee">
-    </div>
-<?php
-    } else {
-        echo "Employee details not found!";
-    }
-}
-?>
  <script>
 document.addEventListener("DOMContentLoaded", function() {
     const viewBtn = document.getElementById("viewbutton");
@@ -326,50 +308,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     });
-    viewBtn.addEventListener('click', () => {
-        if (displaydetails.style.display === "none") {
-            displaydetails.style.display = "block";
-            overlay.style.display = "block";
-            containers.forEach(function(container) {
-                container.classList.add("blur");
-            });
-
-            // Populate the employee details using the preloaded variable
-            const employeeDetailsHTML = `
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6 mt-5">
-                            <div class="card mb-3" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-4 d-flex align-items-center justify-content-center">
-                                        <!-- Employee image -->
-                                        <img src="../Backend/${employeeDetails['Employee_Pic']}" alt="${employeeDetails['Name']}" class="img-fluid rounded" style="max-width: 100%; height: auto;">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Employee Details</h5><br>
-                                            <p class="card-text">Employee Id: ${employeeDetails['Employee_ID']}</p>
-                                            <p class="card-text">Employee Name: ${employeeDetails['Name']}</p>
-                                            <p class="card-text">Position: ${employeeDetails['Position']}</p>
-                                            <p class="card-text">Contact No: ${employeeDetails['Telephone_No']}</p>
-                                            <p class="card-text">Email: ${employeeDetails['Email_Address']}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            displaydetails.innerHTML = employeeDetailsHTML;
-        } else {
-            displaydetails.style.display = "none";
-            overlay.style.display = "none";
-            containers.forEach(function(container) {
-                container.classList.remove("blur");
-            });
-        }
-    });
 
     overlay.addEventListener("click", function(event) {
         if (event.target === this) {
@@ -384,6 +322,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </body>
 </html>
 

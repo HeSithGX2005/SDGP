@@ -138,7 +138,6 @@ h1{
                                         array("url" => "employee.php", "icon" => "fa-person", "text" => "Employee"),
                                         array("url" => "leave.php", "icon" => "fa-person-walking-arrow-right", "text" => "Leave"),
                                         array("url" => "requestitem.php", "icon" => "fa-hand", "text" => "Request Item"),
-                                        array("url" => "alert-history.php", "icon" => "fa-bell", "text" => "Alert History"),
                                         array("url" => "message.php", "icon" => "fa-message", "text" => "Message"),
                                         array("text" => "Settings", "icon" => "fa-gear", "submenu" => array(
                                             array("url" => "password.php","icon" => "fa-lock", "text" => "Password"),

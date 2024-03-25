@@ -48,7 +48,7 @@ require ("sidepanel.php");
                         <td>' . $row['Report_Date'] . '</td>
                         <td>' . $row['Description'] . '</td>
                         <td>
-                            <a href="inquire.php?delete=' . $row['Report_ID'] . '"class="btn btn-danger">Delete</a>
+                            <a href="inquire.php?delete=' . $row['Report_Id'] . '"class="btn btn-danger">Delete</a>
                         </td>
                         </tr>';
                         $row_number++;

@@ -8,31 +8,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $status = array();
     $status['status'] = 'error';
     $status['message'] = '';
-    if (isset($_POST['operation'])) {
-        $assignment_type = $_POST['operation'];
-        if ($assignment_type =='Automatic') {
-            automaticAssignment($companyID,$database_connection,$siteId);
-        } elseif ($assignment_type == 'Manual') {
-            manualAssignment();
-            $status['status'] = 'success';
-            $status['message'] = 'Manual Assignment Successful';
-            echo json_encode($status);
-            echo "Succesfully Adde42";
-            exit();
-        } else {
-            /*$status['message'] = 'Invalid assignment type selected';
-            echo json_encode($status);*/
-            echo "Invalid assignment type selected1"; 
-        }
-    } else {
-       /* $status['message'] = 'Please select an assignment type';
-        echo json_encode($status);*/
-        echo "Invalid assignment type selected23"; 
-    }
-}
-
-// Function for automatic assignment
-function automaticAssignment($companyID,$database_connection,$siteId) {
     if (isset($_POST['NumofWorker']) && isset($_POST['NumofSupervisor'])) {
         $workers = $_POST['NumofWorker'];
         $supervisors = $_POST['NumofSupervisor'];
@@ -88,8 +63,4 @@ function automaticAssignment($companyID,$database_connection,$siteId) {
     }
 }
 
-// Function for manual assignment
-function manualAssignment() {
-
-}
 ?>

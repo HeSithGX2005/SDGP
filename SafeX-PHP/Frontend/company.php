@@ -12,6 +12,8 @@ require ("sidepanel.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/company.css">
     <title>SafeX|Add New Company</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <style>
 .add_new_company_form {
     position: fixed;
@@ -67,6 +69,7 @@ require ("sidepanel.php");
                     <th class="resizable">Register Date</th>
                     <th class="resizable">Action</th>
                 </tr>
+                <script src="js/api.js"></script>
             </thead>
             <tbody>
                 <?php
@@ -87,13 +90,58 @@ require ("sidepanel.php");
                         <td>' . $row['Cloud_Storage_Renew_Date'] . '</td>
                         <td>' . $row['Join_Date'] . '</td>
                         <td>
-                            <a href="company.php?delete=' . $row['Company_ID'] . '"class="btn btn-danger">Delete</a>
+                        <a href="#" data-company-id="' . $row['Company_ID'] . '" class="deleteBtn">
+                        <button class="btn btn-danger " type="button">Delete</button>
+                        </a>
                         </td>
                         </tr>';
                         $row_number++;
                     }
                 }
                 ?>
+               <script>
+$(document).ready(function() {
+    $('.deleteBtn').click(function() {
+        var companyID = $(this).data('company-id');
+        
+        // Display SweetAlert confirmation dialog
+        Swal.fire({
+            title: 'Delete Company',
+            text: 'Are you sure you want to delete this company?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '../Backend/delete-employee.php', // Update the URL to your backend script
+                    method: 'POST',
+                    data: { Company_ID: companyID }, // Make sure the field name matches what your backend expects
+                    success: function(response) {
+                        response = response.trim(); // Trim leading and trailing whitespace
+                        var data = JSON.parse(response);
+                        if (data.status === 'success') {
+                            // Optionally, you can reload the page or update the UI
+                            location.reload(); // Reload the page
+                        } else {
+                            // Handle error
+                            Swal.fire('Error!', data.message, 'error');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        // Handle error
+                        Swal.fire('Error!', 'An error occurred while deleting the company.', 'error');
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+
             </tbody>
         </table>
     </div>

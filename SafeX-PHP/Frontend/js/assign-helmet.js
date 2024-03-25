@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function updateTableData(selectedOption, position = null) {
+function updateTableData(siteId) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "update_table.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -66,45 +66,8 @@ function updateTableData(selectedOption, position = null) {
             });
         }
     };
-    var siteId = document.querySelector('input[name="siteId"]').value;
-    var params = "siteId=" + encodeURIComponent(siteId) + "&selectedOption=" + encodeURIComponent(selectedOption);
-    if (position) {
-        params += "&position=" + encodeURIComponent(position);
-    }
+
+    var params = "siteId=" + encodeURIComponent(siteId);
     xhr.send(params);
 }
 
-function showFields() {
-    var selectedOption = document.getElementById("dropdown").value;
-    var dynamicForm = document.getElementById("dynamicForm");
-    var dynamicContent = dynamicForm.querySelector(".dynamicform"); // Selecting the div with class "dynamicform"
-
-    // Clear previous content inside dynamicContent
-    dynamicContent.innerHTML = "";
-    updateTableData(selectedOption);
-
-    if (selectedOption === "Automatic") {
-        dynamicContent.innerHTML += '<input type="hidden" id="input1" name="operation" value ="Automatic">';
-        dynamicContent.innerHTML += '<label for="NumofWorker">Number of Worker:</label>';
-        dynamicContent.innerHTML += '<input type="number" id="input1" name="NumofWorker" required>';
-        dynamicContent.innerHTML += '<label for="NumofSupervisor">Number of Supervisor:</label>';
-        dynamicContent.innerHTML += '<input type="number" id="input2" name="NumofSupervisor" required>';    
-        dynamicContent.innerHTML += '<input type="submit" value="Assign Worker">';
-    } else if (selectedOption === "Manual") {
-        dynamicContent.innerHTML += '<input type="hidden" id="input1" name="operation" value ="Manual">';
-        var dropdownHTML = '<label for="position">Position: </label>';
-        dropdownHTML += '<select id="position" name="position" required>';
-        dropdownHTML += '<option value="worker">Construction Worker</option>';
-        dropdownHTML += '<option value="supervisor">Supervisor</option>';
-        dropdownHTML += '</select>';
-        
-        // Append the dropdown menu HTML to dynamicContent
-        dynamicContent.innerHTML += dropdownHTML;
-        dynamicContent.innerHTML += '<label for="employeeSearch">Search Employee:</label>';
-        dynamicContent.innerHTML += '<input type="text" id="employeeSearch" name="employeeSearch" placeholder="Search..." required>';
-        dynamicContent.innerHTML += '<button type="button" onclick="searchEmployee()">Search</button>';
-    }
-
-    
-
-}

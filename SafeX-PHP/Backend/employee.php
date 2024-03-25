@@ -60,21 +60,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $status['message'] = "Failed to insert new data: " . $database_connection->error;
                 }            
             }elseif($position == 'worker' ){
-                $selectHelmet = "SELECT * FROM helmet WHERE Company_ID = '$companyID";
+                $selectHelmet = "SELECT COUNT(*) AS available_helmets FROM helmet WHERE Company_ID = '$companyID' AND Assigned = 0";
                 $result = mysqli_query($database_connection, $selectHelmet);
-                if(mysqli_num_rows($result)>0){
-                    $insertQuery = "INSERT INTO employee (Name, Position, Telephone_No, Company_ID, Employee_Pic, Username, Password_Hash, Email_Address)
-                    VALUES ('$employeeName', '$position', '$telephone', '$companyID', '$targetFilePath', '$username', '$passwordHash', '$email')";
-                     if ($database_connection->query($insertQuery)) {
-
-                        $status['status'] = 'success';
-                        $status['message'] = "Employee Registered Successfully";
+                
+                if ($result && $result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $availableHelmets = $row['available_helmets'];
+                
+                    if ($availableHelmets > 0) {
+                        $insertEmployee = "INSERT INTO employee (Name, Position, Telephone_No, Company_ID, Employee_Pic, Username, Password_Hash, Email_Address, Assigned, Join_Date)
+                                           VALUES ('$employeeName', '$position', '$telephone', '$companyID', '$targetFilePath', '$username', '$passwordHash', '$email', 1, CURDATE())";
+                
+                        if ($database_connection->query($insertEmployee)) {
+                            $employeeID = $database_connection->insert_id;
+                
+                            $updateHelmet = "UPDATE helmet SET Assigned = 1, Employee_ID = $employeeID WHERE Company_ID = '$companyID' AND Assigned = 0 ORDER BY Helmet_ID LIMIT 1";
+                            if ($database_connection->query($updateHelmet)) {
+                                $status['status'] = 'success';
+                                $status['message'] = "Employee Registered Successfully";
+                            } else {
+                                $status['message'] = "Failed to assign helmet: " . $database_connection->error;
+                            }
+                        } else {
+                            $status['message'] = "Failed to insert employee: " . $database_connection->error;
+                        }
                     } else {
-                        $status['message'] = "Failed to insert new data: " . $database_connection->error;
+                        $status['message'] = "Not Enough Helmets";
                     }
-            }else{
-                $status['message'] = "Not Enough Helmets";
-            }}
+                } else {
+                    $status['message'] = "Failed to check available helmets: " . $database_connection->error;
+                }}
         else {
              $status['message'] = "Failed to insert new data: " . $database_connection->error;
         }
